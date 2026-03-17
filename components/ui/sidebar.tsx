@@ -46,7 +46,7 @@ function SidebarHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="sidebar-header"
-      className={cn("flex h-[var(--nav-item-height)] items-center px-[var(--nav-item-px)] border-b", className)}
+      className={cn("flex h-[var(--control-height-md)] items-center px-[var(--control-px-sm)] border-b gap-2", className)}
       {...props}
     />
   );
@@ -56,7 +56,7 @@ function SidebarContent({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="sidebar-content"
-      className={cn("flex-1 overflow-auto p-[var(--nav-item-px)]", className)}
+      className={cn("flex-1 overflow-auto p-[var(--control-px-sm)]", className)}
       {...props}
     />
   );
@@ -66,7 +66,7 @@ function SidebarFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="sidebar-footer"
-      className={cn("border-t p-[var(--nav-item-px)]", className)}
+      className={cn("border-t p-[var(--control-px-sm)]", className)}
       {...props}
     />
   );

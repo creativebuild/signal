@@ -63,7 +63,7 @@ export function MediaSection() {
 
         <div className="space-y-4">
           <h3 className="text-sm font-medium text-muted-foreground">Carousel</h3>
-          <Carousel className="w-full max-w-xs">
+          <Carousel className="w-full max-w-xs" opts={{ loop: true }}>
             <CarouselContent>
               {Array.from({ length: 3 }).map((_, i) => (
                 <CarouselItem key={i}>

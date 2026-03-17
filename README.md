@@ -2,8 +2,8 @@
 
 A Next.js 15 proof-of-concept demonstrating a fully token-driven design
 system built on shadcn/ui. Every visual decision — color, spacing,
-typography, sizing — flows from a single source of truth: CSS custom
-properties in `app/globals.css`.
+typography, sizing — flows from CSS custom properties split across
+`app/tokens.css` (primitives) and `app/globals.css` (semantic tokens).
 
 ---
 
@@ -16,11 +16,14 @@ npm run dev
 
 Open http://localhost:3000 to view the component gallery.
 
-To export tokens to JSON for Figma (via Tokens Studio):
+To export tokens to Variables Pro format for Figma:
 
 ```bash
 npm run tokens
 ```
+
+Output: `tokens/variables-pro.json` — Light Mode and Dark Mode in a
+single file, ready for Variables Pro import.
 
 ---
 
@@ -35,57 +38,71 @@ shadcn/ui ships components with two categories of styling:
   literal Tailwind values in each component file (`h-9`, `px-4`, `text-sm`)
 
 This POC extends the token model so sizing, spacing, and
-component-specific values also live in `globals.css` — making the entire
-visual system editable from one file.
+component-specific values also live in token files — split between
+primitives and semantic tokens for clarity and Figma parity.
+
+### Token file split
+
+| File | Purpose |
+|------|---------|
+| `app/tokens.css` | Primitive overrides (`--ds-space-*`, `--ds-radius-*`, `--ds-shadow-*`, `--ds-text-*`, etc.). Replaces Tailwind defaults. Has `@import "tailwindcss"` and `@theme inline` to map primitives to utilities. |
+| `app/globals.css` | Semantic tokens only: colors (oklch), component sizing (`--control-height-*`, `--card-padding`, etc.), and `--radius` (the base radius dial). Uses `.dark` for color overrides. |
+
+`layout.tsx` imports `tokens.css` before `globals.css`.
 
 ### Three-layer architecture
 
 ```
 ┌─────────────────────────────────────────────────┐
 │  LAYER 3 — Components                           │
-│  Tailwind utilities for color                   │
-│  var() arbitrary values for sizing/spacing      │
+│  Tailwind utilities for color + primitives      │
+│  var() arbitrary values for semantic sizing     │
 └────────────────────┬────────────────────────────┘
                      │
 ┌────────────────────▼────────────────────────────┐
 │  LAYER 2 — Tailwind CSS v4                      │
-│  Generates color utilities from @theme inline   │
-│  (bg-primary, text-foreground, etc.)            │
+│  tokens.css: @theme maps --ds-* → utilities     │
+│  globals.css: @theme maps colors → bg-primary etc │
 └────────────────────┬────────────────────────────┘
                      │
 ┌────────────────────▼────────────────────────────┐
-│  LAYER 1 — globals.css                           │
-│  :root — all token definitions                   │
-│  .dark — color overrides only                    │
-│  @theme inline — colors → Tailwind utilities     │
+│  LAYER 1 — Token files                           │
+│  tokens.css — primitives (:root) + @theme        │
+│  globals.css — semantic (:root, .dark)           │
 └─────────────────────────────────────────────────┘
 ```
 
-### Why colors and sizing use different approaches
+### Why the --ds- prefix for primitives
 
-Tailwind v4's `@theme` reliably generates utilities for colors
-(`--color-primary` → `bg-primary`). However, mapping arbitrary spacing
-and sizing tokens through `@theme` causes circular reference errors that
-silently break the entire block.
+Tailwind v4's `@theme` can hit circular reference errors when mapping
+tokens that reference each other (e.g. `--radius-sm: var(--radius-sm)`).
 
-The solution: `@theme inline` handles colors only. All other tokens
-(spacing, radius, shadow, component sizing) are consumed directly in
-components via `var()` in Tailwind's arbitrary value syntax:
+The solution: primitive tokens use a `--ds-` prefix in `tokens.css`, so
+`@theme` maps them without circular refs: `--radius-sm: var(--ds-radius-sm)`.
+That generates `rounded-sm`, `p-4`, `text-xs`, etc. Semantic component
+sizing (`--control-height-*`, `--card-padding`, etc.) stays in `globals.css`
+and is consumed via `var()` in components. The base radius value `--radius` in globals.css acts as a single dial — changing it updates every `--ds-radius-*` derived value and therefore every component's corner radius at once.
 
 ```
-  bg-primary                        ← color, via @theme
-  h-[var(--control-height-md)]      ← sizing, via var()
-  rounded-[var(--card-radius)]      ← radius, via var()
-  text-[length:var(--font-size-sm)] ← font size, via var()
+  bg-primary                        ← color, via @theme (tokens.css)
+  rounded-lg                        ← radius, via @theme (--ds-radius-lg)
+  p-4                               ← spacing, via @theme (--ds-space-4)
+  h-[var(--control-height-md)]      ← semantic sizing, via var()
 ```
 
 ---
 
 ## Token reference
 
-All tokens are defined in `app/globals.css`.
+### Primitives (`app/tokens.css`)
 
-### Colors (semantic, OKLCH)
+`--ds-space-*`, `--ds-radius-*`, `--ds-shadow-*`, `--ds-text-*`,
+`--ds-leading-*`, `--ds-font-*`. Mapped to Tailwind via `@theme` →
+`p-4`, `rounded-lg`, `shadow-sm`, `text-sm`, etc.
+
+### Semantic tokens (`app/globals.css`)
+
+#### Colors (OKLCH)
 
 Defined in `:root` and overridden in `.dark`:
 
@@ -103,26 +120,25 @@ Defined in `:root` and overridden in `.dark`:
 
 Additional: `--success`, `--warning`, `--info`, `--chart-1` through `--chart-5`, `--sidebar`, `--sidebar-foreground`.
 
-### Spacing
+#### Component sizing
 
-`--space-1` through `--space-12` (0.25rem → 3rem).
-
-### Typography
-
-`--font-size-xs` through `--font-size-3xl`, `--line-height-*`, `--font-weight-*`.
-
-### Radius & shadow
-
-`--radius-sm` through `--radius-full` (derived from `--radius`).  
-`--shadow-sm`, `--shadow-md`, `--shadow-lg`.
-
-### Component tokens
-
-- **Control** (Button, Input, Select): `--control-height-*`, `--control-px-*`, `--control-font-size-*`
-- **Card**: `--card-padding`, `--card-radius`, `--card-shadow`
-- **Badge**: `--badge-height`, `--badge-px`, `--badge-font-size`, `--badge-radius`
+- **Base values** — `--radius` — single base value that all radius tokens derive from. Change this one value to update corner rounding everywhere.
+- **Control** (Button, Input, Select): `--control-height-*`, `--control-px-*`, `--control-gap`
+- **Card**: `--card-padding`
+- **Badge**: `--badge-height`, `--badge-px`
 - **Avatar**: `--avatar-size-sm`, `--avatar-size-md`, `--avatar-size-lg`
-- **Nav/Sidebar**: `--nav-item-height`, `--nav-item-px`, `--sidebar-width`
+- **Sidebar**: `--sidebar-width`
+
+---
+
+## Variables Pro export
+
+`npm run tokens` generates `tokens/variables-pro.json` for Figma Variables Pro:
+
+- **Format:** JSON array with a single collection (`Design System`) and two modes
+- **Light Mode:** Primitives (spacing, radius, shadow, typography) + semantic colors + component tokens
+- **Dark Mode:** Color overrides only
+- **Conversions:** rem → px (×16), oklch kept as-is, scopes assigned per token type
 
 ---
 
@@ -132,16 +148,16 @@ The gallery showcases all UI components in sections:
 
 | Section | Components |
 |---------|------------|
-| **Buttons** | Button variants |
-| **Typography** | Headings, body text |
-| **Form Controls** | Input, Textarea, Label, Select, Combobox, Date Picker (Calendar), Input OTP, Form |
-| **Feedback** | Alert, Badge, Progress, Skeleton, Spinner |
-| **Data Display** | Card, Table, Avatar, Tabs |
-| **Navigation** | Tabs, Breadcrumb, Pagination, Accordion, Collapsible, Menubar, Navigation Menu |
-| **Layout** | Sidebar, Resizable panels |
-| **Overlay** | Dialog, Sheet, Drawer, Popover, Tooltip, Hover Card |
-| **Selection** | Checkbox, Radio, Switch, Slider |
-| **Media** | Progress, Separator, ScrollArea, Carousel |
+| Buttons | Button (all variants + sizes), Toggle, Toggle Group |
+| Typography | Headings h1–h6, body, muted, lead, code, blockquote |
+| Form Controls | Input, Textarea, Label, Select, Combobox, Date Picker, Input OTP |
+| Feedback | Alert, Alert Dialog, Badge (+ success/warning/info), Sonner, Spinner |
+| Data Display | Card, Table, Data Table, Avatar, Skeleton, Chart, Aspect Ratio, Carousel |
+| Navigation | Tabs, Breadcrumb, Pagination, Accordion, Collapsible, Menubar, Navigation Menu |
+| Layout | Sidebar, Resizable panels |
+| Overlay | Dialog, Drawer, Sheet, Popover, Tooltip, Hover Card, Context Menu, Dropdown Menu, Command |
+| Selection | Checkbox, Radio Group, Switch, Slider |
+| Media | Progress, Separator, Scroll Area |
 
 Use the theme toggle (top-right) to switch between light and dark modes.
 
@@ -163,9 +179,16 @@ When prompted to overwrite existing files (e.g. `button.tsx`), choose **no** to 
 
 ```
 app/
-  globals.css      # All design tokens
+  tokens.css       # Primitive overrides + @theme (imported first)
+  globals.css      # Semantic tokens (colors, component sizing)
   layout.tsx       # Root layout with ThemeProvider
   page.tsx         # Gallery page
+
+tokens/
+  variables-pro.json   # Figma Variables Pro export (npm run tokens)
+
+scripts/
+  export-tokens.js    # Parses tokens.css + globals.css → variables-pro.json
 
 components/
   gallery/         # Gallery sections and demo content

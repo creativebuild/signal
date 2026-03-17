@@ -14,9 +14,9 @@ import { MediaSection } from "@/components/gallery/sections/MediaSection";
 
 export function GalleryPage() {
   return (
-    <main className="min-h-screen bg-background">
-      <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto flex max-w-6xl items-center justify-between px-4 py-6">
+    <main className="min-h-screen bg-background" style={{ ["--header-height" as string]: "7rem" }}>
+      <header className="sticky top-0 z-50 flex h-[var(--header-height)] shrink-0 items-center border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container mx-auto flex h-full max-w-6xl items-center justify-between px-4 py-6">
           <div>
             <h1 className="text-2xl font-bold tracking-tight">Design System</h1>
             <p className="text-sm text-muted-foreground">

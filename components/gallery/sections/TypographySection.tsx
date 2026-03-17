@@ -11,16 +11,16 @@ export function TypographySection() {
         <div className="space-y-4">
           <h3 className="text-sm font-medium text-muted-foreground">Headings</h3>
           <div className="space-y-2">
-            <h1 className="text-[var(--font-size-3xl)] font-bold leading-[var(--line-height-tight)]">
+            <h1 className="text-3xl font-bold leading-tight">
               Heading 1
             </h1>
-            <h2 className="text-[var(--font-size-2xl)] font-semibold leading-[var(--line-height-tight)]">
+            <h2 className="text-2xl font-semibold leading-tight">
               Heading 2
             </h2>
-            <h3 className="text-[var(--font-size-xl)] font-semibold">
+            <h3 className="text-xl font-semibold">
               Heading 3
             </h3>
-            <h4 className="text-[var(--font-size-lg)] font-medium">
+            <h4 className="text-lg font-medium">
               Heading 4
             </h4>
           </div>
@@ -29,13 +29,13 @@ export function TypographySection() {
         <div className="space-y-4">
           <h3 className="text-sm font-medium text-muted-foreground">Body text</h3>
           <div className="space-y-2">
-            <p className="text-[var(--font-size-base)] leading-[var(--line-height-normal)]">
+            <p className="text-base leading-normal">
               Base body text at 1rem with normal line height.
             </p>
-            <p className="text-[var(--font-size-sm)] leading-[var(--line-height-relaxed)]">
+            <p className="text-sm leading-relaxed">
               Small text at 0.875rem with relaxed line height.
             </p>
-            <p className="text-[var(--font-size-xs)]">
+            <p className="text-xs">
               Extra small text at 0.75rem.
             </p>
           </div>
@@ -44,10 +44,10 @@ export function TypographySection() {
         <div className="space-y-4">
           <h3 className="text-sm font-medium text-muted-foreground">Weights</h3>
           <div className="space-y-2">
-            <p style={{ fontWeight: "var(--font-weight-normal)" }}>Normal (400)</p>
-            <p style={{ fontWeight: "var(--font-weight-medium)" }}>Medium (500)</p>
-            <p style={{ fontWeight: "var(--font-weight-semibold)" }}>Semibold (600)</p>
-            <p style={{ fontWeight: "var(--font-weight-bold)" }}>Bold (700)</p>
+            <p className="font-normal">Normal (400)</p>
+            <p className="font-medium">Medium (500)</p>
+            <p className="font-semibold">Semibold (600)</p>
+            <p className="font-bold">Bold (700)</p>
           </div>
         </div>
       </div>

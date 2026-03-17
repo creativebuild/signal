@@ -1,0 +1,827 @@
+[
+  {
+    "Design System": {
+      "modes": {
+        "Light Mode": {
+          "spacing": {
+            "1": {
+              "$type": "float",
+              "$value": 4,
+              "$scopes": [
+                "GAP",
+                "WIDTH_HEIGHT"
+              ]
+            },
+            "2": {
+              "$type": "float",
+              "$value": 8,
+              "$scopes": [
+                "GAP",
+                "WIDTH_HEIGHT"
+              ]
+            },
+            "3": {
+              "$type": "float",
+              "$value": 12,
+              "$scopes": [
+                "GAP",
+                "WIDTH_HEIGHT"
+              ]
+            },
+            "4": {
+              "$type": "float",
+              "$value": 16,
+              "$scopes": [
+                "GAP",
+                "WIDTH_HEIGHT"
+              ]
+            },
+            "5": {
+              "$type": "float",
+              "$value": 20,
+              "$scopes": [
+                "GAP",
+                "WIDTH_HEIGHT"
+              ]
+            },
+            "6": {
+              "$type": "float",
+              "$value": 24,
+              "$scopes": [
+                "GAP",
+                "WIDTH_HEIGHT"
+              ]
+            },
+            "8": {
+              "$type": "float",
+              "$value": 32,
+              "$scopes": [
+                "GAP",
+                "WIDTH_HEIGHT"
+              ]
+            },
+            "10": {
+              "$type": "float",
+              "$value": 40,
+              "$scopes": [
+                "GAP",
+                "WIDTH_HEIGHT"
+              ]
+            },
+            "12": {
+              "$type": "float",
+              "$value": 48,
+              "$scopes": [
+                "GAP",
+                "WIDTH_HEIGHT"
+              ]
+            }
+          },
+          "radius": {
+            "sm": {
+              "$type": "float",
+              "$value": 4,
+              "$scopes": [
+                "CORNER_RADIUS"
+              ]
+            },
+            "md": {
+              "$type": "float",
+              "$value": 6,
+              "$scopes": [
+                "CORNER_RADIUS"
+              ]
+            },
+            "lg": {
+              "$type": "float",
+              "$value": 10,
+              "$scopes": [
+                "CORNER_RADIUS"
+              ]
+            },
+            "xl": {
+              "$type": "float",
+              "$value": 14,
+              "$scopes": [
+                "CORNER_RADIUS"
+              ]
+            },
+            "full": {
+              "$type": "float",
+              "$value": 9999,
+              "$scopes": [
+                "CORNER_RADIUS"
+              ]
+            }
+          },
+          "shadow": {
+            "sm": {
+              "$type": "string",
+              "$value": "0 1px 2px 0 oklch(0 0 0 / 0.05)",
+              "$scopes": []
+            },
+            "md": {
+              "$type": "string",
+              "$value": "0 4px 6px -1px oklch(0 0 0 / 0.1), 0 2px 4px -2px oklch(0 0 0 / 0.1)",
+              "$scopes": []
+            },
+            "lg": {
+              "$type": "string",
+              "$value": "0 10px 15px -3px oklch(0 0 0 / 0.1), 0 4px 6px -4px oklch(0 0 0 / 0.1)",
+              "$scopes": []
+            }
+          },
+          "typography": {
+            "font-size": {
+              "xs": {
+                "$type": "float",
+                "$value": 12,
+                "$scopes": [
+                  "FONT_SIZE"
+                ]
+              },
+              "sm": {
+                "$type": "float",
+                "$value": 14,
+                "$scopes": [
+                  "FONT_SIZE"
+                ]
+              },
+              "base": {
+                "$type": "float",
+                "$value": 16,
+                "$scopes": [
+                  "FONT_SIZE"
+                ]
+              },
+              "lg": {
+                "$type": "float",
+                "$value": 18,
+                "$scopes": [
+                  "FONT_SIZE"
+                ]
+              },
+              "xl": {
+                "$type": "float",
+                "$value": 20,
+                "$scopes": [
+                  "FONT_SIZE"
+                ]
+              },
+              "2xl": {
+                "$type": "float",
+                "$value": 24,
+                "$scopes": [
+                  "FONT_SIZE"
+                ]
+              },
+              "3xl": {
+                "$type": "float",
+                "$value": 30,
+                "$scopes": [
+                  "FONT_SIZE"
+                ]
+              }
+            },
+            "line-height": {
+              "tight": {
+                "$type": "float",
+                "$value": 1.25,
+                "$scopes": [
+                  "LINE_HEIGHT"
+                ]
+              },
+              "normal": {
+                "$type": "float",
+                "$value": 1.5,
+                "$scopes": [
+                  "LINE_HEIGHT"
+                ]
+              },
+              "relaxed": {
+                "$type": "float",
+                "$value": 1.75,
+                "$scopes": [
+                  "LINE_HEIGHT"
+                ]
+              }
+            },
+            "font-weight": {
+              "normal": {
+                "$type": "float",
+                "$value": 400,
+                "$scopes": [
+                  "FONT_WEIGHT"
+                ]
+              },
+              "medium": {
+                "$type": "float",
+                "$value": 500,
+                "$scopes": [
+                  "FONT_WEIGHT"
+                ]
+              },
+              "semibold": {
+                "$type": "float",
+                "$value": 600,
+                "$scopes": [
+                  "FONT_WEIGHT"
+                ]
+              },
+              "bold": {
+                "$type": "float",
+                "$value": 700,
+                "$scopes": [
+                  "FONT_WEIGHT"
+                ]
+              }
+            }
+          },
+          "colors": {
+            "background": {
+              "$type": "color",
+              "$value": "oklch(0.985 0 0)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "foreground": {
+              "$type": "color",
+              "$value": "oklch(0.145 0 0)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "card": {
+              "$type": "color",
+              "$value": "oklch(1 0 0)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "card-foreground": {
+              "$type": "color",
+              "$value": "oklch(0.145 0 0)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "popover": {
+              "$type": "color",
+              "$value": "oklch(1 0 0)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "popover-foreground": {
+              "$type": "color",
+              "$value": "oklch(0.145 0 0)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "primary": {
+              "$type": "color",
+              "$value": "oklch(0.205 0 0)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "primary-foreground": {
+              "$type": "color",
+              "$value": "oklch(0.985 0 0)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "secondary": {
+              "$type": "color",
+              "$value": "oklch(0.97 0 0)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "secondary-foreground": {
+              "$type": "color",
+              "$value": "oklch(0.205 0 0)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "muted": {
+              "$type": "color",
+              "$value": "oklch(0.97 0 0)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "muted-foreground": {
+              "$type": "color",
+              "$value": "oklch(0.556 0 0)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "accent": {
+              "$type": "color",
+              "$value": "oklch(0.97 0 0)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "accent-foreground": {
+              "$type": "color",
+              "$value": "oklch(0.205 0 0)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "destructive": {
+              "$type": "color",
+              "$value": "oklch(0.577 0.245 27.325)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "destructive-foreground": {
+              "$type": "color",
+              "$value": "oklch(0.985 0 0)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "success": {
+              "$type": "color",
+              "$value": "oklch(0.6 0.18 145)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "success-foreground": {
+              "$type": "color",
+              "$value": "oklch(0.985 0 0)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "warning": {
+              "$type": "color",
+              "$value": "oklch(0.84 0.16 84)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "warning-foreground": {
+              "$type": "color",
+              "$value": "oklch(0.28 0.07 46)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "info": {
+              "$type": "color",
+              "$value": "oklch(0.6 0.15 240)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "info-foreground": {
+              "$type": "color",
+              "$value": "oklch(0.985 0 0)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "border": {
+              "$type": "color",
+              "$value": "oklch(0.922 0 0)",
+              "$scopes": [
+                "STROKE_COLOR"
+              ]
+            },
+            "input": {
+              "$type": "color",
+              "$value": "oklch(0.922 0 0)",
+              "$scopes": [
+                "STROKE_COLOR"
+              ]
+            },
+            "ring": {
+              "$type": "color",
+              "$value": "oklch(0.708 0 0)",
+              "$scopes": [
+                "STROKE_COLOR"
+              ]
+            },
+            "chart-1": {
+              "$type": "color",
+              "$value": "oklch(0.646 0.222 41.116)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "chart-2": {
+              "$type": "color",
+              "$value": "oklch(0.6 0.118 184.704)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "chart-3": {
+              "$type": "color",
+              "$value": "oklch(0.398 0.07 227.392)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "chart-4": {
+              "$type": "color",
+              "$value": "oklch(0.828 0.189 84.429)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "chart-5": {
+              "$type": "color",
+              "$value": "oklch(0.769 0.188 70.08)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "sidebar": {
+              "$type": "color",
+              "$value": "oklch(0.985 0 0)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "sidebar-foreground": {
+              "$type": "color",
+              "$value": "oklch(0.145 0 0)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            }
+          },
+          "components": {
+            "control": {
+              "height": {
+                "xs": {
+                  "$type": "float",
+                  "$value": 28,
+                  "$scopes": [
+                    "WIDTH_HEIGHT"
+                  ]
+                },
+                "sm": {
+                  "$type": "float",
+                  "$value": 32,
+                  "$scopes": [
+                    "WIDTH_HEIGHT"
+                  ]
+                },
+                "md": {
+                  "$type": "float",
+                  "$value": 36,
+                  "$scopes": [
+                    "WIDTH_HEIGHT"
+                  ]
+                },
+                "lg": {
+                  "$type": "float",
+                  "$value": 44,
+                  "$scopes": [
+                    "WIDTH_HEIGHT"
+                  ]
+                },
+                "xl": {
+                  "$type": "float",
+                  "$value": 48,
+                  "$scopes": [
+                    "WIDTH_HEIGHT"
+                  ]
+                }
+              },
+              "padding": {
+                "xs": {
+                  "$type": "float",
+                  "$value": 8,
+                  "$scopes": [
+                    "GAP"
+                  ]
+                },
+                "sm": {
+                  "$type": "float",
+                  "$value": 12,
+                  "$scopes": [
+                    "GAP"
+                  ]
+                },
+                "md": {
+                  "$type": "float",
+                  "$value": 16,
+                  "$scopes": [
+                    "GAP"
+                  ]
+                },
+                "lg": {
+                  "$type": "float",
+                  "$value": 24,
+                  "$scopes": [
+                    "GAP"
+                  ]
+                },
+                "xl": {
+                  "$type": "float",
+                  "$value": 32,
+                  "$scopes": [
+                    "GAP"
+                  ]
+                }
+              },
+              "gap": {
+                "$type": "float",
+                "$value": 8,
+                "$scopes": [
+                  "GAP"
+                ]
+              }
+            },
+            "card": {
+              "padding": {
+                "$type": "float",
+                "$value": 24,
+                "$scopes": [
+                  "GAP"
+                ]
+              }
+            },
+            "badge": {
+              "height": {
+                "$type": "float",
+                "$value": 20,
+                "$scopes": [
+                  "WIDTH_HEIGHT"
+                ]
+              },
+              "padding": {
+                "$type": "float",
+                "$value": 8,
+                "$scopes": [
+                  "GAP"
+                ]
+              }
+            },
+            "avatar": {
+              "size-sm": {
+                "$type": "float",
+                "$value": 32,
+                "$scopes": [
+                  "WIDTH_HEIGHT"
+                ]
+              },
+              "size-md": {
+                "$type": "float",
+                "$value": 40,
+                "$scopes": [
+                  "WIDTH_HEIGHT"
+                ]
+              },
+              "size-lg": {
+                "$type": "float",
+                "$value": 56,
+                "$scopes": [
+                  "WIDTH_HEIGHT"
+                ]
+              }
+            },
+            "sidebar": {
+              "width": {
+                "$type": "float",
+                "$value": 256,
+                "$scopes": [
+                  "WIDTH_HEIGHT"
+                ]
+              }
+            }
+          }
+        },
+        "Dark Mode": {
+          "colors": {
+            "background": {
+              "$type": "color",
+              "$value": "oklch(0.145 0 0)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "foreground": {
+              "$type": "color",
+              "$value": "oklch(0.985 0 0)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "card": {
+              "$type": "color",
+              "$value": "oklch(0.205 0 0)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "card-foreground": {
+              "$type": "color",
+              "$value": "oklch(0.985 0 0)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "popover": {
+              "$type": "color",
+              "$value": "oklch(0.269 0 0)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "popover-foreground": {
+              "$type": "color",
+              "$value": "oklch(0.985 0 0)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "primary": {
+              "$type": "color",
+              "$value": "oklch(0.922 0 0)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "primary-foreground": {
+              "$type": "color",
+              "$value": "oklch(0.205 0 0)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "secondary": {
+              "$type": "color",
+              "$value": "oklch(0.269 0 0)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "secondary-foreground": {
+              "$type": "color",
+              "$value": "oklch(0.985 0 0)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "muted": {
+              "$type": "color",
+              "$value": "oklch(0.269 0 0)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "muted-foreground": {
+              "$type": "color",
+              "$value": "oklch(0.708 0 0)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "accent": {
+              "$type": "color",
+              "$value": "oklch(0.371 0 0)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "accent-foreground": {
+              "$type": "color",
+              "$value": "oklch(0.985 0 0)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "destructive": {
+              "$type": "color",
+              "$value": "oklch(0.704 0.191 22.216)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "destructive-foreground": {
+              "$type": "color",
+              "$value": "oklch(0.985 0 0)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "border": {
+              "$type": "color",
+              "$value": "oklch(0.269 0 0)",
+              "$scopes": [
+                "STROKE_COLOR"
+              ]
+            },
+            "input": {
+              "$type": "color",
+              "$value": "oklch(0.269 0 0)",
+              "$scopes": [
+                "STROKE_COLOR"
+              ]
+            },
+            "ring": {
+              "$type": "color",
+              "$value": "oklch(0.439 0 0)",
+              "$scopes": [
+                "STROKE_COLOR"
+              ]
+            },
+            "chart-1": {
+              "$type": "color",
+              "$value": "oklch(0.488 0.243 264.376)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "chart-2": {
+              "$type": "color",
+              "$value": "oklch(0.696 0.17 162.48)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "chart-3": {
+              "$type": "color",
+              "$value": "oklch(0.769 0.188 70.08)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "chart-4": {
+              "$type": "color",
+              "$value": "oklch(0.627 0.265 303.9)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "chart-5": {
+              "$type": "color",
+              "$value": "oklch(0.645 0.246 16.439)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "sidebar": {
+              "$type": "color",
+              "$value": "oklch(0.205 0 0)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "sidebar-foreground": {
+              "$type": "color",
+              "$value": "oklch(0.985 0 0)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+]

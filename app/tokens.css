@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+/* ============================================================
+   PRIMITIVE TOKEN OVERRIDES
+   These intentionally replace Tailwind's default scale values.
+   Removing a token here means Tailwind's default takes over.
+   All values exported to tokens.json for Figma parity.
+   ============================================================ */
+
+:root {
+  /* Spacing scale */
+  --ds-space-1: 0.25rem;
+  --ds-space-2: 0.5rem;
+  --ds-space-3: 0.75rem;
+  --ds-space-4: 1rem;
+  --ds-space-5: 1.25rem;
+  --ds-space-6: 1.5rem;
+  --ds-space-8: 2rem;
+  --ds-space-10: 2.5rem;
+  --ds-space-12: 3rem;
+
+  /* Radius scale — derived from --radius in globals.css */
+  --ds-radius-sm: calc(var(--radius) - 4px);
+  --ds-radius-md: var(--radius);
+  --ds-radius-lg: calc(var(--radius) + 4px);
+  --ds-radius-xl: calc(var(--radius) + 8px);
+  --ds-radius-full: 9999px;
+
+  /* Shadow scale */
+  --ds-shadow-sm: 0 1px 2px 0 oklch(0 0 0 / 0.05);
+  --ds-shadow-md: 0 4px 6px -1px oklch(0 0 0 / 0.1), 0 2px 4px -2px oklch(0 0 0 / 0.1);
+  --ds-shadow-lg: 0 10px 15px -3px oklch(0 0 0 / 0.1), 0 4px 6px -4px oklch(0 0 0 / 0.1);
+
+  /* Typography scale */
+  --ds-text-xs: 0.75rem;
+  --ds-text-sm: 0.875rem;
+  --ds-text-base: 1rem;
+  --ds-text-lg: 1.125rem;
+  --ds-text-xl: 1.25rem;
+  --ds-text-2xl: 1.5rem;
+  --ds-text-3xl: 1.875rem;
+
+  /* Line height scale */
+  --ds-leading-tight: 1.25;
+  --ds-leading-normal: 1.5;
+  --ds-leading-relaxed: 1.75;
+
+  /* Font weight scale */
+  --ds-font-normal: 400;
+  --ds-font-medium: 500;
+  --ds-font-semibold: 600;
+  --ds-font-bold: 700;
+}
+
+/* Maps --ds-* primitives to Tailwind utilities.
+   --ds-* prefix on left side prevents circular references. */
+@theme inline {
+  /* Spacing → p-1, gap-2, m-4 etc */
+  --spacing-1: var(--ds-space-1);
+  --spacing-2: var(--ds-space-2);
+  --spacing-3: var(--ds-space-3);
+  --spacing-4: var(--ds-space-4);
+  --spacing-5: var(--ds-space-5);
+  --spacing-6: var(--ds-space-6);
+  --spacing-8: var(--ds-space-8);
+  --spacing-10: var(--ds-space-10);
+  --spacing-12: var(--ds-space-12);
+
+  /* Radius → rounded-sm, rounded-lg etc */
+  --radius-sm: var(--ds-radius-sm);
+  --radius-md: var(--ds-radius-md);
+  --radius-lg: var(--ds-radius-lg);
+  --radius-xl: var(--ds-radius-xl);
+  --radius-full: var(--ds-radius-full);
+
+  /* Shadows → shadow-sm, shadow-md etc */
+  --shadow-sm: var(--ds-shadow-sm);
+  --shadow-md: var(--ds-shadow-md);
+  --shadow-lg: var(--ds-shadow-lg);
+
+  /* Typography → text-xs, text-sm etc */
+  --text-xs: var(--ds-text-xs);
+  --text-sm: var(--ds-text-sm);
+  --text-base: var(--ds-text-base);
+  --text-lg: var(--ds-text-lg);
+  --text-xl: var(--ds-text-xl);
+  --text-2xl: var(--ds-text-2xl);
+  --text-3xl: var(--ds-text-3xl);
+
+  /* Line heights → leading-tight etc */
+  --leading-tight: var(--ds-leading-tight);
+  --leading-normal: var(--ds-leading-normal);
+  --leading-relaxed: var(--ds-leading-relaxed);
+
+  /* Font weights → font-normal, font-medium etc */
+  --font-weight-normal: var(--ds-font-normal);
+  --font-weight-medium: var(--ds-font-medium);
+  --font-weight-semibold: var(--ds-font-semibold);
+  --font-weight-bold: var(--ds-font-bold);
+}
+
+/* Color mappings — semantic tokens from globals.css (loaded after tokens) */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+}

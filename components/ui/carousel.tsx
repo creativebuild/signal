@@ -56,7 +56,7 @@ function Carousel({
       ...opts,
       axis: orientation === "horizontal" ? "x" : "y",
     },
-    plugins
+    plugins ?? []
   )
   const [canScrollPrev, setCanScrollPrev] = React.useState(false)
   const [canScrollNext, setCanScrollNext] = React.useState(false)
@@ -181,18 +181,23 @@ function CarouselPrevious({
 
   return (
     <Button
+      type="button"
       data-slot="carousel-previous"
       variant={variant}
       size={size}
       className={cn(
-        "absolute size-8 rounded-full",
+        "absolute z-10 size-8 rounded-full",
         orientation === "horizontal"
           ? "top-1/2 -left-12 -translate-y-1/2"
           : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
       disabled={!canScrollPrev}
-      onClick={scrollPrev}
+      onClick={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        scrollPrev()
+      }}
       {...props}
     >
       <ArrowLeft />
@@ -211,18 +216,23 @@ function CarouselNext({
 
   return (
     <Button
+      type="button"
       data-slot="carousel-next"
       variant={variant}
       size={size}
       className={cn(
-        "absolute size-8 rounded-full",
+        "absolute z-10 size-8 rounded-full",
         orientation === "horizontal"
           ? "top-1/2 -right-12 -translate-y-1/2"
           : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
       disabled={!canScrollNext}
-      onClick={scrollNext}
+      onClick={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        scrollNext()
+      }}
       {...props}
     >
       <ArrowRight />

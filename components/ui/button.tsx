@@ -5,11 +5,11 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground [a]:hover:bg-primary/80",
+        default: "bg-primary text-primary-foreground hover:bg-primary/80",
         outline:
           "border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
         secondary:
@@ -21,16 +21,16 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
-        xs: "h-[var(--control-height-xs)] px-[var(--control-px-xs)] text-[length:var(--control-font-size-sm)] gap-2",
-        sm: "h-[var(--control-height-sm)] px-[var(--control-px-sm)] text-[length:var(--control-font-size-sm)] gap-2",
-        default: "h-[var(--control-height-md)] px-[var(--control-px-md)] text-[length:var(--control-font-size-md)] gap-2",
-        lg: "h-[var(--control-height-lg)] px-[var(--control-px-lg)] text-[length:var(--control-font-size-lg)] gap-2",
-        xl: "h-[var(--control-height-xl)] px-[var(--control-px-xl)] text-[length:var(--control-font-size-lg)] gap-2",
-        icon: "size-[var(--control-height-md)]",
-        "icon-xs": "size-[var(--control-height-xs)]",
-        "icon-sm": "size-[var(--control-height-sm)]",
-        "icon-lg": "size-[var(--control-height-lg)]",
-        "icon-xl": "size-[var(--control-height-xl)]",
+        xs: "h-[var(--control-height-xs)] px-[var(--control-px-xs)] text-xs gap-[var(--control-gap)] rounded-[var(--control-radius-xs)]",
+        sm: "h-[var(--control-height-sm)] px-[var(--control-px-sm)] text-xs gap-[var(--control-gap)] rounded-[var(--control-radius-sm)]",
+        default: "h-[var(--control-height-md)] px-[var(--control-px-md)] text-sm gap-[var(--control-gap)] rounded-[var(--control-radius-md)]",
+        lg: "h-[var(--control-height-lg)] px-[var(--control-px-lg)] text-base gap-[var(--control-gap)] rounded-[var(--control-radius-lg)]",
+        xl: "h-[var(--control-height-xl)] px-[var(--control-px-xl)] text-base gap-[var(--control-gap)] rounded-[var(--control-radius-xl)]",
+        icon: "size-[var(--control-height-md)] rounded-[var(--control-radius-md)]",
+        "icon-xs": "size-[var(--control-height-xs)] rounded-[var(--control-radius-xs)]",
+        "icon-sm": "size-[var(--control-height-sm)] rounded-[var(--control-radius-sm)]",
+        "icon-lg": "size-[var(--control-height-lg)] rounded-[var(--control-radius-lg)]",
+        "icon-xl": "size-[var(--control-height-xl)] rounded-[var(--control-radius-xl)]",
       },
     },
     defaultVariants: {

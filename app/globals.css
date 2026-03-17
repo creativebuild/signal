@@ -1,13 +1,15 @@
-@import "tailwindcss";
+@reference "./tokens.css";
 
 /* ==========================================================================
-   TOKEN-DRIVEN DESIGN SYSTEM — All visual decisions via CSS custom properties
+   SEMANTIC TOKENS — Colors and component sizing
+   Primitives (spacing, radius, typography) live in tokens.css
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
    Color tokens (semantic) — oklch
    -------------------------------------------------------------------------- */
 :root {
+  /* Colors — semantic, OKLCH */
   --background: oklch(0.985 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -27,7 +29,6 @@
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
-  --radius: 0.625rem;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -44,116 +45,34 @@
   --info: oklch(0.6 0.15 240);
   --info-foreground: oklch(0.985 0 0);
 
-  /* ----------------------------------------------------------------------
-     Spacing tokens
-     ---------------------------------------------------------------------- */
-  --spacing: 0.25rem;
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-5: 1.25rem;
-  --space-6: 1.5rem;
-  --space-8: 2rem;
-  --space-10: 2.5rem;
-  --space-12: 3rem;
-
-  /* ----------------------------------------------------------------------
-     Typography tokens
-     ---------------------------------------------------------------------- */
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 1.875rem;
-  --line-height-tight: 1.25;
-  --line-height-normal: 1.5;
-  --line-height-relaxed: 1.75;
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
-
-  /* ----------------------------------------------------------------------
-     Radius tokens
-     ---------------------------------------------------------------------- */
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: var(--radius);
-  --radius-lg: calc(var(--radius) + 4px);
-  --radius-xl: calc(var(--radius) + 8px);
-  --radius-full: 9999px;
-
-  /* ----------------------------------------------------------------------
-     Shadow tokens
-     ---------------------------------------------------------------------- */
-  --shadow-sm: 0 1px 2px 0 oklch(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px oklch(0 0 0 / 0.1), 0 2px 4px -2px oklch(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px oklch(0 0 0 / 0.1), 0 4px 6px -4px oklch(0 0 0 / 0.1);
-
-  /* ----------------------------------------------------------------------
-     Control tokens — shared by Button, Input, and other form controls
-     ---------------------------------------------------------------------- */
+  /* Semantic sizing tokens — shared across component families */
+  --radius: 0.625rem;
   --control-height-xs: 1.75rem;
   --control-height-sm: 2rem;
   --control-height-md: 2.25rem;
   --control-height-lg: 2.75rem;
   --control-height-xl: 3rem;
-  --control-px-xs: var(--space-2);
-  --control-px-sm: var(--space-3);
-  --control-px-md: var(--space-4);
-  --control-px-lg: var(--space-6);
-  --control-px-xl: var(--space-8);
-  --control-font-size-sm: var(--font-size-xs);
-  --control-font-size-md: var(--font-size-sm);
-  --control-font-size-lg: var(--font-size-base);
-  --control-gap: var(--space-2);
+  --control-px-xs: 0.5rem;
+  --control-px-sm: 0.75rem;
+  --control-px-md: 1rem;
+  --control-px-lg: 1.5rem;
+  --control-px-xl: 2rem;
+  --control-gap: 0.5rem;
 
-  /* ----------------------------------------------------------------------
-     Component tokens — Input (extends control)
-     ---------------------------------------------------------------------- */
-  --input-px: var(--space-3);
-  --input-border-width: 1px;
+  /* Control radius — scales with control size */
+  --control-radius-xs: var(--ds-radius-sm);
+  --control-radius-sm: var(--ds-radius-sm);
+  --control-radius-md: var(--ds-radius-md);
+  --control-radius-lg: var(--ds-radius-lg);
+  --control-radius-xl: var(--ds-radius-xl);
 
-  /* ----------------------------------------------------------------------
-     Component tokens — Card
-     ---------------------------------------------------------------------- */
-  --card-padding: var(--space-6);
-  --card-radius: var(--radius-lg);
-  --card-shadow: var(--shadow-sm);
-  --card-border-width: 1px;
-
-  /* ----------------------------------------------------------------------
-     Component tokens — Badge
-     ---------------------------------------------------------------------- */
+  --card-padding: 1.5rem;
   --badge-height: 1.25rem;
-  --badge-px: var(--space-2);
-  --badge-font-size: var(--font-size-xs);
-  --badge-radius: var(--radius-full);
-
-  /* ----------------------------------------------------------------------
-     Component tokens — Avatar
-     ---------------------------------------------------------------------- */
+  --badge-px: 0.5rem;
   --avatar-size-sm: 2rem;
   --avatar-size-md: 2.5rem;
   --avatar-size-lg: 3.5rem;
-
-  /* ----------------------------------------------------------------------
-     Component tokens — Navigation / Sidebar
-     ---------------------------------------------------------------------- */
-  --nav-item-height: 2.25rem;
-  --nav-item-px: var(--space-3);
-  --nav-item-gap: var(--space-2);
   --sidebar-width: 16rem;
-
-  /* ----------------------------------------------------------------------
-     Animation tokens
-     ---------------------------------------------------------------------- */
-  --duration-fast: 100ms;
-  --duration-normal: 200ms;
-  --duration-slow: 300ms;
-  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* --------------------------------------------------------------------------
@@ -186,44 +105,6 @@
   --chart-5: oklch(0.645 0.246 16.439);
   --sidebar: oklch(0.205 0 0);
   --sidebar-foreground: oklch(0.985 0 0);
-}
-
-/* --------------------------------------------------------------------------
-   Tailwind @theme mapping — colors only (avoids circular refs in radius/shadow/spacing)
-   -------------------------------------------------------------------------- */
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-success: var(--success);
-  --color-success-foreground: var(--success-foreground);
-  --color-warning: var(--warning);
-  --color-warning-foreground: var(--warning-foreground);
-  --color-info: var(--info);
-  --color-info-foreground: var(--info-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
 }
 
 /* Accordion animations */

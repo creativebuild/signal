@@ -14,7 +14,7 @@ function Card({
       data-slot="card"
       data-size={size}
       className={cn(
-        "group/card flex flex-col gap-4 overflow-hidden rounded-[var(--card-radius)] bg-card p-[var(--card-padding)] text-sm text-card-foreground shadow-[var(--card-shadow)] ring-1 ring-foreground/10 has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:gap-3 data-[size=sm]:py-3 data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl",
+        "group/card flex flex-col gap-4 overflow-hidden rounded-lg bg-card p-[var(--card-padding)] text-sm text-card-foreground shadow-sm border border-border has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:gap-3 data-[size=sm]:py-3 data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl",
         className
       )}
       {...props}
@@ -104,7 +104,7 @@ function CardFooter({
     <div
       data-slot="card-footer"
       className={cn(
-        "flex items-center rounded-b-xl border-t bg-muted/50 -mx-[var(--card-padding)] px-[calc(var(--card-padding)+var(--space-4))] py-4 group-data-[size=sm]/card:px-[calc(var(--card-padding)+var(--space-3))] group-data-[size=sm]/card:py-3",
+        "flex items-center rounded-b-xl border-t bg-muted/50 -mx-[var(--card-padding)] px-[calc(var(--card-padding)+1rem)] py-4 group-data-[size=sm]/card:px-[calc(var(--card-padding)+0.75rem)] group-data-[size=sm]/card:py-3",
         className
       )}
       {...props}
