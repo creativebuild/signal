@@ -104,7 +104,7 @@ function CardFooter({
     <div
       data-slot="card-footer"
       className={cn(
-        "flex items-center rounded-b-xl border-t bg-muted/50 p-4 group-data-[size=sm]/card:p-3",
+        "flex items-center rounded-b-xl border-t bg-muted/50 -mx-[var(--card-padding)] px-[calc(var(--card-padding)+var(--space-4))] py-4 group-data-[size=sm]/card:px-[calc(var(--card-padding)+var(--space-3))] group-data-[size=sm]/card:py-3",
         className
       )}
       {...props}

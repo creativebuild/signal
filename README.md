@@ -1,15 +1,47 @@
 # Design System POC — Token-driven shadcn/ui
 
-A Next.js 15 proof-of-concept demonstrating a fully token-driven design system built on shadcn/ui. Every visual decision—color, spacing, typography, radius, shadow—flows from CSS custom properties in `app/globals.css`. Change a token once, and every component that uses it updates.
+A Next.js 15 proof-of-concept demonstrating how to build a fully token-driven design system on top of shadcn/ui. Every visual decision—color, spacing, typography, sizing—flows from CSS custom properties in `app/globals.css`.
 
-## Overview
+## How the layers fit together
 
-This POC validates a design-token approach for a component library:
+Three layers work together. Understanding who owns what helps when changing design decisions.
 
-- **Single source of truth**: All tokens live in `globals.css`; no hardcoded values in components.
-- **Theme support**: Light and dark modes via `next-themes` and `.dark` overrides.
-- **shadcn/ui foundation**: New York style, zinc base, CSS variables enabled.
-- **Tailwind v4**: Uses `@theme inline` to map tokens to utilities.
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  COMPONENTS (Button, Card, Input, etc.)                          │
+│  Use Tailwind utility classes + var() for token values           │
+└─────────────────────────────────────────────────────────────────┘
+                              ▲
+┌─────────────────────────────────────────────────────────────────┐
+│  TAILWIND CSS v4                                                 │
+│  • Provides utility classes (flex, gap-2, rounded-lg, etc.)      │
+│  • Generates color utilities from @theme (bg-primary, etc.)       │
+│  • Does NOT generate utilities for our custom spacing/radius     │
+└─────────────────────────────────────────────────────────────────┘
+                              ▲
+┌─────────────────────────────────────────────────────────────────┐
+│  DESIGN TOKENS — app/globals.css                                │
+│  • :root / .dark — all token definitions                         │
+│  • @theme inline — maps colors to Tailwind (colors only)          │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### What shadcn provides
+
+shadcn/ui ships components that use Tailwind. Out of the box:
+
+- **Tokenized:** Semantic colors (`--primary`, `--border`, etc.) in `:root`. These map to Tailwind via `@theme`, so you get `bg-primary`, `text-foreground`, etc.
+- **Hardcoded:** Heights, padding, font sizes, gaps are literal values in component files (`h-9`, `px-4`, `text-sm`). No shared tokens.
+
+### What this POC adds
+
+We extend the token model so spacing, sizing, and component-specific values also live in one place:
+
+- **All tokens** are defined in `globals.css` under `:root` (and `.dark` for color overrides).
+- **Colors** flow through `@theme inline` → Tailwind generates utilities (`bg-primary`, `text-muted-foreground`).
+- **Everything else** (spacing, radius, shadow, control heights, etc.) is used directly via `var()` in components, e.g. `h-[var(--control-height-md)]`, `rounded-[var(--card-radius)]`.
+
+**Why the split?** Tailwind v4's `@theme` can fail on circular references when mapping spacing/radius/shadow. Keeping `@theme` to colors only avoids that. Non-color tokens work fine via `var()` in arbitrary values.
 
 ## Tech stack
 
@@ -33,6 +65,18 @@ Open [http://localhost:3000](http://localhost:3000) to view the component galler
 
 ## Token architecture
 
+All tokens live in `app/globals.css`. The file is organised into sections:
+
+| Section | Location | What it defines |
+|---------|-----------|------------------|
+| **Color tokens** | `:root` / `.dark` | Semantic colors (primary, muted, accent, etc.) in OKLCH |
+| **Spacing** | `:root` | `--space-1` through `--space-12` |
+| **Typography** | `:root` | Font sizes, line heights, weights |
+| **Radius** | `:root` | `--radius-sm` through `--radius-full` (derived from `--radius`) |
+| **Shadow** | `:root` | `--shadow-sm`, `--shadow-md`, `--shadow-lg` |
+| **Control tokens** | `:root` | Heights, padding, font sizes for Button/Input/Select |
+| **Component tokens** | `:root` | Card, Badge, Avatar, Nav, Sidebar |
+
 ### Color tokens (OKLCH)
 
 Semantic colors in `:root` and `.dark`:
@@ -51,47 +95,13 @@ Semantic colors in `:root` and `.dark`:
 
 Additional semantic tokens: `--success`, `--warning`, `--info`, `--chart-*`, `--sidebar`.
 
-### Spacing tokens
+### How components use tokens
 
-`--space-1` through `--space-12` (0.25rem → 3rem).
-
-### Typography tokens
-
-```css
---font-size-xs, --font-size-sm, --font-size-base, --font-size-lg, --font-size-xl, --font-size-2xl, --font-size-3xl
---line-height-tight, --line-height-normal, --line-height-relaxed
---font-weight-normal, --font-weight-medium, --font-weight-semibold, --font-weight-bold
-```
-
-### Component tokens
-
-Per-component sizing tokens:
-
-- **Button**: `--button-height-*`, `--button-px-*`, `--button-font-size-*`, `--button-gap`
-- **Input**: `--input-height-*`, `--input-px`, `--input-font-size`
-- **Card**: `--card-padding`, `--card-radius`, `--card-shadow`
-- **Badge**: `--badge-height`, `--badge-px`, `--badge-font-size`, `--badge-radius`
-- **Avatar**: `--avatar-size-sm`, `--avatar-size-md`, `--avatar-size-lg`
-- **Nav/Sidebar**: `--nav-item-height`, `--nav-item-px`, `--sidebar-width`
-
-### Radius & shadow
-
-`--radius-sm`, `--radius-md`, `--radius-lg`, `--radius-xl`, `--radius-full`  
-`--shadow-sm`, `--shadow-md`, `--shadow-lg`
-
-## Theme mapping
-
-Tokens are exposed to Tailwind via `@theme inline` in `globals.css`:
-
-```css
-@theme inline {
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  /* ... */
-}
-```
-
-Utilities like `bg-primary`, `text-primary-foreground`, `rounded-md` resolve to these tokens.
+| Token type | How components use them | Example |
+|------------|--------------------------|---------|
+| **Colors** | Tailwind utilities (from `@theme`) | `bg-primary`, `text-muted-foreground` |
+| **Spacing, radius, shadow, control** | `var()` in arbitrary values | `h-[var(--control-height-md)]`, `rounded-[var(--card-radius)]` |
+| **Font size** | `text-[length:var(--...)]` (avoids color ambiguity) | `text-[length:var(--control-font-size-md)]` |
 
 ## Component gallery
 
@@ -134,25 +144,6 @@ components/
   gallery/         # Gallery sections and demo content
   ui/              # shadcn components (47 components)
 ```
-
-## Implementation notes
-
-### Tailwind v4: font-size vs color
-
-When using `text-[var(--button-font-size-md)]` for font size, Tailwind v4 may interpret it as a color. Use the `length` type hint:
-
-```tsx
-text-[length:var(--button-font-size-md)]  // ✓ Correct
-text-[var(--button-font-size-md)]        // ✗ May override text color
-```
-
-### Dark mode accent
-
-For menu hover states (Select, Combobox, Menubar, Navigation Menu, Dropdown) to be visible in dark mode, `--accent` must be lighter than `--popover`. This POC uses `oklch(0.371 0 0)` (shadcn default) so hovered items stand out against the popover background.
-
-### iCloud Drive
-
-If the project lives in iCloud Drive, build artifacts can cause issues. Consider moving the project outside iCloud (e.g. `~/Projects`) if you see `routes-manifest.json` or similar errors. Run `rm -rf .next && npm run dev` to reset the build cache.
 
 ## License
 
