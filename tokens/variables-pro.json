@@ -78,34 +78,6 @@
             }
           },
           "radius": {
-            "sm": {
-              "$type": "float",
-              "$value": 4,
-              "$scopes": [
-                "CORNER_RADIUS"
-              ]
-            },
-            "md": {
-              "$type": "float",
-              "$value": 6,
-              "$scopes": [
-                "CORNER_RADIUS"
-              ]
-            },
-            "lg": {
-              "$type": "float",
-              "$value": 10,
-              "$scopes": [
-                "CORNER_RADIUS"
-              ]
-            },
-            "xl": {
-              "$type": "float",
-              "$value": 14,
-              "$scopes": [
-                "CORNER_RADIUS"
-              ]
-            },
             "full": {
               "$type": "float",
               "$value": 9999,

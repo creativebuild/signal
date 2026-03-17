@@ -3,7 +3,7 @@
 A Next.js 15 proof-of-concept demonstrating a fully token-driven design
 system built on shadcn/ui. Every visual decision — color, spacing,
 typography, sizing — flows from CSS custom properties split across
-`app/tokens.css` (primitives) and `app/globals.css` (semantic tokens).
+`app/globals.css` (semantic design decisions) and `app/tokens.css` (Tailwind bridge that maps those values to utility classes).
 
 ---
 
@@ -41,12 +41,12 @@ This POC extends the token model so sizing, spacing, and
 component-specific values also live in token files — split between
 primitives and semantic tokens for clarity and Figma parity.
 
-### Token file split
+### Token file responsibilities
 
 | File | Purpose |
 |------|---------|
-| `app/tokens.css` | Primitive overrides (`--ds-space-*`, `--ds-radius-*`, `--ds-shadow-*`, `--ds-text-*`, etc.). Replaces Tailwind defaults. Has `@import "tailwindcss"` and `@theme inline` to map primitives to utilities. |
-| `app/globals.css` | Semantic tokens only: colors (oklch), component sizing (`--control-height-*`, `--card-padding`, etc.), and `--radius` (the base radius dial). Uses `.dark` for color overrides. |
+| `app/tokens.css` | Tailwind bridge — maps design values to Tailwind utility classes via `@theme inline`. Defines `--ds-*` scale variables for spacing, radius, typography and shadow so Tailwind generates utilities like `p-4`, `rounded-lg`, `text-sm`. |
+| `app/globals.css` | Semantic tokens — all named design decisions. Colors (oklch), component sizing (`--control-height-*`, `--card-padding`, etc.), base radius dial (`--radius`), and dark mode overrides. This is the primary file to edit when changing the look of the system. |
 
 `layout.tsx` imports `tokens.css` before `globals.css`.
 
@@ -122,7 +122,7 @@ Additional: `--success`, `--warning`, `--info`, `--chart-1` through `--chart-5`,
 
 #### Component sizing
 
-- **Base values** — `--radius` — single base value that all radius tokens derive from. Change this one value to update corner rounding everywhere.
+- **Base values** — `--radius` — base dial that drives the full radius scale. Radius is assigned by visual hierarchy, not control size: containers (Card, Dialog) use `--radius-container` (largest), controls (Button, Input) use `--radius-control` (medium), nested elements use `--radius-inset` (tight), pills and badges use `--radius-pill` (full).
 - **Control** (Button, Input, Select): `--control-height-*`, `--control-px-*`, `--control-gap`
 - **Card**: `--card-padding`
 - **Badge**: `--badge-height`, `--badge-px`
