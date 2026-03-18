@@ -19,7 +19,7 @@ export function ButtonsSection() {
         <div className="space-y-4">
           <h3 className="text-sm font-medium text-muted-foreground">Variants</h3>
           <div className="flex flex-wrap gap-2">
-            <Button>Default</Button>
+            <Button>Primary</Button>
             <Button variant="secondary">Secondary</Button>
             <Button variant="outline">Outline</Button>
             <Button variant="ghost">Ghost</Button>
@@ -31,27 +31,27 @@ export function ButtonsSection() {
         <div className="space-y-4">
           <h3 className="text-sm font-medium text-muted-foreground">Sizes</h3>
           <div className="flex flex-wrap items-center gap-2">
-            <Button size="xs">Extra Small</Button>
-            <Button size="sm">Small</Button>
-            <Button>Default</Button>
-            <Button size="lg">Large</Button>
-            <Button size="xl">Extra Large</Button>
+            <Button variant="secondary" size="xs">Extra Small</Button>
+            <Button variant="secondary" size="sm">Small</Button>
+            <Button variant="secondary">Default</Button>
+            <Button variant="secondary" size="lg">Large</Button>
+            <Button variant="secondary" size="xl">Extra Large</Button>
           </div>
         </div>
 
         <div className="space-y-4">
           <h3 className="text-sm font-medium text-muted-foreground">Icon buttons</h3>
           <div className="flex flex-wrap items-center gap-2">
-            <Button size="icon-xs" aria-label="Add">
+            <Button variant="secondary" size="icon-xs" aria-label="Add">
               <PlusIcon />
             </Button>
-            <Button size="icon-sm" aria-label="Add">
+            <Button variant="secondary" size="icon-sm" aria-label="Add">
               <PlusIcon />
             </Button>
-            <Button size="icon" aria-label="Add">
+            <Button variant="secondary" size="icon" aria-label="Add">
               <PlusIcon />
             </Button>
-            <Button size="icon-lg" aria-label="Add">
+            <Button variant="secondary" size="icon-lg" aria-label="Add">
               <PlusIcon />
             </Button>
           </div>
@@ -60,7 +60,7 @@ export function ButtonsSection() {
         <div className="space-y-4">
           <h3 className="text-sm font-medium text-muted-foreground">With icon</h3>
           <div className="flex flex-wrap gap-2">
-            <Button>
+            <Button variant="secondary">
               Next
               <ArrowRightIcon data-icon="inline-end" />
             </Button>
@@ -82,7 +82,7 @@ export function ButtonsSection() {
             <Toggle>Toggle</Toggle>
             <Toggle variant="outline">Outline</Toggle>
           </div>
-          <ToggleGroup type="single">
+          <ToggleGroup type="single" className="justify-start">
             <ToggleGroupItem value="a">Option A</ToggleGroupItem>
             <ToggleGroupItem value="b">Option B</ToggleGroupItem>
             <ToggleGroupItem value="c">Option C</ToggleGroupItem>

@@ -1,6 +1,7 @@
 "use client";
 
 import { ThemeToggle } from "@/components/gallery/ThemeToggle";
+import { TokensDownloadButton } from "@/components/gallery/TokensDownloadButton";
 import { ButtonsSection } from "@/components/gallery/sections/ButtonsSection";
 import { TypographySection } from "@/components/gallery/sections/TypographySection";
 import { FormControlsSection } from "@/components/gallery/sections/FormControlsSection";
@@ -23,7 +24,10 @@ export function GalleryPage() {
               Token-driven shadcn/ui component gallery
             </p>
           </div>
-          <ThemeToggle />
+          <div className="flex items-center gap-2">
+            <TokensDownloadButton />
+            <ThemeToggle />
+          </div>
         </div>
       </header>
 
