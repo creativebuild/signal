@@ -7,6 +7,7 @@ import { TypographySection } from "@/components/gallery/sections/TypographySecti
 import { FormControlsSection } from "@/components/gallery/sections/FormControlsSection";
 import { FeedbackSection } from "@/components/gallery/sections/FeedbackSection";
 import { DataDisplaySection } from "@/components/gallery/sections/DataDisplaySection";
+import { ChartsSection } from "@/components/gallery/sections/ChartsSection";
 import { NavigationSection } from "@/components/gallery/sections/NavigationSection";
 import { LayoutSection } from "@/components/gallery/sections/LayoutSection";
 import { OverlaySection } from "@/components/gallery/sections/OverlaySection";
@@ -37,6 +38,7 @@ export function GalleryPage() {
         <FormControlsSection />
         <FeedbackSection />
         <DataDisplaySection />
+        <ChartsSection />
         <NavigationSection />
         <LayoutSection />
         <OverlaySection />
