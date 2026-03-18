@@ -6,62 +6,60 @@
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   Color tokens (semantic) — oklch
+   Color tokens (semantic)
    -------------------------------------------------------------------------- */
 :root {
-  /* Colors — semantic, OKLCH */
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --secondary-hover: oklch(0.92 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
+  /* Colors — semantic */
+  --background: var(--color-white);
+  --foreground: var(--color-neutral-950);
+  --card: var(--color-white);
+  --card-foreground: var(--color-neutral-950);
+  --popover: var(--color-white);
+  --popover-foreground: var(--color-neutral-950);
+  --primary: var(--color-neutral-900);
+  --primary-foreground: var(--color-neutral-50);
+  --secondary: var(--color-neutral-100);
+  --secondary-foreground: var(--color-neutral-900);
+  --secondary-hover: var(--color-neutral-200);
+  --muted: var(--color-neutral-100);
+  --muted-foreground: var(--color-neutral-500);
+  --accent: var(--color-neutral-100);
+  --accent-foreground: var(--color-neutral-900);
+  --link: var(--color-blue-700);
+  --link-foreground: var(--color-neutral-50);
+  --destructive: var(--color-red-600);
+  --destructive-foreground: var(--color-neutral-50);
+  --border: var(--color-neutral-200);
+  --input: var(--color-neutral-200);
+  --ring: var(--color-blue-600);
+  --chart-1: var(--color-orange-600);
+  --chart-2: var(--color-teal-600);
+  --chart-3: var(--color-cyan-900);
+  --chart-4: var(--color-amber-400);
+  --chart-5: var(--color-amber-500);
+  --sidebar: var(--color-neutral-50);
+  --sidebar-foreground: var(--color-neutral-950);
 
   /* Semantic extras */
-  --success: oklch(0.6 0.18 145);
-  --success-foreground: oklch(0.985 0 0);
-  --warning: oklch(0.84 0.16 84);
-  --warning-foreground: oklch(0.28 0.07 46);
-  --info: oklch(0.6 0.15 240);
-  --info-foreground: oklch(0.985 0 0);
+  --success: var(--color-green-600);
+  --success-foreground: var(--color-neutral-50);
+  --warning: var(--color-amber-400);
+  --warning-foreground: var(--color-amber-950);
+  --info: var(--color-sky-600);
+  --info-foreground: var(--color-neutral-50);
 
   /* Press state — blue-700 / white for active/pressed controls */
-  --press: oklch(0.45 0.2 264);
-  --press-foreground: oklch(0.985 0 0);
+  --press: var(--color-blue-800);
+  --press-foreground: var(--color-neutral-50);
 
   /* Semantic sizing tokens — shared across component families */
-  --radius: 0.625rem;
-  --control-height-xs: 1.75rem;
-  --control-height-sm: 2rem;
-  --control-height-md: 2.25rem;
-  --control-height-lg: 2.75rem;
-  --control-height-xl: 3rem;
-  --control-px-xs: 0.5rem;
+  --radius: 0.1875rem;
+  --control-height-sm: 1.5rem;
+  --control-height-md: 2rem;
+  --control-height-lg: 2.5rem;
   --control-px-sm: 0.75rem;
   --control-px-md: 1rem;
   --control-px-lg: 1.5rem;
-  --control-px-xl: 2rem;
   --control-gap: 0.5rem;
 
   /* Radius by hierarchy — outer to inner */
@@ -83,35 +81,37 @@
    Dark mode overrides (color tokens only)
    -------------------------------------------------------------------------- */
 .dark {
-  --background: oklch(0 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.269 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --secondary-hover: oklch(0.371 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.371 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --press: oklch(0.55 0.22 264);
-  --press-foreground: oklch(0.985 0 0);
+  --background: var(--color-black);
+  --foreground: var(--color-neutral-50);
+  --card: var(--color-neutral-950);
+  --card-foreground: var(--color-neutral-50);
+  --popover: var(--color-neutral-800);
+  --popover-foreground: var(--color-neutral-50);
+  --primary: var(--color-neutral-200);
+  --primary-foreground: var(--color-neutral-900);
+  --secondary: var(--color-neutral-800);
+  --secondary-foreground: var(--color-neutral-50);
+  --secondary-hover: var(--color-neutral-700);
+  --muted: var(--color-neutral-800);
+  --muted-foreground: var(--color-neutral-400);
+  --accent: var(--color-neutral-700);
+  --accent-foreground: var(--color-neutral-50);
+  --link: var(--color-blue-400);
+  --link-foreground: var(--color-neutral-950);
+  --destructive: var(--color-red-400);
+  --destructive-foreground: var(--color-neutral-50);
+  --border: var(--color-neutral-800);
+  --input: var(--color-neutral-800);
+  --ring: var(--color-blue-600);
+  --chart-1: var(--color-blue-700);
+  --chart-2: var(--color-emerald-500);
+  --chart-3: var(--color-amber-500);
+  --chart-4: var(--color-purple-500);
+  --chart-5: var(--color-rose-500);
+  --sidebar: var(--color-neutral-900);
+  --sidebar-foreground: var(--color-neutral-50);
+  --press: var(--color-blue-600);
+  --press-foreground: var(--color-neutral-50);
 }
 
 /* Accordion animations */
@@ -144,6 +144,10 @@
 
 
 @layer utilities {
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50;
+  }
+
   .animate-accordion-down {
     animation: accordion-down 0.2s ease-out;
   }

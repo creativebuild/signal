@@ -31,20 +31,15 @@ export function ButtonsSection() {
         <div className="space-y-4">
           <h3 className="text-sm font-medium text-muted-foreground">Sizes</h3>
           <div className="flex flex-wrap items-center gap-2">
-            <Button variant="secondary" size="xs">Extra Small</Button>
             <Button variant="secondary" size="sm">Small</Button>
-            <Button variant="secondary">Default</Button>
+            <Button variant="secondary">Medium</Button>
             <Button variant="secondary" size="lg">Large</Button>
-            <Button variant="secondary" size="xl">Extra Large</Button>
           </div>
         </div>
 
         <div className="space-y-4">
           <h3 className="text-sm font-medium text-muted-foreground">Icon buttons</h3>
           <div className="flex flex-wrap items-center gap-2">
-            <Button variant="secondary" size="icon-xs" aria-label="Add">
-              <PlusIcon />
-            </Button>
             <Button variant="secondary" size="icon-sm" aria-label="Add">
               <PlusIcon />
             </Button>
