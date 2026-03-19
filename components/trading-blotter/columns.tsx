@@ -105,6 +105,7 @@ export const columns = [
     cell: ({ row }) => (
       <span className="text-data-primary">{row.getValue("execAmount")}</span>
     ),
+    meta: { align: "right" },
   }),
 
   columnHelper.accessor("execPrice", {
@@ -112,6 +113,7 @@ export const columns = [
     cell: ({ row }) => (
       <span className="text-data-primary">{row.getValue("execPrice")}</span>
     ),
+    meta: { align: "right" },
   }),
 
   columnHelper.accessor("spotPrice", {
@@ -119,6 +121,7 @@ export const columns = [
     cell: ({ row }) => (
       <span className="text-data-primary">{row.getValue("spotPrice")}</span>
     ),
+    meta: { align: "right" },
   }),
 
   columnHelper.accessor("fwdPoints", {

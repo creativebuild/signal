@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { cn } from "@/lib/utils";
 import {
   flexRender,
   getCoreRowModel,
@@ -43,7 +44,10 @@ export function TradingBlotter() {
                 {headerGroup.headers.map((header) => (
                   <TableHead
                     key={header.id}
-                    className="h-data-table-header text-[length:var(--data-table-header-font-size)] font-data-table-header px-data-table-cell-px py-data-table-cell-py"
+                    className={cn(
+                      "h-data-table-header text-[length:var(--data-table-header-font-size)] font-data-table-header px-data-table-cell-px py-data-table-cell-py",
+                      (header.column.columnDef.meta as { align?: string })?.align === "right" && "text-right"
+                    )}
                   >
                     {header.isPlaceholder
                       ? null
@@ -67,7 +71,10 @@ export function TradingBlotter() {
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
                       key={cell.id}
-                      className="h-full px-data-table-cell-px py-data-table-cell-py"
+                      className={cn(
+                        "h-full px-data-table-cell-px py-data-table-cell-py",
+                        (cell.column.columnDef.meta as { align?: string })?.align === "right" && "text-right"
+                      )}
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
