@@ -198,7 +198,7 @@ export function ChartsSection() {
                   Desktop vs mobile — April 2024
                 </CardDescription>
               </div>
-              <Select value={timeRange} onValueChange={setTimeRange}>
+              <Select value={timeRange} onValueChange={(v) => setTimeRange(v ?? timeRange)}>
                 <SelectTrigger className="w-[160px]">
                   <SelectValue placeholder="Last 3 months" />
                 </SelectTrigger>

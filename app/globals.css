@@ -112,6 +112,15 @@
   --sidebar-foreground: var(--color-neutral-50);
   --press: var(--color-blue-600);
   --press-foreground: var(--color-neutral-50);
+
+  /* Semantic extras */
+  --success: var(--color-green-500);
+  --success-foreground: var(--color-neutral-50);
+  --warning: var(--color-amber-500);
+  --warning-foreground: var(--color-neutral-900);
+  --info: var(--color-sky-400);
+  --info-foreground: var(--color-neutral-50);
+  
 }
 
 /* Accordion animations */

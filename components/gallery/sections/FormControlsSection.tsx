@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { format } from "date-fns";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -66,6 +66,15 @@ export function FormControlsSection() {
   const [comboboxOpen, setComboboxOpen] = useState(false);
   const [comboboxValue, setComboboxValue] = useState("");
   const [date, setDate] = useState<Date | undefined>(new Date());
+  const scrollBeforeOpen = useRef(0);
+
+  // Prevent page jump when Combobox opens (focus on CommandInput triggers scroll)
+  useEffect(() => {
+    if (comboboxOpen) {
+      const id = setTimeout(() => window.scrollTo(0, scrollBeforeOpen.current), 0);
+      return () => clearTimeout(id);
+    }
+  }, [comboboxOpen]);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -116,7 +125,13 @@ export function FormControlsSection() {
 
         <div className="space-y-4">
           <h3 className="text-sm font-medium text-muted-foreground">Combobox (Popover + Command)</h3>
-          <Popover open={comboboxOpen} onOpenChange={setComboboxOpen}>
+          <Popover
+            open={comboboxOpen}
+            onOpenChange={(open) => {
+              if (open) scrollBeforeOpen.current = window.scrollY;
+              setComboboxOpen(open);
+            }}
+          >
             <PopoverTrigger asChild>
               <Button variant="outline" role="combobox" aria-expanded={comboboxOpen}>
                 {comboboxValue
