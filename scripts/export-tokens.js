@@ -122,19 +122,24 @@ function buildLightMode(dsVars, semanticVars) {
   }
 
   // Colors (semantic)
-  const fillOnly = ["background", "foreground", "primary-foreground", "secondary-foreground", "muted-foreground", "accent-foreground", "destructive-foreground", "success-foreground", "warning-foreground", "info-foreground", "popover-foreground", "card-foreground", "sidebar-foreground"];
+  const fillOnly = ["background", "foreground", "primary-foreground", "secondary-foreground", "muted-foreground", "accent-foreground", "destructive-foreground", "success-foreground", "warning-foreground", "info-foreground", "popover-foreground", "card-foreground", "sidebar-foreground", "link-foreground", "press-foreground", "selection-foreground"];
   const strokeOnly = ["border", "input", "ring"];
 
   mode.colors = {};
   const colorKeys = [
     "background", "foreground", "card", "card-foreground",
     "popover", "popover-foreground", "primary", "primary-foreground",
-    "secondary", "secondary-foreground", "muted", "muted-foreground",
-    "accent", "accent-foreground", "destructive", "destructive-foreground",
-    "success", "success-foreground", "warning", "warning-foreground",
-    "info", "info-foreground", "border", "input", "ring",
+    "secondary", "secondary-foreground", "secondary-hover", "muted", "muted-foreground",
+    "accent", "accent-foreground", "link", "link-foreground",
+    "destructive", "destructive-foreground", "success", "success-foreground",
+    "warning", "warning-foreground", "info", "info-foreground",
+    "press", "press-foreground", "selection", "selection-foreground",
+    "border", "input", "ring",
     "chart-1", "chart-2", "chart-3", "chart-4", "chart-5",
     "sidebar", "sidebar-foreground",
+    "data-primary", "data-secondary", "data-currency", "data-entity", "data-identifier", "data-category", "data-datetime",
+    "data-status-positive", "data-status-negative", "data-status-warning", "data-status-neutral",
+    "data-value-positive", "data-value-negative", "data-value-neutral",
   ];
 
   for (const key of colorKeys) {
@@ -275,19 +280,40 @@ function buildLightMode(dsVars, semanticVars) {
     }
   }
 
+  // Data table
+  mode.components["data-table"] = { "row-height": {} };
+  const dataTableRowHeights = { sm: "data-table-row-height-sm", md: "data-table-row-height-md", lg: "data-table-row-height-lg" };
+  for (const [size, varName] of Object.entries(dataTableRowHeights)) {
+    const v = semanticVars[`--${varName}`];
+    if (v) {
+      const px = remToPx(v);
+      if (px !== null) {
+        mode.components["data-table"]["row-height"][size] = {
+          $type: "float",
+          $value: px,
+          $scopes: ["WIDTH_HEIGHT"],
+        };
+      }
+    }
+  }
+
   return mode;
 }
 
-/** Build Dark Mode from .dark block */
+/** Build Dark Mode from .dark block — includes oklch and var() refs */
 function buildDarkMode(darkVars) {
   const mode = { colors: {} };
 
-  const fillOnly = ["background", "foreground", "primary-foreground", "secondary-foreground", "muted-foreground", "accent-foreground", "destructive-foreground", "popover-foreground", "card-foreground", "sidebar-foreground"];
+  const fillOnly = ["background", "foreground", "primary-foreground", "secondary-foreground", "muted-foreground", "accent-foreground", "destructive-foreground", "success-foreground", "warning-foreground", "info-foreground", "popover-foreground", "card-foreground", "sidebar-foreground", "link-foreground", "press-foreground", "selection-foreground"];
   const strokeOnly = ["border", "input", "ring"];
+
+  const colorKeyPattern = /^(background|foreground|card|popover|primary|secondary|muted|accent|destructive|success|warning|info|link|press|selection|sidebar|chart-\d|data-|table-row|data-table|button-|toast-|sidebar-item)/;
 
   for (const [name, value] of Object.entries(darkVars)) {
     const key = name.replace(/^--/, "");
-    if (!value || !value.startsWith("oklch")) continue;
+    if (!value) continue;
+    const isColor = value.startsWith("oklch") || value.startsWith("var(") || value.startsWith("rgba");
+    if (!isColor) continue;
 
     let scopes;
     if (strokeOnly.includes(key)) {

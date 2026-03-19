@@ -212,21 +212,21 @@
           "colors": {
             "background": {
               "$type": "color",
-              "$value": "oklch(0.985 0 0)",
+              "$value": "var(--color-white)",
               "$scopes": [
                 "ALL_FILLS"
               ]
             },
             "foreground": {
               "$type": "color",
-              "$value": "oklch(0.145 0 0)",
+              "$value": "var(--color-neutral-950)",
               "$scopes": [
                 "ALL_FILLS"
               ]
             },
             "card": {
               "$type": "color",
-              "$value": "oklch(1 0 0)",
+              "$value": "var(--color-white)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -234,14 +234,14 @@
             },
             "card-foreground": {
               "$type": "color",
-              "$value": "oklch(0.145 0 0)",
+              "$value": "var(--color-neutral-950)",
               "$scopes": [
                 "ALL_FILLS"
               ]
             },
             "popover": {
               "$type": "color",
-              "$value": "oklch(1 0 0)",
+              "$value": "var(--color-white)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -249,14 +249,14 @@
             },
             "popover-foreground": {
               "$type": "color",
-              "$value": "oklch(0.145 0 0)",
+              "$value": "var(--color-neutral-950)",
               "$scopes": [
                 "ALL_FILLS"
               ]
             },
             "primary": {
               "$type": "color",
-              "$value": "oklch(0.205 0 0)",
+              "$value": "var(--color-neutral-900)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -264,14 +264,14 @@
             },
             "primary-foreground": {
               "$type": "color",
-              "$value": "oklch(0.985 0 0)",
+              "$value": "var(--color-neutral-50)",
               "$scopes": [
                 "ALL_FILLS"
               ]
             },
             "secondary": {
               "$type": "color",
-              "$value": "oklch(0.97 0 0)",
+              "$value": "var(--color-neutral-100)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -279,14 +279,22 @@
             },
             "secondary-foreground": {
               "$type": "color",
-              "$value": "oklch(0.205 0 0)",
+              "$value": "var(--color-neutral-900)",
               "$scopes": [
                 "ALL_FILLS"
               ]
             },
+            "secondary-hover": {
+              "$type": "color",
+              "$value": "var(--color-neutral-200)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
             "muted": {
               "$type": "color",
-              "$value": "oklch(0.97 0 0)",
+              "$value": "var(--color-neutral-100)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -294,14 +302,14 @@
             },
             "muted-foreground": {
               "$type": "color",
-              "$value": "oklch(0.556 0 0)",
+              "$value": "var(--color-neutral-500)",
               "$scopes": [
                 "ALL_FILLS"
               ]
             },
             "accent": {
               "$type": "color",
-              "$value": "oklch(0.97 0 0)",
+              "$value": "var(--color-neutral-100)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -309,14 +317,29 @@
             },
             "accent-foreground": {
               "$type": "color",
-              "$value": "oklch(0.205 0 0)",
+              "$value": "var(--color-neutral-900)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "link": {
+              "$type": "color",
+              "$value": "var(--color-blue-700)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "link-foreground": {
+              "$type": "color",
+              "$value": "var(--color-neutral-50)",
               "$scopes": [
                 "ALL_FILLS"
               ]
             },
             "destructive": {
               "$type": "color",
-              "$value": "oklch(0.577 0.245 27.325)",
+              "$value": "var(--color-red-600)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -324,14 +347,14 @@
             },
             "destructive-foreground": {
               "$type": "color",
-              "$value": "oklch(0.985 0 0)",
+              "$value": "var(--color-neutral-50)",
               "$scopes": [
                 "ALL_FILLS"
               ]
             },
             "success": {
               "$type": "color",
-              "$value": "oklch(0.6 0.18 145)",
+              "$value": "var(--color-green-600)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -339,14 +362,14 @@
             },
             "success-foreground": {
               "$type": "color",
-              "$value": "oklch(0.985 0 0)",
+              "$value": "var(--color-neutral-50)",
               "$scopes": [
                 "ALL_FILLS"
               ]
             },
             "warning": {
               "$type": "color",
-              "$value": "oklch(0.84 0.16 84)",
+              "$value": "var(--color-amber-400)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -354,14 +377,14 @@
             },
             "warning-foreground": {
               "$type": "color",
-              "$value": "oklch(0.28 0.07 46)",
+              "$value": "var(--color-amber-950)",
               "$scopes": [
                 "ALL_FILLS"
               ]
             },
             "info": {
               "$type": "color",
-              "$value": "oklch(0.6 0.15 240)",
+              "$value": "var(--color-sky-600)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -369,35 +392,65 @@
             },
             "info-foreground": {
               "$type": "color",
-              "$value": "oklch(0.985 0 0)",
+              "$value": "var(--color-neutral-50)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "press": {
+              "$type": "color",
+              "$value": "var(--color-blue-800)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "press-foreground": {
+              "$type": "color",
+              "$value": "var(--color-neutral-50)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "selection": {
+              "$type": "color",
+              "$value": "var(--color-blue-600)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "selection-foreground": {
+              "$type": "color",
+              "$value": "var(--color-white)",
               "$scopes": [
                 "ALL_FILLS"
               ]
             },
             "border": {
               "$type": "color",
-              "$value": "oklch(0.922 0 0)",
+              "$value": "var(--color-neutral-200)",
               "$scopes": [
                 "STROKE_COLOR"
               ]
             },
             "input": {
               "$type": "color",
-              "$value": "oklch(0.922 0 0)",
+              "$value": "var(--color-neutral-200)",
               "$scopes": [
                 "STROKE_COLOR"
               ]
             },
             "ring": {
               "$type": "color",
-              "$value": "oklch(0.708 0 0)",
+              "$value": "var(--color-blue-600)",
               "$scopes": [
                 "STROKE_COLOR"
               ]
             },
             "chart-1": {
               "$type": "color",
-              "$value": "oklch(0.646 0.222 41.116)",
+              "$value": "var(--color-orange-600)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -405,7 +458,7 @@
             },
             "chart-2": {
               "$type": "color",
-              "$value": "oklch(0.6 0.118 184.704)",
+              "$value": "var(--color-teal-600)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -413,7 +466,7 @@
             },
             "chart-3": {
               "$type": "color",
-              "$value": "oklch(0.398 0.07 227.392)",
+              "$value": "var(--color-cyan-900)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -421,7 +474,7 @@
             },
             "chart-4": {
               "$type": "color",
-              "$value": "oklch(0.828 0.189 84.429)",
+              "$value": "var(--color-amber-400)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -429,7 +482,7 @@
             },
             "chart-5": {
               "$type": "color",
-              "$value": "oklch(0.769 0.188 70.08)",
+              "$value": "var(--color-amber-500)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -437,7 +490,7 @@
             },
             "sidebar": {
               "$type": "color",
-              "$value": "oklch(0.985 0 0)",
+              "$value": "var(--color-neutral-50)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -445,59 +498,150 @@
             },
             "sidebar-foreground": {
               "$type": "color",
-              "$value": "oklch(0.145 0 0)",
+              "$value": "var(--color-neutral-950)",
               "$scopes": [
                 "ALL_FILLS"
+              ]
+            },
+            "data-primary": {
+              "$type": "color",
+              "$value": "var(--color-neutral-900)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-secondary": {
+              "$type": "color",
+              "$value": "var(--color-neutral-600)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-currency": {
+              "$type": "color",
+              "$value": "var(--color-yellow-600)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-entity": {
+              "$type": "color",
+              "$value": "var(--color-blue-600)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-identifier": {
+              "$type": "color",
+              "$value": "var(--color-cyan-600)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-category": {
+              "$type": "color",
+              "$value": "var(--color-purple-600)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-datetime": {
+              "$type": "color",
+              "$value": "var(--color-teal-600)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-status-positive": {
+              "$type": "color",
+              "$value": "var(--color-green-600)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-status-negative": {
+              "$type": "color",
+              "$value": "var(--color-red-600)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-status-warning": {
+              "$type": "color",
+              "$value": "var(--color-amber-500)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-status-neutral": {
+              "$type": "color",
+              "$value": "var(--color-neutral-500)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-value-positive": {
+              "$type": "color",
+              "$value": "var(--color-green-600)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-value-negative": {
+              "$type": "color",
+              "$value": "var(--color-red-600)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-value-neutral": {
+              "$type": "color",
+              "$value": "var(--color-neutral-900)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
               ]
             }
           },
           "components": {
             "control": {
               "height": {
-                "xs": {
-                  "$type": "float",
-                  "$value": 28,
-                  "$scopes": [
-                    "WIDTH_HEIGHT"
-                  ]
-                },
                 "sm": {
                   "$type": "float",
-                  "$value": 32,
+                  "$value": 24,
                   "$scopes": [
                     "WIDTH_HEIGHT"
                   ]
                 },
                 "md": {
                   "$type": "float",
-                  "$value": 36,
+                  "$value": 32,
                   "$scopes": [
                     "WIDTH_HEIGHT"
                   ]
                 },
                 "lg": {
                   "$type": "float",
-                  "$value": 44,
-                  "$scopes": [
-                    "WIDTH_HEIGHT"
-                  ]
-                },
-                "xl": {
-                  "$type": "float",
-                  "$value": 48,
+                  "$value": 40,
                   "$scopes": [
                     "WIDTH_HEIGHT"
                   ]
                 }
               },
               "padding": {
-                "xs": {
-                  "$type": "float",
-                  "$value": 8,
-                  "$scopes": [
-                    "GAP"
-                  ]
-                },
                 "sm": {
                   "$type": "float",
                   "$value": 12,
@@ -515,13 +659,6 @@
                 "lg": {
                   "$type": "float",
                   "$value": 24,
-                  "$scopes": [
-                    "GAP"
-                  ]
-                },
-                "xl": {
-                  "$type": "float",
-                  "$value": 32,
                   "$scopes": [
                     "GAP"
                   ]
@@ -552,13 +689,7 @@
                   "WIDTH_HEIGHT"
                 ]
               },
-              "padding": {
-                "$type": "float",
-                "$value": 8,
-                "$scopes": [
-                  "GAP"
-                ]
-              }
+              "padding": null
             },
             "avatar": {
               "size-sm": {
@@ -591,6 +722,31 @@
                   "WIDTH_HEIGHT"
                 ]
               }
+            },
+            "data-table": {
+              "row-height": {
+                "sm": {
+                  "$type": "float",
+                  "$value": 20,
+                  "$scopes": [
+                    "WIDTH_HEIGHT"
+                  ]
+                },
+                "md": {
+                  "$type": "float",
+                  "$value": 24,
+                  "$scopes": [
+                    "WIDTH_HEIGHT"
+                  ]
+                },
+                "lg": {
+                  "$type": "float",
+                  "$value": 32,
+                  "$scopes": [
+                    "WIDTH_HEIGHT"
+                  ]
+                }
+              }
             }
           }
         },
@@ -598,21 +754,21 @@
           "colors": {
             "background": {
               "$type": "color",
-              "$value": "oklch(0.145 0 0)",
+              "$value": "var(--color-black)",
               "$scopes": [
                 "ALL_FILLS"
               ]
             },
             "foreground": {
               "$type": "color",
-              "$value": "oklch(0.985 0 0)",
+              "$value": "var(--color-neutral-50)",
               "$scopes": [
                 "ALL_FILLS"
               ]
             },
             "card": {
               "$type": "color",
-              "$value": "oklch(0.205 0 0)",
+              "$value": "var(--color-neutral-950)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -620,14 +776,14 @@
             },
             "card-foreground": {
               "$type": "color",
-              "$value": "oklch(0.985 0 0)",
+              "$value": "var(--color-neutral-50)",
               "$scopes": [
                 "ALL_FILLS"
               ]
             },
             "popover": {
               "$type": "color",
-              "$value": "oklch(0.269 0 0)",
+              "$value": "var(--color-neutral-800)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -635,14 +791,14 @@
             },
             "popover-foreground": {
               "$type": "color",
-              "$value": "oklch(0.985 0 0)",
+              "$value": "var(--color-neutral-50)",
               "$scopes": [
                 "ALL_FILLS"
               ]
             },
             "primary": {
               "$type": "color",
-              "$value": "oklch(0.922 0 0)",
+              "$value": "var(--color-neutral-200)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -650,14 +806,14 @@
             },
             "primary-foreground": {
               "$type": "color",
-              "$value": "oklch(0.205 0 0)",
+              "$value": "var(--color-neutral-900)",
               "$scopes": [
                 "ALL_FILLS"
               ]
             },
             "secondary": {
               "$type": "color",
-              "$value": "oklch(0.269 0 0)",
+              "$value": "var(--color-neutral-800)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -665,14 +821,22 @@
             },
             "secondary-foreground": {
               "$type": "color",
-              "$value": "oklch(0.985 0 0)",
+              "$value": "var(--color-neutral-50)",
               "$scopes": [
                 "ALL_FILLS"
               ]
             },
+            "secondary-hover": {
+              "$type": "color",
+              "$value": "var(--color-neutral-700)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
             "muted": {
               "$type": "color",
-              "$value": "oklch(0.269 0 0)",
+              "$value": "var(--color-neutral-800)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -680,14 +844,14 @@
             },
             "muted-foreground": {
               "$type": "color",
-              "$value": "oklch(0.708 0 0)",
+              "$value": "var(--color-neutral-400)",
               "$scopes": [
                 "ALL_FILLS"
               ]
             },
             "accent": {
               "$type": "color",
-              "$value": "oklch(0.371 0 0)",
+              "$value": "var(--color-neutral-700)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -695,14 +859,29 @@
             },
             "accent-foreground": {
               "$type": "color",
-              "$value": "oklch(0.985 0 0)",
+              "$value": "var(--color-neutral-50)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "link": {
+              "$type": "color",
+              "$value": "var(--color-blue-400)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "link-foreground": {
+              "$type": "color",
+              "$value": "var(--color-neutral-950)",
               "$scopes": [
                 "ALL_FILLS"
               ]
             },
             "destructive": {
               "$type": "color",
-              "$value": "oklch(0.704 0.191 22.216)",
+              "$value": "var(--color-red-400)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -710,35 +889,35 @@
             },
             "destructive-foreground": {
               "$type": "color",
-              "$value": "oklch(0.985 0 0)",
+              "$value": "var(--color-neutral-50)",
               "$scopes": [
                 "ALL_FILLS"
               ]
             },
             "border": {
               "$type": "color",
-              "$value": "oklch(0.269 0 0)",
+              "$value": "var(--color-neutral-800)",
               "$scopes": [
                 "STROKE_COLOR"
               ]
             },
             "input": {
               "$type": "color",
-              "$value": "oklch(0.269 0 0)",
+              "$value": "var(--color-neutral-800)",
               "$scopes": [
                 "STROKE_COLOR"
               ]
             },
             "ring": {
               "$type": "color",
-              "$value": "oklch(0.439 0 0)",
+              "$value": "var(--color-blue-600)",
               "$scopes": [
                 "STROKE_COLOR"
               ]
             },
             "chart-1": {
               "$type": "color",
-              "$value": "oklch(0.488 0.243 264.376)",
+              "$value": "var(--color-blue-700)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -746,7 +925,7 @@
             },
             "chart-2": {
               "$type": "color",
-              "$value": "oklch(0.696 0.17 162.48)",
+              "$value": "var(--color-emerald-500)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -754,7 +933,7 @@
             },
             "chart-3": {
               "$type": "color",
-              "$value": "oklch(0.769 0.188 70.08)",
+              "$value": "var(--color-amber-500)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -762,7 +941,7 @@
             },
             "chart-4": {
               "$type": "color",
-              "$value": "oklch(0.627 0.265 303.9)",
+              "$value": "var(--color-purple-500)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -770,7 +949,7 @@
             },
             "chart-5": {
               "$type": "color",
-              "$value": "oklch(0.645 0.246 16.439)",
+              "$value": "var(--color-rose-500)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -778,7 +957,7 @@
             },
             "sidebar": {
               "$type": "color",
-              "$value": "oklch(0.205 0 0)",
+              "$value": "var(--color-neutral-900)",
               "$scopes": [
                 "ALL_FILLS",
                 "STROKE_COLOR"
@@ -786,9 +965,364 @@
             },
             "sidebar-foreground": {
               "$type": "color",
-              "$value": "oklch(0.985 0 0)",
+              "$value": "var(--color-neutral-50)",
               "$scopes": [
                 "ALL_FILLS"
+              ]
+            },
+            "press": {
+              "$type": "color",
+              "$value": "var(--color-blue-600)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "press-foreground": {
+              "$type": "color",
+              "$value": "var(--color-neutral-50)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "selection": {
+              "$type": "color",
+              "$value": "var(--color-blue-800)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "selection-foreground": {
+              "$type": "color",
+              "$value": "var(--color-neutral-50)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "success": {
+              "$type": "color",
+              "$value": "var(--color-green-500)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "success-foreground": {
+              "$type": "color",
+              "$value": "var(--color-neutral-50)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "warning": {
+              "$type": "color",
+              "$value": "var(--color-amber-500)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "warning-foreground": {
+              "$type": "color",
+              "$value": "var(--color-neutral-900)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "info": {
+              "$type": "color",
+              "$value": "var(--color-sky-400)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "info-foreground": {
+              "$type": "color",
+              "$value": "var(--color-neutral-50)",
+              "$scopes": [
+                "ALL_FILLS"
+              ]
+            },
+            "data-primary": {
+              "$type": "color",
+              "$value": "var(--color-neutral-50)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-secondary": {
+              "$type": "color",
+              "$value": "var(--color-neutral-400)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-currency": {
+              "$type": "color",
+              "$value": "var(--color-yellow-400)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-entity": {
+              "$type": "color",
+              "$value": "var(--color-blue-400)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-identifier": {
+              "$type": "color",
+              "$value": "var(--color-cyan-400)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-category": {
+              "$type": "color",
+              "$value": "var(--color-purple-400)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-datetime": {
+              "$type": "color",
+              "$value": "var(--color-teal-500)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-status-positive": {
+              "$type": "color",
+              "$value": "var(--color-green-400)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-status-negative": {
+              "$type": "color",
+              "$value": "var(--color-red-400)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-status-warning": {
+              "$type": "color",
+              "$value": "var(--color-amber-400)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-status-neutral": {
+              "$type": "color",
+              "$value": "var(--color-neutral-400)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-value-positive": {
+              "$type": "color",
+              "$value": "var(--color-green-400)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-value-negative": {
+              "$type": "color",
+              "$value": "var(--color-red-400)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-value-neutral": {
+              "$type": "color",
+              "$value": "var(--color-neutral-50)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "button-primary-bg-hover": {
+              "$type": "color",
+              "$value": "var(--color-neutral-300)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "button-link-fg": {
+              "$type": "color",
+              "$value": "var(--link)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "button-link-fg-hover": {
+              "$type": "color",
+              "$value": "var(--color-blue-300)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "button-destructive-bg-hover": {
+              "$type": "color",
+              "$value": "var(--color-red-500)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "button-cta-bg": {
+              "$type": "color",
+              "$value": "var(--ring)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "button-cta-fg": {
+              "$type": "color",
+              "$value": "var(--color-white)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "button-cta-bg-hover": {
+              "$type": "color",
+              "$value": "var(--color-blue-500)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "button-rag-green-bg-hover": {
+              "$type": "color",
+              "$value": "var(--color-green-500)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "button-rag-yellow-bg-hover": {
+              "$type": "color",
+              "$value": "var(--color-amber-400)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "button-rag-red-bg-hover": {
+              "$type": "color",
+              "$value": "var(--color-red-500)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "toast-bg": {
+              "$type": "color",
+              "$value": "var(--color-neutral-800)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "toast-bg-hover": {
+              "$type": "color",
+              "$value": "var(--color-neutral-700)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "sidebar-item-bg-active": {
+              "$type": "color",
+              "$value": "var(--color-blue-950)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "sidebar-item-fg-active": {
+              "$type": "color",
+              "$value": "var(--color-blue-300)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "table-row-bg-selected": {
+              "$type": "color",
+              "$value": "var(--color-blue-500)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "table-row-fg-selected": {
+              "$type": "color",
+              "$value": "var(--color-white)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-table-row-bg-selected": {
+              "$type": "color",
+              "$value": "var(--color-blue-500)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-table-row-fg-selected": {
+              "$type": "color",
+              "$value": "var(--color-white)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "table-checkbox-in-selected-bg": {
+              "$type": "color",
+              "$value": "var(--color-white)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "table-checkbox-in-selected-fg": {
+              "$type": "color",
+              "$value": "var(--color-neutral-900)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
+              ]
+            },
+            "data-table-row-bg-hover": {
+              "$type": "color",
+              "$value": "var(--color-neutral-800)",
+              "$scopes": [
+                "ALL_FILLS",
+                "STROKE_COLOR"
               ]
             }
           }
