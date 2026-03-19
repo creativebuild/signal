@@ -62,7 +62,7 @@ export function TradingBlotter() {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  className="h-data-table-row border-b-0 hover:bg-data-table-row-hover data-[state=selected]:bg-selection data-[state=selected]:text-selection-foreground data-[state=selected]:[&_td:first-child]:text-foreground data-[state=selected]:[&_td:not(:first-child)_*]:text-selection-foreground"
+                  className="h-data-table-row-sm border-b-0 hover:bg-[var(--data-table-row-bg-hover)] data-[state=selected]:bg-selection data-[state=selected]:text-selection-foreground data-[state=selected]:[&_td:first-child]:text-foreground data-[state=selected]:[&_td:not(:first-child)_*]:text-selection-foreground"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
@@ -78,7 +78,7 @@ export function TradingBlotter() {
                 </TableRow>
               ))
             ) : (
-              <TableRow className="h-data-table-row border-b-0">
+              <TableRow className="h-data-table-row-sm border-b-0">
                 <TableCell
                   colSpan={columns.length}
                   className="h-24 px-data-table-cell-px py-data-table-cell-py text-center"

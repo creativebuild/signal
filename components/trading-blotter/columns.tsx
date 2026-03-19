@@ -46,12 +46,15 @@ export const columns = [
         WRK: "bg-data-status-warning",
       };
       const baseClasses =
-        "flex h-full w-full items-center px-[calc(var(--spacing-data-table-cell-px)/2)] py-data-table-cell-py font-bold text-primary-foreground";
+        "flex h-full w-full items-center px-[calc(var(--spacing-data-table-cell-px)/2)] py-data-table-cell-py font-bold";
+      const selectedClasses = "bg-transparent text-data-table-row-fg-selected";
+      const unselectedClasses = "text-primary-foreground";
       return (
         <div
           className={cn(
             baseClasses,
-            isSelected ? "bg-transparent" : statusClasses[status] ?? "bg-data-status-neutral"
+            isSelected ? selectedClasses : unselectedClasses,
+            !isSelected && (statusClasses[status] ?? "bg-data-status-neutral")
           )}
         >
           {status}
@@ -88,7 +91,7 @@ export const columns = [
         <div
           className={cn(
             "flex h-full w-full items-center px-[calc(var(--spacing-data-table-cell-px)/2)] py-data-table-cell-py font-bold",
-            isSelected ? "bg-transparent text-white" : sideClasses[side] ?? "text-data-value-neutral bg-data-value-neutral/20"
+            isSelected ? "bg-transparent text-data-table-row-fg-selected" : sideClasses[side] ?? "text-data-value-neutral bg-data-value-neutral/20"
           )}
         >
           {side}
@@ -146,10 +149,10 @@ export const columns = [
     ),
   }),
 
-  columnHelper.accessor("ubsRef", {
-    header: "UBS Ref",
+  columnHelper.accessor("ref", {
+    header: "Ref",
     cell: ({ row }) => (
-      <span className="text-data-secondary">{row.getValue("ubsRef")}</span>
+      <span className="text-data-secondary">{row.getValue("ref")}</span>
     ),
   }),
 

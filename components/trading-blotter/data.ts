@@ -11,7 +11,7 @@ export interface TradingBlotterRow {
   valueDate: string;
   modifiedDate: string;
   modifiedBy: string;
-  ubsRef: string;
+  ref: string;
   lifecycle: string;
 }
 
@@ -29,7 +29,7 @@ export const tradingBlotterData: TradingBlotterRow[] = [
     valueDate: "00:00:000",
     modifiedDate: "09-Sep-2024 09:22:34",
     modifiedBy: "weilands",
-    ubsRef: "QOD123ABC123AA",
+    ref: "QOD123ABC123AA",
     lifecycle: "Pending",
   },
   {
@@ -45,7 +45,7 @@ export const tradingBlotterData: TradingBlotterRow[] = [
     valueDate: "00:00:000",
     modifiedDate: "09-Sep-2024 09:22:34",
     modifiedBy: "laneganm",
-    ubsRef: "QOD123ABC123AA",
+    ref: "QOD123ABC123AA",
     lifecycle: "Pending",
   },
   {
@@ -61,7 +61,7 @@ export const tradingBlotterData: TradingBlotterRow[] = [
     valueDate: "00:00:000",
     modifiedDate: "09-Sep-2024 09:22:34",
     modifiedBy: "staleyl",
-    ubsRef: "QOD123ABC123AA",
+    ref: "QOD123ABC123AA",
     lifecycle: "Complete",
   },
   {
@@ -77,7 +77,7 @@ export const tradingBlotterData: TradingBlotterRow[] = [
     valueDate: "00:00:000",
     modifiedDate: "09-Sep-2024 09:22:34",
     modifiedBy: "cornellc",
-    ubsRef: "QOD123ABC123AA",
+    ref: "QOD123ABC123AA",
     lifecycle: "Complete",
   },
   {
@@ -93,7 +93,7 @@ export const tradingBlotterData: TradingBlotterRow[] = [
     valueDate: "00:00:000",
     modifiedDate: "09-Sep-2024 09:22:34",
     modifiedBy: "thompsonhs",
-    ubsRef: "QOD123ABC123AA",
+    ref: "QOD123ABC123AA",
     lifecycle: "Complete",
   },
   {
@@ -109,7 +109,7 @@ export const tradingBlotterData: TradingBlotterRow[] = [
     valueDate: "00:00:000",
     modifiedDate: "09-Sep-2024 09:22:34",
     modifiedBy: "twainm",
-    ubsRef: "QOD123ABC123AA",
+    ref: "QOD123ABC123AA",
     lifecycle: "Pending",
   },
   {
@@ -125,7 +125,7 @@ export const tradingBlotterData: TradingBlotterRow[] = [
     valueDate: "00:00:000",
     modifiedDate: "09-Sep-2024 09:22:34",
     modifiedBy: "C21029-…",
-    ubsRef: "QOD123ABC123AA",
+    ref: "QOD123ABC123AA",
     lifecycle: "Complete",
   },
 ];

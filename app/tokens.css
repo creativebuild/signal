@@ -51,20 +51,7 @@
   --ds-font-semibold: 600;
   --ds-font-bold: 700;
 
-  /* Data table primitives — tune the entire table from here */
-  --data-table-row-height:       var(--ds-space-5);
-  --data-table-header-height:   var(--ds-space-10);
-  --data-table-row-divider-width: 0;
-  --data-table-cell-px:          var(--ds-space-2);
-  --data-table-cell-py:          0;
-  --data-table-font-size:        0.9375rem;
-  --data-table-header-font-size: var(--ds-text-sm);
-  --data-table-font-weight:      var(--ds-font-medium);
-  --data-table-header-font-weight: var(--ds-font-bold);
-  /* Header and row colors — override in globals.css for light/dark */
-  --data-table-header-bg:        var(--background);
-  --data-table-header-foreground: var(--muted-foreground);
-  --data-table-row-hover:        var(--muted);
+  /* Data table primitives — defined in globals.css; tokens.css @theme references them */
 }
 
 /* Maps --ds-* primitives to Tailwind utilities.
@@ -83,6 +70,9 @@
 
   /* Data table */
   --spacing-data-table-row:      var(--data-table-row-height);
+  --spacing-data-table-row-sm:   var(--data-table-row-height-sm);
+  --spacing-data-table-row-md:   var(--data-table-row-height-md);
+  --spacing-data-table-row-lg:   var(--data-table-row-height-lg);
   --spacing-data-table-header:   var(--data-table-header-height);
   --spacing-data-table-cell-px:  var(--data-table-cell-px);
   --spacing-data-table-cell-py:  var(--data-table-cell-py);
@@ -94,7 +84,7 @@
   /* Data table colors — header bg/foreground, row hover (defined in globals.css) */
   --color-data-table-header:        var(--data-table-header-bg);
   --color-data-table-header-foreground: var(--data-table-header-foreground);
-  --color-data-table-row-hover:     var(--data-table-row-hover);
+  --color-data-table-row-hover:     var(--data-table-row-bg-hover);
 
   /* Radius → rounded-sm, rounded-lg etc */
   --radius-sm: var(--ds-radius-sm);
@@ -188,4 +178,220 @@
   --color-data-value-positive:   var(--data-value-positive);
   --color-data-value-negative:   var(--data-value-negative);
   --color-data-value-neutral:    var(--data-value-neutral);
+
+  /* Component tokens — overlay, slider, table */
+  --color-dialog-overlay: var(--dialog-overlay-bg);
+  --color-drawer-overlay: var(--drawer-overlay-bg);
+  --color-alert-dialog-overlay: var(--alert-dialog-overlay-bg);
+  --color-sheet-overlay: var(--sheet-overlay-bg);
+  --color-slider-thumb: var(--slider-thumb-bg);
+  --color-table-row-fg-selected: var(--table-row-fg-selected);
+  --color-table-row-bg-selected: var(--table-row-bg-selected);
+  --color-table-checkbox-in-selected-bg: var(--table-checkbox-in-selected-bg);
+  --color-table-checkbox-in-selected-fg: var(--table-checkbox-in-selected-fg);
+  --color-data-table-row-fg-selected: var(--data-table-row-fg-selected);
+
+  /* Component tokens — button */
+  --color-button-primary-bg: var(--button-primary-bg);
+  --color-button-primary-fg: var(--button-primary-fg);
+  --color-button-primary-border: var(--button-primary-border);
+  --color-button-primary-bg-hover: var(--button-primary-bg-hover);
+  --color-button-secondary-bg: var(--button-secondary-bg);
+  --color-button-secondary-fg: var(--button-secondary-fg);
+  --color-button-secondary-border: var(--button-secondary-border);
+  --color-button-secondary-bg-hover: var(--button-secondary-bg-hover);
+  --color-button-ghost-bg: var(--button-ghost-bg);
+  --color-button-ghost-fg: var(--button-ghost-fg);
+  --color-button-ghost-bg-hover: var(--button-ghost-bg-hover);
+  --color-button-ghost-fg-hover: var(--button-ghost-fg-hover);
+  --color-button-link-fg: var(--button-link-fg);
+  --color-button-link-fg-hover: var(--button-link-fg-hover);
+  --color-button-destructive-bg: var(--button-destructive-bg);
+  --color-button-destructive-fg: var(--button-destructive-fg);
+  --color-button-destructive-border: var(--button-destructive-border);
+  --color-button-destructive-bg-hover: var(--button-destructive-bg-hover);
+  --color-button-cta-bg: var(--button-cta-bg);
+  --color-button-cta-fg: var(--button-cta-fg);
+  --color-button-cta-border: var(--button-cta-border);
+  --color-button-cta-bg-hover: var(--button-cta-bg-hover);
+  --color-button-rag-green-bg: var(--button-rag-green-bg);
+  --color-button-rag-green-fg: var(--button-rag-green-fg);
+  --color-button-rag-yellow-bg: var(--button-rag-yellow-bg);
+  --color-button-rag-yellow-fg: var(--button-rag-yellow-fg);
+  --color-button-rag-red-bg: var(--button-rag-red-bg);
+  --color-button-rag-red-fg: var(--button-rag-red-fg);
+
+  /* Component tokens — input */
+  --color-input-bg: var(--input-bg);
+  --color-input-fg: var(--input-fg);
+  --color-input-placeholder: var(--input-placeholder);
+  --color-input-border: var(--input-border);
+  --color-input-border-hover: var(--input-border-hover);
+  --color-input-border-focus: var(--input-border-focus);
+  --color-input-border-error: var(--input-border-error);
+  --color-input-bg-disabled: var(--input-bg-disabled);
+  --color-input-fg-disabled: var(--input-fg-disabled);
+
+  /* Component tokens — card */
+  --color-card-bg: var(--card-bg);
+  --color-card-fg: var(--card-fg);
+  --color-card-border: var(--card-border);
+  --color-card-bg-hover: var(--card-bg-hover);
+  --color-card-fg-hover: var(--card-fg-hover);
+
+  /* Component tokens — badge */
+  --color-badge-bg: var(--badge-bg);
+  --color-badge-fg: var(--badge-fg);
+  --color-badge-border: var(--badge-border);
+  --color-badge-bg-hover: var(--badge-bg-hover);
+  --color-badge-fg-hover: var(--badge-fg-hover);
+
+  /* Component tokens — dialog, popover, toast, tooltip */
+  --color-dialog-bg: var(--dialog-bg);
+  --color-dialog-fg: var(--dialog-fg);
+  --color-dialog-border: var(--dialog-border);
+  --color-popover-bg: var(--popover-bg);
+  --color-popover-fg: var(--popover-fg);
+  --color-popover-border: var(--popover-border-color);
+  --color-toast-bg: var(--toast-bg);
+  --color-toast-fg: var(--toast-fg);
+  --color-toast-border: var(--toast-border);
+  --color-toast-bg-hover: var(--toast-bg-hover);
+  --color-tooltip-bg: var(--tooltip-bg);
+  --color-tooltip-fg: var(--tooltip-fg);
+  --color-tooltip-border: var(--tooltip-border);
+
+  /* Component tokens — select, dropdown, tabs */
+  --color-select-bg: var(--select-bg);
+  --color-select-fg: var(--select-fg);
+  --color-select-placeholder: var(--select-placeholder);
+  --color-select-border: var(--select-border);
+  --color-select-item-bg-hover: var(--select-item-bg-hover);
+  --color-select-item-fg-hover: var(--select-item-fg-hover);
+  --color-dropdown-bg: var(--dropdown-bg);
+  --color-dropdown-fg: var(--dropdown-fg);
+  --color-dropdown-border: var(--dropdown-border);
+  --color-dropdown-item-bg-hover: var(--dropdown-item-bg-hover);
+  --color-dropdown-item-fg-hover: var(--dropdown-item-fg-hover);
+  --color-tabs-list-bg: var(--tabs-list-bg);
+  --color-tabs-list-fg: var(--tabs-list-fg);
+  --color-tabs-trigger-bg-active: var(--tabs-trigger-bg-active);
+  --color-tabs-trigger-fg-active: var(--tabs-trigger-fg-active);
+  --color-tabs-trigger-bg-hover: var(--tabs-trigger-bg-hover);
+  --color-tabs-trigger-fg-hover: var(--tabs-trigger-fg-hover);
+  --color-tabs-border: var(--tabs-border);
+
+  /* Component tokens — table */
+  --color-table-header-bg: var(--table-header-bg);
+  --color-table-header-fg: var(--table-header-fg);
+  --color-table-row-bg: var(--table-row-bg);
+  --color-table-row-bg-hover: var(--table-row-bg-hover);
+  --color-table-row-bg-striped: var(--table-row-bg-striped);
+  --color-table-row-fg: var(--table-row-fg);
+  --color-table-row-fg-hover: var(--table-row-fg-hover);
+  --color-table-border: var(--table-border);
+
+  /* Component tokens — sidebar */
+  --color-sidebar-bg: var(--sidebar-bg);
+  --color-sidebar-fg: var(--sidebar-fg);
+  --color-sidebar-border: var(--sidebar-border-color);
+  --color-sidebar-item-bg-hover: var(--sidebar-item-bg-hover);
+  --color-sidebar-item-fg-hover: var(--sidebar-item-fg-hover);
+  --color-sidebar-item-bg-active: var(--sidebar-item-bg-active);
+  --color-sidebar-item-fg-active: var(--sidebar-item-fg-active);
+
+  /* Component tokens — avatar, checkbox, switch, slider, progress */
+  --color-avatar-bg: var(--avatar-bg);
+  --color-avatar-fg: var(--avatar-fg);
+  --color-avatar-border: var(--avatar-border);
+  --color-checkbox-bg: var(--checkbox-bg);
+  --color-checkbox-bg-hover: var(--checkbox-bg-hover);
+  --color-checkbox-bg-checked: var(--checkbox-bg-checked);
+  --color-checkbox-fg-checked: var(--checkbox-fg-checked);
+  --color-checkbox-border: var(--checkbox-border);
+  --color-checkbox-border-hover: var(--checkbox-border-hover);
+  --color-checkbox-border-checked: var(--checkbox-border-checked);
+  --color-switch-track-bg: var(--switch-track-bg);
+  --color-switch-track-bg-hover: var(--switch-track-bg-hover);
+  --color-switch-track-bg-checked: var(--switch-track-bg-checked);
+  --color-switch-thumb-bg: var(--switch-thumb-bg);
+  --color-slider-track-bg: var(--slider-track-bg);
+  --color-slider-track-filled: var(--slider-track-filled);
+  --color-slider-thumb-border: var(--slider-thumb-border);
+  --color-slider-thumb-border-hover: var(--slider-thumb-border-hover);
+  --color-progress-track-bg: var(--progress-track-bg);
+  --color-progress-fill-bg: var(--progress-fill-bg);
+
+  /* Component tokens — alert, skeleton, separator */
+  --color-alert-bg: var(--alert-bg);
+  --color-alert-fg: var(--alert-fg);
+  --color-alert-border: var(--alert-border);
+  --color-skeleton-bg: var(--skeleton-bg);
+  --color-separator-bg: var(--separator-bg);
+
+  /* Component tokens — accordion, sheet, command, nav, pagination */
+  --color-accordion-bg: var(--accordion-bg);
+  --color-accordion-bg-hover: var(--accordion-bg-hover);
+  --color-accordion-fg: var(--accordion-fg);
+  --color-accordion-fg-hover: var(--accordion-fg-hover);
+  --color-accordion-border: var(--accordion-border);
+  --color-sheet-bg: var(--sheet-bg);
+  --color-sheet-fg: var(--sheet-fg);
+  --color-sheet-border: var(--sheet-border);
+  --color-command-bg: var(--command-bg);
+  --color-command-fg: var(--command-fg);
+  --color-command-border: var(--command-border);
+  --color-command-item-bg-hover: var(--command-item-bg-hover);
+  --color-command-item-fg-hover: var(--command-item-fg-hover);
+  --color-nav-bg: var(--nav-bg);
+  --color-nav-fg: var(--nav-fg);
+  --color-nav-border: var(--nav-border);
+  --color-nav-item-bg-hover: var(--nav-item-bg-hover);
+  --color-nav-item-fg-hover: var(--nav-item-fg-hover);
+  --color-pagination-bg: var(--pagination-bg);
+  --color-pagination-fg: var(--pagination-fg);
+  --color-pagination-border: var(--pagination-border);
+  --color-pagination-bg-hover: var(--pagination-bg-hover);
+  --color-pagination-fg-hover: var(--pagination-fg-hover);
+  --color-pagination-bg-active: var(--pagination-bg-active);
+  --color-pagination-fg-active: var(--pagination-fg-active);
+
+  /* Component tokens — breadcrumb, calendar, toggle, scroll */
+  --color-breadcrumb-fg: var(--breadcrumb-fg);
+  --color-breadcrumb-fg-hover: var(--breadcrumb-fg-hover);
+  --color-breadcrumb-separator-fg: var(--breadcrumb-separator-fg);
+  --color-breadcrumb-fg-active: var(--breadcrumb-fg-active);
+  --color-calendar-bg: var(--calendar-bg);
+  --color-calendar-fg: var(--calendar-fg);
+  --color-calendar-border: var(--calendar-border);
+  --color-calendar-day-bg-hover: var(--calendar-day-bg-hover);
+  --color-calendar-day-fg-hover: var(--calendar-day-fg-hover);
+  --color-calendar-day-bg-selected: var(--calendar-day-bg-selected);
+  --color-calendar-day-fg-selected: var(--calendar-day-fg-selected);
+  --color-calendar-day-bg-today: var(--calendar-day-bg-today);
+  --color-calendar-day-fg-today: var(--calendar-day-fg-today);
+  --color-toggle-bg: var(--toggle-bg);
+  --color-toggle-fg: var(--toggle-fg);
+  --color-toggle-bg-hover: var(--toggle-bg-hover);
+  --color-toggle-fg-hover: var(--toggle-fg-hover);
+  --color-toggle-bg-active: var(--toggle-bg-active);
+  --color-toggle-fg-active: var(--toggle-fg-active);
+  --color-scroll-thumb-bg: var(--scroll-thumb-bg);
+  --color-scroll-thumb-bg-hover: var(--scroll-thumb-bg-hover);
+
+  /* Component tokens — data-table */
+  --color-data-table-header-bg: var(--data-table-header-bg);
+  --color-data-table-header-fg: var(--data-table-header-fg);
+  --color-data-table-row-bg: var(--data-table-row-bg);
+  --color-data-table-row-bg-hover: var(--data-table-row-bg-hover);
+  --color-data-table-row-bg-striped: var(--data-table-row-bg-striped);
+  --color-data-table-row-fg: var(--data-table-row-fg);
+  --color-data-table-row-bg-selected: var(--data-table-row-bg-selected);
+  --color-data-table-border: var(--data-table-border);
+
+  /* Spacing/size mappings for components */
+  --spacing-component-height-sm: var(--component-height-sm);
+  --spacing-component-height-md: var(--component-height-md);
+  --spacing-component-height-lg: var(--component-height-lg);
+  --radius-component: var(--component-radius);
 }

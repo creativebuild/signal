@@ -91,7 +91,7 @@ export function DataDisplaySection() {
             <Table>
               <TableCaption>A sample data table</TableCaption>
               <TableHeader>
-                <TableRow>
+                <TableRow className="h-data-table-row-sm">
                   <TableHead>Name</TableHead>
                   <TableHead>Email</TableHead>
                   <TableHead>Role</TableHead>
@@ -99,7 +99,7 @@ export function DataDisplaySection() {
               </TableHeader>
               <TableBody>
                 {tableData.map((row) => (
-                  <TableRow key={row.email}>
+                  <TableRow key={row.email} className="h-data-table-row-sm">
                     <TableCell>{row.name}</TableCell>
                     <TableCell>{row.email}</TableCell>
                     <TableCell>{row.role}</TableCell>

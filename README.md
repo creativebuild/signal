@@ -1,9 +1,16 @@
-# Design System POC — Token-driven shadcn/ui
+# Signal — Token-driven Design System POC
 
-A Next.js 15 proof-of-concept demonstrating a fully token-driven design
-system built on shadcn/ui. Every visual decision — color, spacing,
-typography, sizing — flows from CSS custom properties split across
-`app/globals.css` (semantic design decisions) and `app/tokens.css` (Tailwind bridge that maps those values to utility classes).
+A Next.js 15 proof of concept for a fully token-driven design system built on shadcn/ui, with Figma Variables Pro parity as a first-class goal. Every visual decision — color, spacing, typography, sizing — flows from CSS custom properties defined in two files: `globals.css` (semantic decisions) and `tokens.css` (Tailwind bridge). Run `npm run tokens` to export the entire theme to a Variables Pro JSON file ready to import into Figma.
+
+---
+
+## Stack
+
+- **Next.js 15** — App router, React 19
+- **Tailwind CSS v4** — Utility-first CSS with `@theme inline` for token mapping
+- **shadcn/ui** — Component library (Base UI + Radix primitives)
+- **next-themes** — System-aware light/dark mode (`ThemeProvider`, `class` attribute)
+- **class-variance-authority** — Variant composition for buttons, badges, etc.
 
 ---
 
@@ -14,164 +21,207 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000 to view the component gallery.
+Open [http://localhost:3000](http://localhost:3000) to view the component gallery. Use the theme toggle (top-right) to switch between light and dark modes.
 
-To export tokens to Variables Pro format for Figma:
+To export the full theme to Figma:
 
 ```bash
 npm run tokens
 ```
 
-Output: `tokens/variables-pro.json` — Light Mode and Dark Mode in a
-single file, ready for Variables Pro import.
+Output: `tokens/variables-pro.json` — ready to import into Figma via Variables Pro.
 
 ---
 
 ## How it works
 
-shadcn/ui ships components with two categories of styling:
+shadcn/ui ships with two categories of styling out of the box:
 
-- **Tokenized by default:** Semantic colors (`--primary`, `--border`,
-  etc.) defined in `:root`, mapped to Tailwind utilities via `@theme`
-  (`bg-primary`, `text-foreground`, etc.)
-- **Hardcoded by default:** Heights, padding, font sizes, and gaps are
-  literal Tailwind values in each component file (`h-9`, `px-4`, `text-sm`)
+- **Tokenized** — Semantic colors (`--primary`, `--border`, etc.) defined in `:root` and mapped to Tailwind utilities via `@theme` (`bg-primary`, `text-foreground`, etc.)
+- **Hardcoded** — Heights, padding, font sizes, and gaps as literal Tailwind values in each component file (`h-9`, `px-4`, `text-sm`)
 
-This POC extends the token model so sizing, spacing, and
-component-specific values also live in token files — split between
-primitives and semantic tokens for clarity and Figma parity.
+Signal extends the token model so that sizing, spacing, and component-specific values also live as named tokens — giving the system complete Figma parity and a single place to change anything.
 
-### Token file responsibilities
+### File responsibilities
 
 | File | Purpose |
 |------|---------|
-| `app/tokens.css` | Tailwind bridge — maps design values to Tailwind utility classes via `@theme inline`. Defines `--ds-*` scale variables for spacing, radius, typography and shadow so Tailwind generates utilities like `p-4`, `rounded-lg`, `text-sm`. |
-| `app/globals.css` | Semantic tokens — all named design decisions. Colors (oklch), component sizing (`--control-height-*`, `--card-padding`, etc.), base radius dial (`--radius`), and dark mode overrides. This is the primary file to edit when changing the look of the system. |
+| `app/globals.css` | **Source of truth.** Semantic colors (referencing Tailwind palette variables), component tokens (`--button-*`, `--input-*`, `--data-table-*`, etc.), the base radius dial (`--radius`), and `.dark` overrides. Edit this file to change the theme. |
+| `app/tokens.css` | **Tailwind bridge.** Defines `--ds-*` primitive tokens (spacing, radius, typography, shadow) and maps all semantic and component tokens from `globals.css` to Tailwind utilities via `@theme inline` — generating `p-4`, `rounded-lg`, `bg-primary`, `text-data-entity`, etc. |
 
 `layout.tsx` imports `tokens.css` before `globals.css`.
 
-### Three-layer architecture
+### Architecture
 
 ```
-┌─────────────────────────────────────────────────┐
-│  LAYER 3 — Components                           │
-│  Tailwind utilities for color + primitives      │
-│  var() arbitrary values for semantic sizing     │
-└────────────────────┬────────────────────────────┘
-                     │
-┌────────────────────▼────────────────────────────┐
-│  LAYER 2 — Tailwind CSS v4                      │
-│  tokens.css: @theme maps --ds-* → utilities     │
-│  globals.css: @theme maps colors → bg-primary etc │
-└────────────────────┬────────────────────────────┘
-                     │
-┌────────────────────▼────────────────────────────┐
-│  LAYER 1 — Token files                           │
-│  tokens.css — primitives (:root) + @theme        │
-│  globals.css — semantic (:root, .dark)           │
-└─────────────────────────────────────────────────┘
+Components
+  └── Tailwind utilities (bg-primary, text-data-entity, rounded-component)
+        └── @theme inline (tokens.css)
+              └── Semantic tokens (globals.css :root / .dark)
+                    └── Tailwind palette (--color-neutral-950, --color-blue-600)
 ```
 
-### Why the --ds- prefix for primitives
+### Why the `--ds-` prefix
 
-Tailwind v4's `@theme` can hit circular reference errors when mapping
-tokens that reference each other (e.g. `--radius-sm: var(--radius-sm)`).
+Tailwind v4's `@theme` throws circular reference errors when a token and its mapped utility share the same name — e.g. `--radius-sm: var(--radius-sm)` references itself.
 
-The solution: primitive tokens use a `--ds-` prefix in `tokens.css`, so
-`@theme` maps them without circular refs: `--radius-sm: var(--ds-radius-sm)`.
-That generates `rounded-sm`, `p-4`, `text-xs`, etc. Semantic component
-sizing (`--control-height-*`, `--card-padding`, etc.) stays in `globals.css`
-and is consumed via `var()` in components. The base radius value `--radius` in globals.css acts as a single dial — changing it updates every `--ds-radius-*` derived value and therefore every component's corner radius at once.
+The fix: primitive tokens in `tokens.css` use a `--ds-` namespace, so `@theme` can safely map them without collision:
 
+```css
+/* tokens.css */
+--ds-radius-sm: calc(var(--radius) - 4px);   /* primitive */
+
+@theme inline {
+  --radius-sm: var(--ds-radius-sm);           /* maps to rounded-sm */
+}
 ```
-  bg-primary                        ← color, via @theme (tokens.css)
-  rounded-lg                        ← radius, via @theme (--ds-radius-lg)
-  p-4                               ← spacing, via @theme (--ds-space-4)
-  h-[var(--control-height-md)]      ← semantic sizing, via var()
-```
+
+This prefix only applies to primitives in `tokens.css`. Semantic tokens in `globals.css` (`--background`, `--button-primary-bg`, `--data-entity` etc.) use no prefix — they follow shadcn's own naming convention.
+
+The base `--radius` value in `globals.css` acts as a single dial. Changing it cascades through the full radius scale and updates every component's corner radius at once.
+
+### Token priority
+
+When styling components, use this order:
+
+1. **shadcn native** — `bg-background`, `text-foreground`, `border-border`, `bg-primary`, `text-muted-foreground` (shadcn components depend on these)
+2. **Signal semantic** — `bg-success`, `text-link`, `bg-press`, `text-data-entity` (Signal extensions to shadcn)
+3. **Signal component** — `bg-button-primary`, `text-input-placeholder`, `bg-data-table-row-selected` (component-specific tokens)
+4. **Raw Tailwind palette** — only for genuinely one-off values not worth tokenising
 
 ---
 
 ## Token reference
 
-### Primitives (`app/tokens.css`)
+### Primitives — `tokens.css`
 
-`--ds-space-*`, `--ds-radius-*`, `--ds-shadow-*`, `--ds-text-*`,
-`--ds-leading-*`, `--ds-font-*`. Mapped to Tailwind via `@theme` →
-`p-4`, `rounded-lg`, `shadow-sm`, `text-sm`, etc.
+Defined with `--ds-*` prefix, mapped to Tailwind utilities via `@theme inline`.
 
-### Semantic tokens (`app/globals.css`)
+| Group | Tokens | Utilities |
+|-------|--------|-----------|
+| Spacing | `--ds-space-1` → `--ds-space-12` | `p-1`, `gap-4`, `m-8` etc. |
+| Radius | `--ds-radius-sm` → `--ds-radius-full` | `rounded-sm`, `rounded-xl` etc. |
+| Shadow | `--ds-shadow-sm` → `--ds-shadow-lg` | `shadow-sm`, `shadow-lg` etc. |
+| Typography | `--ds-text-xs` → `--ds-text-3xl` | `text-xs`, `text-2xl` etc. |
+| Line height | `--ds-leading-tight` → `--ds-leading-relaxed` | `leading-tight` etc. |
+| Font weight | `--ds-font-normal` → `--ds-font-bold` | `font-medium`, `font-bold` etc. |
 
-#### Colors (OKLCH)
+### Semantic tokens — `globals.css`
 
-Defined in `:root` and overridden in `.dark`:
+All semantic colors reference Tailwind palette variables (e.g. `var(--color-neutral-950)`) — never hardcoded hex or oklch values. Defined in `:root` for light mode, overridden in `.dark` for dark mode.
+
+#### shadcn base (preserved exactly)
+
+These are shadcn's own variables. All shadcn components depend on them — do not rename or remove.
 
 | Token | Purpose |
 |-------|---------|
-| `--background`, `--foreground` | Page background and text |
+| `--background`, `--foreground` | Page surface and default text |
 | `--card`, `--card-foreground` | Card surfaces |
 | `--popover`, `--popover-foreground` | Dropdowns, menus, tooltips |
-| `--primary`, `--primary-foreground` | Primary buttons, links |
-| `--secondary`, `--secondary-foreground` | Secondary buttons |
-| `--muted`, `--muted-foreground` | Muted backgrounds and text |
-| `--accent`, `--accent-foreground` | Hover/focus states (menus, sidebar items) |
+| `--primary`, `--primary-foreground` | Primary actions |
+| `--secondary`, `--secondary-foreground` | Secondary actions |
+| `--muted`, `--muted-foreground` | Muted surfaces and text |
+| `--accent`, `--accent-foreground` | Hover and focus states |
 | `--destructive`, `--destructive-foreground` | Destructive actions |
-| `--border`, `--input`, `--ring` | Borders, inputs, focus rings |
+| `--border`, `--input`, `--ring` | Borders, input outlines, focus rings |
+| `--chart-1` through `--chart-5` | Chart series colors |
+| `--sidebar`, `--sidebar-foreground` | Sidebar surface and text |
+| `--radius` | Base radius dial — drives the full radius scale |
 
-Additional: `--success`, `--warning`, `--info`, `--chart-1` through `--chart-5`, `--sidebar`, `--sidebar-foreground`.
+#### Signal extensions
 
-#### Component sizing
+Additional semantic tokens that extend the shadcn base:
 
-- **Base values** — `--radius` — base dial that drives the full radius scale. Radius is assigned by visual hierarchy, not control size: containers (Card, Dialog) use `--radius-container` (largest), controls (Button, Input) use `--radius-control` (medium), nested elements use `--radius-inset` (tight), pills and badges use `--radius-pill` (full).
-- **Control** (Button, Input, Select): `--control-height-*`, `--control-px-*`, `--control-gap`
-- **Card**: `--card-padding`
-- **Badge**: `--badge-height`, `--badge-px`
-- **Avatar**: `--avatar-size-sm`, `--avatar-size-md`, `--avatar-size-lg`
-- **Sidebar**: `--sidebar-width`
+| Token | Purpose |
+|-------|---------|
+| `--success`, `--success-foreground` | Success state |
+| `--warning`, `--warning-foreground` | Warning state |
+| `--info`, `--info-foreground` | Informational state |
+| `--press`, `--press-foreground` | Active/pressed control state |
+| `--link`, `--link-foreground` | Link color |
+
+#### Radius hierarchy
+
+Radius is assigned by visual hierarchy, not control size:
+
+| Token | Used for |
+|-------|---------|
+| `--radius-container` | Card, Dialog, Sheet, Drawer — outermost surfaces |
+| `--radius-control` | Button, Input, Select, Toggle — interactive controls |
+| `--radius-inset` | Elements nested inside controls or cards |
+| `--radius-pill` | Badge, tag, pill shapes |
+
+#### dataSyntax — visual grammar for data display
+
+A system of semantic color tokens for consistently styling different categories of data in tables and grids — similar to syntax highlighting for code.
+
+| Token | Purpose | Example use |
+|-------|---------|-------------|
+| `--data-primary` | Primary data text | Main values |
+| `--data-secondary` | Secondary data text | Supporting values |
+| `--data-currency` | Monetary values | Amounts, prices |
+| `--data-entity` | Named entities | Usernames, counterparties |
+| `--data-identifier` | Codes and IDs | Currency pairs, reference numbers |
+| `--data-category` | Categories and types | Product type, instrument |
+| `--data-datetime` | Dates and times | Timestamps, value dates |
+| `--data-status-positive` | Positive status | Complete, filled |
+| `--data-status-negative` | Negative status | Rejected, failed |
+| `--data-status-warning` | Warning status | Pending, working |
+| `--data-status-neutral` | Neutral status | — |
+| `--data-value-positive` | Positive numeric value | Gains |
+| `--data-value-negative` | Negative numeric value | Losses |
+| `--data-value-neutral` | Neutral numeric value | Standard figures |
+
+Utilities: `text-data-entity`, `text-data-status-positive`, `text-data-currency` etc.
+
+#### Component tokens
+
+Every shadcn component has a dedicated token block in `globals.css` covering background, foreground, border, hover states, sizing, padding, and radius. Component tokens reference shadcn base tokens wherever possible, then Signal semantic extensions, and only introduce new values where genuinely needed.
+
+Naming pattern:
+```css
+--{component}-bg
+--{component}-fg
+--{component}-border
+--{component}-bg-hover
+--{component}-fg-hover
+--{component}-border-hover
+--{component}-radius
+--{component}-px
+--{component}-py
+```
+
+Components with tokens: `button` (with variants: primary, secondary, ghost, link, cta, destructive, rag-green, rag-yellow, rag-red), `input`, `card`, `badge`, `dialog`, `popover`, `toast`, `tooltip`, `select`, `dropdown-menu`, `tabs`, `table`, `data-table`, `sidebar`, `avatar`, `checkbox`, `switch`, `slider`, `progress`, `alert`, `skeleton`, `separator`, `accordion`, `sheet`, `command`, `navigation-menu`, `pagination`, `breadcrumb`, `calendar`, `toggle`, `scroll-area`.
 
 ---
 
-## Variables Pro export
+## Figma export
 
-`npm run tokens` generates `tokens/variables-pro.json` for Figma Variables Pro:
+```bash
+npm run tokens
+```
 
-- **Format:** JSON array with a single collection (`Design System`) and two modes
-- **Light Mode:** Primitives (spacing, radius, shadow, typography) + semantic colors + component tokens
-- **Dark Mode:** Color overrides only
-- **Conversions:** rem → px (×16), oklch kept as-is, scopes assigned per token type
+Generates `tokens/variables-pro.json` in Variables Pro format:
 
----
+- Two collections: **Signal | Primitives** (single mode) and **Signal | Semantic** (Light + Dark modes)
+- Semantic tokens alias back to primitives via `$collectionName` cross-collection references
+- Scopes assigned per token type (`ALL_FILLS`, `TEXT_FILL`, `STROKE_COLOR`, `CORNER_RADIUS` etc.)
+- rem values converted to px (× 16)
 
-## Component gallery
-
-The gallery showcases all UI components in sections:
-
-| Section | Components |
-|---------|------------|
-| Buttons | Button (all variants + sizes), Toggle, Toggle Group |
-| Typography | Headings h1–h6, body, muted, lead, code, blockquote |
-| Form Controls | Input, Textarea, Label, Select, Combobox, Date Picker, Input OTP |
-| Feedback | Alert, Alert Dialog, Badge (+ success/warning/info), Sonner, Spinner |
-| Data Display | Card, Table, Data Table, Avatar, Skeleton, Chart, Aspect Ratio, Carousel |
-| Navigation | Tabs, Breadcrumb, Pagination, Accordion, Collapsible, Menubar, Navigation Menu |
-| Layout | Sidebar, Resizable panels |
-| Overlay | Dialog, Drawer, Sheet, Popover, Tooltip, Hover Card, Context Menu, Dropdown Menu, Command |
-| Selection | Checkbox, Radio Group, Switch, Slider |
-| Media | Progress, Separator, Scroll Area |
-
-Use the theme toggle (top-right) to switch between light and dark modes.
+To import into Figma: open Variables Pro plugin → Import → select `tokens/variables-pro.json`.
 
 ---
 
 ## Adding components
 
-Add shadcn components with the CLI:
-
 ```bash
 npx shadcn@latest add <component-name>
 ```
 
-When prompted to overwrite existing files (e.g. `button.tsx`), choose **no** to preserve your token-driven customizations.
+If prompted to overwrite a file you have already customised (e.g. `button.tsx`), choose **no** to preserve your token-driven version. For components you are adding for the first time, choose **yes**.
+
+After adding a new component, add its token block to `globals.css` following the naming pattern above, and map the tokens through `@theme inline` in `tokens.css`.
 
 ---
 
@@ -179,24 +229,24 @@ When prompted to overwrite existing files (e.g. `button.tsx`), choose **no** to 
 
 ```
 app/
-  tokens.css       # Primitive overrides + @theme (imported first)
-  globals.css      # Semantic tokens (colors, component sizing)
-  layout.tsx       # Root layout with ThemeProvider
-  page.tsx         # Gallery page
+  tokens.css          # Primitive tokens + @theme inline mappings (imported first)
+  globals.css         # Semantic tokens, component tokens, .dark overrides
+  layout.tsx          # Root layout with ThemeProvider
+  page.tsx            # Component gallery
 
 tokens/
-  variables-pro.json   # Figma Variables Pro export (npm run tokens)
+  variables-pro.json  # Figma export (generated by npm run tokens)
 
 scripts/
   export-tokens.js    # Parses tokens.css + globals.css → variables-pro.json
 
 components/
-  gallery/         # Gallery sections and demo content
-  ui/              # shadcn components (47 components)
+  gallery/            # Gallery sections
+  ui/                 # shadcn components
 ```
 
 ---
 
-## License
+## Component gallery
 
-Private.
+The gallery at [http://localhost:3000](http://localhost:3000) covers all shadcn components organised into sections: Buttons, Typography, Form Controls, Feedback, Data Display, Navigation, Layout, Overlay, and Selection. The Data Display section includes a Trading Blotter demo built with TanStack Table that demonstrates dataSyntax token usage across a dense financial data grid.
