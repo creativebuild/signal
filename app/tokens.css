@@ -138,4 +138,22 @@
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-press: var(--press);
   --color-press-foreground: var(--press-foreground);
+
+  /* dataSyntax — visual grammar */
+  --color-data-primary:          var(--data-primary);
+  --color-data-secondary:        var(--data-secondary);
+  --color-data-currency:         var(--data-currency);
+  --color-data-entity:           var(--data-entity);
+  --color-data-identifier:       var(--data-identifier);
+  --color-data-category:         var(--data-category);
+  --color-data-datetime:         var(--data-datetime);
+
+  --color-data-status-positive:  var(--data-status-positive);
+  --color-data-status-negative:  var(--data-status-negative);
+  --color-data-status-warning:   var(--data-status-warning);
+  --color-data-status-neutral:   var(--data-status-neutral);
+
+  --color-data-value-positive:   var(--data-value-positive);
+  --color-data-value-negative:   var(--data-value-negative);
+  --color-data-value-neutral:    var(--data-value-neutral);
 }

@@ -21,6 +21,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { TradingBlotter } from "@/components/trading-blotter";
 
 const tableData = [
   { name: "Alice", email: "alice@example.com", role: "Admin" },
@@ -107,6 +108,11 @@ export function DataDisplaySection() {
               </TableBody>
             </Table>
           </div>
+        </div>
+
+        <div className="col-span-full space-y-4">
+          <h3 className="text-sm font-medium text-muted-foreground">Trading Blotter</h3>
+          <TradingBlotter />
         </div>
 
         <div className="space-y-4">

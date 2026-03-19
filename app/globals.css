@@ -52,6 +52,24 @@
   --press: var(--color-blue-800);
   --press-foreground: var(--color-neutral-50);
 
+  /* dataSyntax — visual grammar for data display */
+  --data-primary:           var(--color-neutral-900);
+  --data-secondary:         var(--color-neutral-600);
+  --data-currency:          var(--color-yellow-600);
+  --data-entity:            var(--color-blue-600);
+  --data-identifier:        var(--color-cyan-600);
+  --data-category:          var(--color-purple-600);
+  --data-datetime:          var(--color-teal-500);
+
+  --data-status-positive:   var(--color-green-600);
+  --data-status-negative:   var(--color-red-600);
+  --data-status-warning:    var(--color-amber-600);
+  --data-status-neutral:    var(--color-neutral-500);
+
+  --data-value-positive:    var(--color-green-600);
+  --data-value-negative:    var(--color-red-600);
+  --data-value-neutral:     var(--color-neutral-900);
+
   /* Semantic sizing tokens — shared across component families */
   --radius: 0.1875rem;
   --control-height-sm: 1.5rem;
@@ -120,7 +138,24 @@
   --warning-foreground: var(--color-neutral-900);
   --info: var(--color-sky-400);
   --info-foreground: var(--color-neutral-50);
-  
+
+  /* dataSyntax — visual grammar (dark) */
+  --data-primary:           var(--color-neutral-50);
+  --data-secondary:         var(--color-neutral-400);
+  --data-currency:          var(--color-yellow-400);
+  --data-entity:            var(--color-blue-400);
+  --data-identifier:        var(--color-cyan-400);
+  --data-category:          var(--color-purple-400);
+  --data-datetime:          var(--color-teal-500);
+
+  --data-status-positive:   var(--color-green-400);
+  --data-status-negative:   var(--color-red-400);
+  --data-status-warning:    var(--color-amber-400);
+  --data-status-neutral:    var(--color-neutral-400);
+
+  --data-value-positive:    var(--color-green-400);
+  --data-value-negative:    var(--color-red-400);
+  --data-value-neutral:     var(--color-neutral-50);
 }
 
 /* Accordion animations */
