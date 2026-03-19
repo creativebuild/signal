@@ -52,6 +52,10 @@
   --press: var(--color-blue-800);
   --press-foreground: var(--color-neutral-50);
 
+  /* Selection state — blue / white for selected rows, list items, etc. */
+  --selection: var(--color-blue-600);
+  --selection-foreground: var(--color-white);
+
   /* dataSyntax — visual grammar for data display */
   --data-primary:           var(--color-neutral-900);
   --data-secondary:         var(--color-neutral-600);
@@ -59,11 +63,11 @@
   --data-entity:            var(--color-blue-600);
   --data-identifier:        var(--color-cyan-600);
   --data-category:          var(--color-purple-600);
-  --data-datetime:          var(--color-teal-500);
+  --data-datetime:          var(--color-teal-600);
 
   --data-status-positive:   var(--color-green-600);
   --data-status-negative:   var(--color-red-600);
-  --data-status-warning:    var(--color-amber-600);
+  --data-status-warning:    var(--color-amber-500);
   --data-status-neutral:    var(--color-neutral-500);
 
   --data-value-positive:    var(--color-green-600);
@@ -131,6 +135,9 @@
   --press: var(--color-blue-600);
   --press-foreground: var(--color-neutral-50);
 
+  --selection: var(--color-blue-800);
+  --selection-foreground: var(--color-neutral-50);
+
   /* Semantic extras */
   --success: var(--color-green-500);
   --success-foreground: var(--color-neutral-50);
@@ -184,8 +191,8 @@
   body {
     @apply bg-background text-foreground antialiased;
   }
-}
 
+}
 
 @layer utilities {
   .focus-ring {
@@ -198,4 +205,11 @@
   .animate-accordion-up {
     animation: accordion-up 0.2s ease-out;
   }
+}
+
+/* Light mode: selected row checkbox — white bg, black tick (inverted for contrast) */
+:root:not(.dark) [data-in-selected-row] [data-slot="checkbox"][data-checked] {
+  background-color: white;
+  border-color: white;
+  color: var(--color-neutral-900);
 }

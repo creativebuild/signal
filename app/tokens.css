@@ -50,6 +50,21 @@
   --ds-font-medium: 500;
   --ds-font-semibold: 600;
   --ds-font-bold: 700;
+
+  /* Data table primitives — tune the entire table from here */
+  --data-table-row-height:       var(--ds-space-5);
+  --data-table-header-height:   var(--ds-space-10);
+  --data-table-row-divider-width: 0;
+  --data-table-cell-px:          var(--ds-space-2);
+  --data-table-cell-py:          0;
+  --data-table-font-size:        0.9375rem;
+  --data-table-header-font-size: var(--ds-text-sm);
+  --data-table-font-weight:      var(--ds-font-medium);
+  --data-table-header-font-weight: var(--ds-font-bold);
+  /* Header and row colors — override in globals.css for light/dark */
+  --data-table-header-bg:        var(--background);
+  --data-table-header-foreground: var(--muted-foreground);
+  --data-table-row-hover:        var(--muted);
 }
 
 /* Maps --ds-* primitives to Tailwind utilities.
@@ -65,6 +80,21 @@
   --spacing-8: var(--ds-space-8);
   --spacing-10: var(--ds-space-10);
   --spacing-12: var(--ds-space-12);
+
+  /* Data table */
+  --spacing-data-table-row:      var(--data-table-row-height);
+  --spacing-data-table-header:   var(--data-table-header-height);
+  --spacing-data-table-cell-px:  var(--data-table-cell-px);
+  --spacing-data-table-cell-py:  var(--data-table-cell-py);
+  --text-data-table:             var(--data-table-font-size);
+  --text-data-table-header:       var(--data-table-header-font-size);
+  --font-weight-data-table:      var(--data-table-font-weight);
+  --font-weight-data-table-header: var(--data-table-header-font-weight);
+
+  /* Data table colors — header bg/foreground, row hover (defined in globals.css) */
+  --color-data-table-header:        var(--data-table-header-bg);
+  --color-data-table-header-foreground: var(--data-table-header-foreground);
+  --color-data-table-row-hover:     var(--data-table-row-hover);
 
   /* Radius → rounded-sm, rounded-lg etc */
   --radius-sm: var(--ds-radius-sm);
@@ -138,6 +168,8 @@
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-press: var(--press);
   --color-press-foreground: var(--press-foreground);
+  --color-selection: var(--selection);
+  --color-selection-foreground: var(--selection-foreground);
 
   /* dataSyntax — visual grammar */
   --color-data-primary:          var(--data-primary);

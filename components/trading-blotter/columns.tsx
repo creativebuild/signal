@@ -20,7 +20,10 @@ export const columns = [
       </div>
     ),
     cell: ({ row }) => (
-      <div className="flex w-10 min-w-10 items-center justify-start pr-2">
+      <div
+        className="flex w-10 min-w-10 items-center justify-start pr-2"
+        data-in-selected-row={row.getIsSelected() || undefined}
+      >
         <Checkbox
           checked={row.getIsSelected()}
           onCheckedChange={(value) => row.toggleSelected(!!value)}
@@ -36,16 +39,19 @@ export const columns = [
     header: "Status",
     cell: ({ row }) => {
       const status = row.getValue("status") as TradingBlotterRow["status"];
+      const isSelected = row.getIsSelected();
       const statusClasses: Record<TradingBlotterRow["status"], string> = {
-        FILL: "bg-data-status-positive text-white dark:text-black",
-        REJ: "bg-data-status-negative text-white dark:text-black",
-        WRK: "bg-data-status-warning text-white dark:text-black",
+        FILL: "bg-data-status-positive",
+        REJ: "bg-data-status-negative",
+        WRK: "bg-data-status-warning",
       };
+      const baseClasses =
+        "flex h-full w-full items-center px-[calc(var(--spacing-data-table-cell-px)/2)] py-data-table-cell-py font-bold text-primary-foreground";
       return (
         <div
           className={cn(
-            "-m-2 flex min-w-full items-center p-2 font-bold",
-            statusClasses[status] ?? "bg-data-status-neutral text-white dark:text-black"
+            baseClasses,
+            isSelected ? "bg-transparent" : statusClasses[status] ?? "bg-data-status-neutral"
           )}
         >
           {status}
@@ -73,6 +79,7 @@ export const columns = [
     header: "Side",
     cell: ({ row }) => {
       const side = row.getValue("side") as TradingBlotterRow["side"];
+      const isSelected = row.getIsSelected();
       const sideClasses: Record<TradingBlotterRow["side"], string> = {
         BUY: "text-data-value-positive bg-data-value-positive/20",
         SELL: "text-data-value-negative bg-data-value-negative/20",
@@ -80,8 +87,8 @@ export const columns = [
       return (
         <div
           className={cn(
-            "-m-2 flex min-w-full items-center p-2 font-bold",
-            sideClasses[side] ?? "text-data-value-neutral bg-data-value-neutral/20"
+            "flex h-full w-full items-center px-[calc(var(--spacing-data-table-cell-px)/2)] py-data-table-cell-py font-bold",
+            isSelected ? "bg-transparent text-white" : sideClasses[side] ?? "text-data-value-neutral bg-data-value-neutral/20"
           )}
         >
           {side}
