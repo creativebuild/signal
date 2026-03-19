@@ -19,18 +19,40 @@ function extractVars(cssBlock) {
   return vars;
 }
 
-/** Extract vars from :root block only */
+/** Extract vars from :root block — handles nested braces in values */
 function extractRootVars(css) {
-  const rootMatch = css.match(/:root\s*\{([\s\S]*?)\}(?=\s*(?:\.|@|$))/m);
-  if (!rootMatch) return {};
-  return extractVars(rootMatch[1]);
+  const start = css.indexOf(":root");
+  if (start === -1) return {};
+  const openBrace = css.indexOf("{", start);
+  if (openBrace === -1) return {};
+  let depth = 1;
+  let pos = openBrace + 1;
+  while (pos < css.length && depth > 0) {
+    const c = css[pos];
+    if (c === "{") depth++;
+    else if (c === "}") depth--;
+    pos++;
+  }
+  const block = css.slice(openBrace + 1, pos - 1);
+  return extractVars(block);
 }
 
-/** Extract vars from .dark block only */
+/** Extract vars from .dark block */
 function extractDarkVars(css) {
-  const darkMatch = css.match(/\.dark\s*\{([\s\S]*?)\}(?=\s*(?:\.|@|$))/m);
-  if (!darkMatch) return {};
-  return extractVars(darkMatch[1]);
+  const start = css.indexOf(".dark");
+  if (start === -1) return {};
+  const openBrace = css.indexOf("{", start);
+  if (openBrace === -1) return {};
+  let depth = 1;
+  let pos = openBrace + 1;
+  while (pos < css.length && depth > 0) {
+    const c = css[pos];
+    if (c === "{") depth++;
+    else if (c === "}") depth--;
+    pos++;
+  }
+  const block = css.slice(openBrace + 1, pos - 1);
+  return extractVars(block);
 }
 
 /** Convert rem to px (multiply by 16) */
@@ -61,7 +83,7 @@ function buildLightMode(dsVars, semanticVars) {
     }
   }
 
-  // Radius
+  // Radius — include calc() values as strings when not parseable to px
   mode.radius = {};
   for (const [name, value] of Object.entries(dsVars)) {
     if (!name.startsWith("--ds-radius-")) continue;
@@ -71,6 +93,12 @@ function buildLightMode(dsVars, semanticVars) {
       mode.radius[key] = {
         $type: "float",
         $value: px,
+        $scopes: ["CORNER_RADIUS"],
+      };
+    } else {
+      mode.radius[key] = {
+        $type: "string",
+        $value: value,
         $scopes: ["CORNER_RADIUS"],
       };
     }
@@ -297,7 +325,118 @@ function buildLightMode(dsVars, semanticVars) {
     }
   }
 
+  // All tokens — every variable from tokens.css + globals.css
+  mode.tokens = buildAllTokens({ ...dsVars, ...semanticVars });
+
   return mode;
+}
+
+/** Build comprehensive tokens object from all CSS vars — mirrors globals/tokens structure */
+function buildAllTokens(allVars) {
+  const fillOnly = /-foreground|-fg$|-fg-hover|-fg-active|-fg-selected|-fg-checked|-fg-disabled|-fg-hover$/;
+  const strokeOnly = ["border", "input", "ring", "border-hover", "border-focus", "border-error", "border-disabled", "border-checked"];
+
+  function isColor(value) {
+    if (!value) return false;
+    const v = String(value);
+    return v.startsWith("var(") || v.startsWith("oklch") || v.startsWith("rgba") || v.startsWith("#") || v === "transparent";
+  }
+
+  function tokenEntry(name, value) {
+    const key = name.replace(/^--/, "");
+    if (isColor(value)) {
+      const fillOnlyMatch = fillOnly.test(key) || ["foreground", "muted-foreground", "accent-foreground"].some((k) => key === k);
+      const strokeOnlyMatch = strokeOnly.some((k) => key === k || key.endsWith("-border") || key.endsWith("-border-color"));
+      let scopes = ["ALL_FILLS", "STROKE_COLOR"];
+      if (strokeOnlyMatch && !fillOnlyMatch) scopes = ["STROKE_COLOR"];
+      else if (fillOnlyMatch && !strokeOnlyMatch) scopes = ["ALL_FILLS"];
+      return { $type: "color", $value: value, $scopes: scopes };
+    }
+    const px = remToPx(value);
+    if (px !== null) {
+      return { $type: "float", $value: px, $scopes: ["GAP", "WIDTH_HEIGHT", "CORNER_RADIUS"] };
+    }
+    const num = parseFloat(value);
+    if (!isNaN(num) && value === String(num)) {
+      return { $type: "float", $value: num, $scopes: [] };
+    }
+    return { $type: "string", $value: value, $scopes: [] };
+  }
+
+  function setNested(obj, path, value) {
+    const parts = path.split("-");
+    let cur = obj;
+    for (let i = 0; i < parts.length - 1; i++) {
+      const p = parts[i];
+      if (!cur[p]) cur[p] = {};
+      cur = cur[p];
+    }
+    cur[parts[parts.length - 1]] = value;
+  }
+
+  const result = {};
+  const seenInStructured = new Set([
+    "ds-space-1", "ds-space-2", "ds-space-3", "ds-space-4", "ds-space-5", "ds-space-6",
+    "ds-space-8", "ds-space-10", "ds-space-12",
+    "ds-radius-sm", "ds-radius-md", "ds-radius-lg", "ds-radius-xl", "ds-radius-full",
+    "ds-shadow-sm", "ds-shadow-md", "ds-shadow-lg",
+    "ds-text-xs", "ds-text-sm", "ds-text-base", "ds-text-lg", "ds-text-xl", "ds-text-2xl", "ds-text-3xl",
+    "ds-leading-tight", "ds-leading-normal", "ds-leading-relaxed",
+    "ds-font-normal", "ds-font-medium", "ds-font-semibold", "ds-font-bold",
+  ]);
+
+  for (const [name, value] of Object.entries(allVars)) {
+    const key = name.replace(/^--/, "");
+    if (key.startsWith("ds-") && seenInStructured.has(key)) continue;
+
+    const entry = tokenEntry(name, value);
+    const path = key.replace(/^ds-/, "").replace(/^radius-/, "radius.");
+    const topLevel = key.startsWith("ds-")
+      ? key.replace(/^ds-/, "").split("-")[0]
+      : key.split("-")[0];
+
+    let target = result;
+    const prefix = key.startsWith("ds-") ? "primitives" : "semantic";
+    if (!result[prefix]) result[prefix] = {};
+
+    if (key.startsWith("button-")) {
+      if (!result.components) result.components = {};
+      if (!result.components.button) result.components.button = {};
+      result.components.button[key.replace("button-", "")] = entry;
+    } else if (key.startsWith("input-") || key.startsWith("select-") || key.startsWith("data-table-") ||
+      key.startsWith("card-") || key.startsWith("badge-") || key.startsWith("dialog-") || key.startsWith("popover-") ||
+      key.startsWith("toast-") || key.startsWith("tooltip-") || key.startsWith("dropdown-") || key.startsWith("tabs-") ||
+      key.startsWith("table-") || key.startsWith("sidebar-") || key.startsWith("avatar-") || key.startsWith("checkbox-") ||
+      key.startsWith("switch-") || key.startsWith("slider-") || key.startsWith("progress-") || key.startsWith("alert-") ||
+      key.startsWith("skeleton-") || key.startsWith("separator-") || key.startsWith("accordion-") || key.startsWith("sheet-") ||
+      key.startsWith("command-") || key.startsWith("nav-") || key.startsWith("pagination-") || key.startsWith("breadcrumb-") ||
+      key.startsWith("calendar-") || key.startsWith("toggle-") || key.startsWith("scroll-") ||
+      key.startsWith("component-") || key.startsWith("control-") || key.startsWith("drawer-") || key.startsWith("alert-dialog-")) {
+      const [group, ...rest] = key.split("-");
+      const groupKey = group === "data" ? "data-table" : group === "alert" && key.startsWith("alert-dialog") ? "alert-dialog" : group;
+      if (!result.components) result.components = {};
+      if (!result.components[groupKey]) result.components[groupKey] = {};
+      const subKey = key.startsWith("alert-dialog") ? key.replace("alert-dialog-", "") : key.includes("-") ? key.substring(key.indexOf("-") + 1) : key;
+      result.components[groupKey][subKey] = entry;
+    } else {
+      if (!result.semantic) result.semantic = {};
+      result.semantic[key] = entry;
+    }
+  }
+
+  const flattened = {};
+  function flatten(obj, prefix = "") {
+    for (const [k, v] of Object.entries(obj)) {
+      if (v && typeof v === "object" && v.$type) {
+        flattened[prefix ? `${prefix}.${k}` : k] = v;
+      } else if (v && typeof v === "object" && !Array.isArray(v)) {
+        flatten(v, prefix ? `${prefix}.${k}` : k);
+      }
+    }
+  }
+  flatten(result);
+
+  return Object.keys(flattened).length > 0 ? result : {};
 }
 
 /** Build Dark Mode from .dark block — includes oklch and var() refs */
