@@ -1,16 +1,18 @@
 # Signal — Token-driven Design System POC
 
-A Next.js 15 proof of concept for a fully token-driven design system built on shadcn/ui, with Figma Variables Pro parity as a first-class goal. Every visual decision — color, spacing, typography, sizing — flows from CSS custom properties defined in two files: `globals.css` (semantic decisions) and `tokens.css` (Tailwind bridge). Run `npm run tokens` to export the entire theme to a Variables Pro JSON file ready to import into Figma.
+A Next.js 15 proof of concept for a token-driven design system built on shadcn/ui, with Figma Variables parity as a first-class goal. **All design tokens live in `app/tokens.css`.** `app/globals.css` holds base styles, resets, and shared utilities only — not semantic token definitions.
+
+Run **`npm run tokens`** to export JSON for Figma (see [Figma export](#figma-export)).
 
 ---
 
 ## Stack
 
-- **Next.js 15** — App router, React 19
-- **Tailwind CSS v4** — Utility-first CSS with `@theme inline` for token mapping
-- **shadcn/ui** — Component library (Base UI + Radix primitives)
-- **next-themes** — System-aware light/dark mode (`ThemeProvider`, `class` attribute)
-- **class-variance-authority** — Variant composition for buttons, badges, etc.
+- **Next.js 15** — App router, React 19  
+- **Tailwind CSS v4** — Utilities and `@theme inline` for design-token → class mapping  
+- **shadcn/ui** — Components (Base UI + Radix primitives)  
+- **next-themes** — Light / dark via the `class` strategy (`ThemeProvider`)  
+- **class-variance-authority** — Variants for buttons, badges, etc.
 
 ---
 
@@ -21,178 +23,66 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the component gallery. Use the theme toggle (top-right) to switch between light and dark modes.
-
-To export the full theme to Figma:
-
-```bash
-npm run tokens
-```
-
-Output: `tokens/variables-pro.json` — ready to import into Figma via Variables Pro.
+Open [http://localhost:3000](http://localhost:3000) for the component gallery. Use the theme toggle (top-right) for light and dark.
 
 ---
 
-## How it works
+## How tokens work
 
-shadcn/ui ships with two categories of styling out of the box:
+### Three layers in `tokens.css`
 
-- **Tokenized** — Semantic colors (`--primary`, `--border`, etc.) defined in `:root` and mapped to Tailwind utilities via `@theme` (`bg-primary`, `text-foreground`, etc.)
-- **Hardcoded** — Heights, padding, font sizes, and gaps as literal Tailwind values in each component file (`h-9`, `px-4`, `text-sm`)
+| Layer | Role |
+|--------|------|
+| **`@theme inline`** | **Theme-dependent values exposed as Tailwind.** Today this is **semantic colors only** (`--color-*` → `bg-primary`, `text-foreground`, `text-data-entity`, …). These utilities resolve through CSS variables that **change** when the document is light vs dark. |
+| **`:root`** | **Default (light) theme values.** All semantic CSS variables are defined here: colors, radius, shadows, spacing, data-table sizing, etc. This is the single source of truth for **light** appearance and for **non-color** tokens that are the same in every theme. |
+| **`.dark`** | **Dark overrides only.** Typically **color** variables that differ from light. Structural tokens (spacing, radius, shadows, data-table row heights, …) stay in `:root` unless you intentionally override them. |
 
-Signal extends the token model so that sizing, spacing, and component-specific values also live as named tokens — giving the system complete Figma parity and a single place to change anything.
+`layout.tsx` imports **`tokens.css` first**, then **`globals.css`**, so tokens exist before global base styles run.
 
-### File responsibilities
+### How this maps to components
 
-| File | Purpose |
-|------|---------|
-| `app/globals.css` | **Source of truth.** Semantic colors (referencing Tailwind palette variables), component tokens (`--button-*`, `--input-*`, `--data-table-*`, etc.), the base radius dial (`--radius`), and `.dark` overrides. Edit this file to change the theme. |
-| `app/tokens.css` | **Tailwind bridge.** Defines `--ds-*` primitive tokens (spacing, radius, typography, shadow) and maps all semantic and component tokens from `globals.css` to Tailwind utilities via `@theme inline` — generating `p-4`, `rounded-lg`, `bg-primary`, `text-data-entity`, etc. |
+- **Colors** — Prefer Tailwind classes generated from `@theme` (`bg-background`, `text-muted-foreground`, `border-border`, `text-data-currency`, …). They follow the active theme because they point at the same `--background`, `--primary`, … variables that `.dark` overrides.
+- **Everything else** — Spacing, radius, shadows, data-table dimensions, opacity, etc. are **not** duplicated in `@theme`. Use **arbitrary values** that reference `:root` variables, e.g. `rounded-[var(--radius-control)]`, `shadow-[var(--shadow-md)]`, `h-[var(--data-table-row-height-sm)]`, `p-[var(--card-padding)]`, `gap-[var(--control-gap)]`.
 
-`layout.tsx` imports `tokens.css` before `globals.css`.
+That split keeps `@theme` focused on **what changes with light/dark (mostly color)** and keeps **layout and structure** in one place (`:root`).
 
-### Architecture
+### `globals.css`
+
+Contains `@reference "./tokens.css"`, base resets, `@layer base` / `@layer utilities` (e.g. `.focus-ring`), and keyframes — **not** a second token file.
+
+---
+
+## Architecture (mental model)
 
 ```
 Components
-  └── Tailwind utilities (bg-primary, text-data-entity, rounded-component)
-        └── @theme inline (tokens.css)
-              └── Semantic tokens (globals.css :root / .dark)
-                    └── Tailwind palette (--color-neutral-950, --color-blue-600)
+  ├── Tailwind color utilities     ← @theme inline (--color-* → bg-*, text-*, …)
+  │       └── var(--background), var(--primary), …  ← :root definitions, .dark overrides
+  └── Arbitrary + structural       ← var(--radius-*), var(--shadow-*), var(--control-*), …
+          └── :root (and .dark only where needed)
 ```
-
-### Why the `--ds-` prefix
-
-Tailwind v4's `@theme` throws circular reference errors when a token and its mapped utility share the same name — e.g. `--radius-sm: var(--radius-sm)` references itself.
-
-The fix: primitive tokens in `tokens.css` use a `--ds-` namespace, so `@theme` can safely map them without collision:
-
-```css
-/* tokens.css */
---ds-radius-sm: calc(var(--radius) - 4px);   /* primitive */
-
-@theme inline {
-  --radius-sm: var(--ds-radius-sm);           /* maps to rounded-sm */
-}
-```
-
-This prefix only applies to primitives in `tokens.css`. Semantic tokens in `globals.css` (`--background`, `--button-primary-bg`, `--data-entity` etc.) use no prefix — they follow shadcn's own naming convention.
-
-The base `--radius` value in `globals.css` acts as a single dial. Changing it cascades through the full radius scale and updates every component's corner radius at once.
-
-### Token priority
-
-When styling components, use this order:
-
-1. **shadcn native** — `bg-background`, `text-foreground`, `border-border`, `bg-primary`, `text-muted-foreground` (shadcn components depend on these)
-2. **Signal semantic** — `bg-success`, `text-link`, `bg-press`, `text-data-entity` (Signal extensions to shadcn)
-3. **Signal component** — `bg-button-primary`, `text-input-placeholder`, `bg-data-table-row-selected` (component-specific tokens)
-4. **Raw Tailwind palette** — only for genuinely one-off values not worth tokenising
 
 ---
 
-## Token reference
+## Usage priority when styling
 
-### Primitives — `tokens.css`
+1. **shadcn / semantic colors** — `bg-background`, `text-foreground`, `border-border`, `bg-primary`, …  
+2. **Signal extensions** — `text-success`, `bg-press`, `text-data-entity`, chart colors, overlay tints, etc.  
+3. **Structural tokens** — `var(--radius-container)`, `var(--card-padding)`, `shadow-[var(--shadow-sm)]`, …  
+4. **Raw palette / one-offs** — Only when something is not worth tokenising.
 
-Defined with `--ds-*` prefix, mapped to Tailwind utilities via `@theme inline`.
+---
 
-| Group | Tokens | Utilities |
-|-------|--------|-----------|
-| Spacing | `--ds-space-1` → `--ds-space-12` | `p-1`, `gap-4`, `m-8` etc. |
-| Radius | `--ds-radius-sm` → `--ds-radius-full` | `rounded-sm`, `rounded-xl` etc. |
-| Shadow | `--ds-shadow-sm` → `--ds-shadow-lg` | `shadow-sm`, `shadow-lg` etc. |
-| Typography | `--ds-text-xs` → `--ds-text-3xl` | `text-xs`, `text-2xl` etc. |
-| Line height | `--ds-leading-tight` → `--ds-leading-relaxed` | `leading-tight` etc. |
-| Font weight | `--ds-font-normal` → `--ds-font-bold` | `font-medium`, `font-bold` etc. |
+## Token reference (where to look)
 
-### Semantic tokens — `globals.css`
+All sections are commented in **`app/tokens.css`**. In outline:
 
-All semantic colors reference Tailwind palette variables (e.g. `var(--color-neutral-950)`) — never hardcoded hex or oklch values. Defined in `:root` for light mode, overridden in `.dark` for dark mode.
+- **Semantic colors** — Core surfaces, brand, state, borders, data-syntax palette, charts, transparency scales, overlays, component-specific colors (sidebar, table, data-table, slider, …).  
+- **Radius / shadows** — Stepped radius (`--radius-md`, …) and semantic aliases (`--radius-control`, …); shadow scales (`--shadow-xs` … `--shadow-lg`).  
+- **Spacing** — Control heights, padding, gaps; structural (`--card-padding`, `--menu-item-*`, `--avatar-size-*`, …).  
+- **Data table** — Row/header heights, cell padding, typography tokens for dense grids.
 
-#### shadcn base (preserved exactly)
-
-These are shadcn's own variables. All shadcn components depend on them — do not rename or remove.
-
-| Token | Purpose |
-|-------|---------|
-| `--background`, `--foreground` | Page surface and default text |
-| `--card`, `--card-foreground` | Card surfaces |
-| `--popover`, `--popover-foreground` | Dropdowns, menus, tooltips |
-| `--primary`, `--primary-foreground` | Primary actions |
-| `--secondary`, `--secondary-foreground` | Secondary actions |
-| `--muted`, `--muted-foreground` | Muted surfaces and text |
-| `--accent`, `--accent-foreground` | Hover and focus states |
-| `--destructive`, `--destructive-foreground` | Destructive actions |
-| `--border`, `--input`, `--ring` | Borders, input outlines, focus rings |
-| `--chart-1` through `--chart-5` | Chart series colors |
-| `--sidebar`, `--sidebar-foreground` | Sidebar surface and text |
-| `--radius` | Base radius dial — drives the full radius scale |
-
-#### Signal extensions
-
-Additional semantic tokens that extend the shadcn base:
-
-| Token | Purpose |
-|-------|---------|
-| `--success`, `--success-foreground` | Success state |
-| `--warning`, `--warning-foreground` | Warning state |
-| `--info`, `--info-foreground` | Informational state |
-| `--press`, `--press-foreground` | Active/pressed control state |
-| `--link`, `--link-foreground` | Link color |
-
-#### Radius hierarchy
-
-Radius is assigned by visual hierarchy, not control size:
-
-| Token | Used for |
-|-------|---------|
-| `--radius-container` | Card, Dialog, Sheet, Drawer — outermost surfaces |
-| `--radius-control` | Button, Input, Select, Toggle — interactive controls |
-| `--radius-inset` | Elements nested inside controls or cards |
-| `--radius-pill` | Badge, tag, pill shapes |
-
-#### dataSyntax — visual grammar for data display
-
-A system of semantic color tokens for consistently styling different categories of data in tables and grids — similar to syntax highlighting for code.
-
-| Token | Purpose | Example use |
-|-------|---------|-------------|
-| `--data-primary` | Primary data text | Main values |
-| `--data-secondary` | Secondary data text | Supporting values |
-| `--data-currency` | Monetary values | Amounts, prices |
-| `--data-entity` | Named entities | Usernames, counterparties |
-| `--data-identifier` | Codes and IDs | Currency pairs, reference numbers |
-| `--data-category` | Categories and types | Product type, instrument |
-| `--data-datetime` | Dates and times | Timestamps, value dates |
-| `--data-status-positive` | Positive status | Complete, filled |
-| `--data-status-negative` | Negative status | Rejected, failed |
-| `--data-status-warning` | Warning status | Pending, working |
-| `--data-status-neutral` | Neutral status | — |
-| `--data-value-positive` | Positive numeric value | Gains |
-| `--data-value-negative` | Negative numeric value | Losses |
-| `--data-value-neutral` | Neutral numeric value | Standard figures |
-
-Utilities: `text-data-entity`, `text-data-status-positive`, `text-data-currency` etc.
-
-#### Component tokens
-
-Every shadcn component has a dedicated token block in `globals.css` covering background, foreground, border, hover states, sizing, padding, and radius. Component tokens reference shadcn base tokens wherever possible, then Signal semantic extensions, and only introduce new values where genuinely needed.
-
-Naming pattern:
-```css
---{component}-bg
---{component}-fg
---{component}-border
---{component}-bg-hover
---{component}-fg-hover
---{component}-border-hover
---{component}-radius
---{component}-px
---{component}-py
-```
-
-Components with tokens: `button` (with variants: primary, secondary, ghost, link, cta, destructive, rag-green, rag-yellow, rag-red), `input`, `card`, `badge`, `dialog`, `popover`, `toast`, `tooltip`, `select`, `dropdown-menu`, `tabs`, `table`, `data-table`, `sidebar`, `avatar`, `checkbox`, `switch`, `slider`, `progress`, `alert`, `skeleton`, `separator`, `accordion`, `sheet`, `command`, `navigation-menu`, `pagination`, `breadcrumb`, `calendar`, `toggle`, `scroll-area`.
+**dataSyntax** — Semantic text colors for tables and dense data (`--data-currency`, `--data-entity`, `--data-status-positive`, …) with matching `text-data-*` utilities.
 
 ---
 
@@ -202,26 +92,37 @@ Components with tokens: `button` (with variants: primary, secondary, ghost, link
 npm run tokens
 ```
 
-Generates `tokens/variables-pro.json` in Variables Pro format:
+This runs **two** exporters:
 
-- Two collections: **Signal | Primitives** (single mode) and **Signal | Semantic** (Light + Dark modes)
-- Semantic tokens alias back to primitives via `$collectionName` cross-collection references
-- Scopes assigned per token type (`ALL_FILLS`, `TEXT_FILL`, `STROKE_COLOR`, `CORNER_RADIUS` etc.)
-- rem values converted to px (× 16)
+| Output | Format | Use case |
+|--------|--------|----------|
+| **`tokens/variables-pro.json`** | Variables Pro (Light + Dark modes in one file) | [Variables Pro](https://variables.pro/) plugin → Import |
+| **`tokens/light.json`** & **`tokens/dark.json`** | DTCG-style trees **per mode** (primitives + semantic resolved for that mode) | Figma’s **native Variables** import (import each file into the matching mode / collection workflow) |
 
-To import into Figma: open Variables Pro plugin → Import → select `tokens/variables-pro.json`.
+Optional scripts:
+
+- `npm run tokens:variables-pro` — only `variables-pro.json`  
+- `npm run tokens:figma` — only `light.json` + `dark.json`
+
+**API (dev server):**
+
+- `GET /api/tokens` — download `variables-pro.json`  
+- `GET /api/tokens/figma` — `light.json` (default)  
+- `GET /api/tokens/figma?mode=dark` — `dark.json`  
+
+Generate files with `npm run tokens` before using these routes.
 
 ---
 
-## Adding components
+## Adding shadcn components
 
 ```bash
 npx shadcn@latest add <component-name>
 ```
 
-If prompted to overwrite a file you have already customised (e.g. `button.tsx`), choose **no** to preserve your token-driven version. For components you are adding for the first time, choose **yes**.
+If prompted to overwrite a customised file (e.g. `button.tsx`), choose **no** to keep token-driven styling. For new components, choose **yes**.
 
-After adding a new component, add its token block to `globals.css` following the naming pattern above, and map the tokens through `@theme inline` in `tokens.css`.
+After adding a component, wire any new **colors** through **`@theme inline`** (`--color-*`) and **`:root` / `.dark`** as needed; use **`var(--…)`** from `:root` for spacing, radius, and shadows instead of duplicating them in `@theme`.
 
 ---
 
@@ -229,16 +130,18 @@ After adding a new component, add its token block to `globals.css` following the
 
 ```
 app/
-  tokens.css          # Primitive tokens + @theme inline mappings (imported first)
-  globals.css         # Semantic tokens, component tokens, .dark overrides
-  layout.tsx          # Root layout with ThemeProvider
-  page.tsx            # Component gallery
+  tokens.css          # Design tokens: @theme + :root + .dark (imported first)
+  globals.css         # Base styles, utilities, keyframes (@reference tokens.css)
+  layout.tsx          # ThemeProvider, CSS import order
 
 tokens/
-  variables-pro.json  # Figma export (generated by npm run tokens)
+  variables-pro.json  # Variables Pro export (generated)
+  light.json          # Figma native — light mode (generated)
+  dark.json           # Figma native — dark mode (generated)
 
 scripts/
-  export-tokens.js    # Parses tokens.css + globals.css → variables-pro.json
+  export-tokens.js         # → variables-pro.json
+  export-tokens-figma.js   # → light.json, dark.json
 
 components/
   gallery/            # Gallery sections
@@ -249,4 +152,4 @@ components/
 
 ## Component gallery
 
-The gallery at [http://localhost:3000](http://localhost:3000) covers all shadcn components organised into sections: Buttons, Typography, Form Controls, Feedback, Data Display, Navigation, Layout, Overlay, and Selection. The Data Display section includes a Trading Blotter demo built with TanStack Table that demonstrates dataSyntax token usage across a dense financial data grid.
+The gallery lists shadcn components by category: Buttons, Typography, Form controls, Feedback, Data display, Navigation, Layout, Overlay, and Selection. **Data display** includes a Trading Blotter (TanStack Table) using **dataSyntax** tokens on a dense financial grid.

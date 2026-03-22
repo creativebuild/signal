@@ -18,13 +18,13 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-muted hover:text-foreground active:!bg-press active:!text-press-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
         destructive:
-          "bg-destructive/10 text-destructive hover:bg-destructive/20 active:bg-destructive active:text-destructive-foreground focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
+          "bg-destructive/10 text-destructive hover:bg-destructive/20 active:bg-destructive active:text-destructive-foreground dark:active:bg-destructive dark:active:text-destructive-foreground focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
         success:
-          "bg-success/10 text-success hover:bg-success/20 active:bg-success active:text-success-foreground focus-visible:border-success/40 focus-visible:ring-success/20 dark:bg-success/20 dark:hover:bg-success/30 dark:focus-visible:ring-success/40",
+          "bg-success/10 text-success hover:bg-success/20 active:bg-success active:text-success-foreground dark:active:bg-success dark:active:text-success-foreground focus-visible:border-success/40 focus-visible:ring-success/20 dark:bg-success/20 dark:hover:bg-success/30 dark:focus-visible:ring-success/40",
         warning:
-          "bg-warning/10 text-warning hover:bg-warning/20 active:bg-warning active:text-warning-foreground focus-visible:border-warning/40 focus-visible:ring-warning/20 dark:bg-warning/20 dark:hover:bg-warning/30 dark:focus-visible:ring-warning/40",
+          "bg-warning/10 text-warning hover:bg-warning/20 active:bg-warning active:text-warning-foreground dark:active:bg-warning dark:active:text-warning-foreground focus-visible:border-warning/40 focus-visible:ring-warning/20 dark:bg-warning/20 dark:hover:bg-warning/30 dark:focus-visible:ring-warning/40",
         info:
-          "bg-info/10 text-info hover:bg-info/20 active:bg-info active:text-info-foreground focus-visible:border-info/40 focus-visible:ring-info/20 dark:bg-info/20 dark:hover:bg-info/30 dark:focus-visible:ring-info/40",
+          "bg-info/10 text-info hover:bg-info/20 active:bg-info active:text-info-foreground dark:active:bg-info dark:active:text-info-foreground focus-visible:border-info/40 focus-visible:ring-info/20 dark:bg-info/20 dark:hover:bg-info/30 dark:focus-visible:ring-info/40",
         link: "text-link underline-offset-4 hover:underline active:bg-press/10 active:text-press",
       },
       size: {

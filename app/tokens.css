@@ -1,132 +1,29 @@
 @import "tailwindcss";
 
-/* ============================================================
-   PRIMITIVE TOKEN OVERRIDES
-   These intentionally replace Tailwind's default scale values.
-   Removing a token here means Tailwind's default takes over.
-   All values exported to tokens.json for Figma parity.
-   ============================================================ */
+/* ==========================================================================
+   DESIGN TOKENS
+   Single source of truth for all semantic variables.
+   Components use Tailwind utility classes (bg-primary, text-foreground, etc.)
+   plus structural var(--...) for spacing and radius.
+   Radius: prefer var(--radius-container|control|inset|pill); for a step use
+   var(--radius-sm|md|lg|xl|full). The stepped scale lives in :root only; Tailwind
+   rounded-* utilities still use the default @import "tailwindcss" theme unless
+   you extend @theme elsewhere.
+   ========================================================================== */
 
-:root {
-  /* Spacing scale */
-  --ds-space-1: 0.25rem;
-  --ds-space-2: 0.5rem;
-  --ds-space-3: 0.75rem;
-  --ds-space-4: 1rem;
-  --ds-space-5: 1.25rem;
-  --ds-space-6: 1.5rem;
-  --ds-space-8: 2rem;
-  --ds-space-10: 2.5rem;
-  --ds-space-12: 3rem;
-
-  /* Radius scale — derived from --radius in globals.css */
-  --ds-radius-sm: calc(var(--radius) - 4px);
-  --ds-radius-md: var(--radius);
-  --ds-radius-lg: calc(var(--radius) + 4px);
-  --ds-radius-xl: calc(var(--radius) + 8px);
-  --ds-radius-full: 9999px;
-
-  /* Shadow scale */
-  --ds-shadow-sm: 0 1px 2px 0 oklch(0 0 0 / 0.05);
-  --ds-shadow-md: 0 4px 6px -1px oklch(0 0 0 / 0.1), 0 2px 4px -2px oklch(0 0 0 / 0.1);
-  --ds-shadow-lg: 0 10px 15px -3px oklch(0 0 0 / 0.1), 0 4px 6px -4px oklch(0 0 0 / 0.1);
-
-  /* Typography scale */
-  --ds-text-xs: 0.75rem;
-  --ds-text-sm: 0.875rem;
-  --ds-text-base: 1rem;
-  --ds-text-lg: 1.125rem;
-  --ds-text-xl: 1.25rem;
-  --ds-text-2xl: 1.5rem;
-  --ds-text-3xl: 1.875rem;
-
-  /* Line height scale */
-  --ds-leading-tight: 1.25;
-  --ds-leading-normal: 1.5;
-  --ds-leading-relaxed: 1.75;
-
-  /* Font weight scale */
-  --ds-font-normal: 400;
-  --ds-font-medium: 500;
-  --ds-font-semibold: 600;
-  --ds-font-bold: 700;
-
-  /* Data table primitives — defined in globals.css; tokens.css @theme references them */
-}
-
-/* Maps --ds-* primitives to Tailwind utilities.
-   --ds-* prefix on left side prevents circular references. */
+/* --------------------------------------------------------------------------
+   @theme — maps semantic tokens to Tailwind utilities
+   -------------------------------------------------------------------------- */
 @theme inline {
-  /* Spacing → p-1, gap-2, m-4 etc */
-  --spacing-1: var(--ds-space-1);
-  --spacing-2: var(--ds-space-2);
-  --spacing-3: var(--ds-space-3);
-  --spacing-4: var(--ds-space-4);
-  --spacing-5: var(--ds-space-5);
-  --spacing-6: var(--ds-space-6);
-  --spacing-8: var(--ds-space-8);
-  --spacing-10: var(--ds-space-10);
-  --spacing-12: var(--ds-space-12);
-
-  /* Data table */
-  --spacing-data-table-row:      var(--data-table-row-height);
-  --spacing-data-table-row-sm:   var(--data-table-row-height-sm);
-  --spacing-data-table-row-md:   var(--data-table-row-height-md);
-  --spacing-data-table-row-lg:   var(--data-table-row-height-lg);
-  --spacing-data-table-header:   var(--data-table-header-height);
-  --spacing-data-table-cell-px:  var(--data-table-cell-px);
-  --spacing-data-table-cell-py:  var(--data-table-cell-py);
-  --text-data-table:             var(--data-table-font-size);
-  --text-data-table-header:       var(--data-table-header-font-size);
-  --font-weight-data-table:      var(--data-table-font-weight);
-  --font-weight-data-table-header: var(--data-table-header-font-weight);
-
-  /* Data table colors — header bg/foreground, row hover (defined in globals.css) */
-  --color-data-table-header:        var(--data-table-header-bg);
-  --color-data-table-header-foreground: var(--data-table-header-foreground);
-  --color-data-table-row-hover:     var(--data-table-row-bg-hover);
-
-  /* Radius → rounded-sm, rounded-lg etc */
-  --radius-sm: var(--ds-radius-sm);
-  --radius-md: var(--ds-radius-md);
-  --radius-lg: var(--ds-radius-lg);
-  --radius-xl: var(--ds-radius-xl);
-  --radius-full: var(--ds-radius-full);
-
-  /* Shadows → shadow-sm, shadow-md etc */
-  --shadow-sm: var(--ds-shadow-sm);
-  --shadow-md: var(--ds-shadow-md);
-  --shadow-lg: var(--ds-shadow-lg);
-
-  /* Typography → text-xs, text-sm etc */
-  --text-xs: var(--ds-text-xs);
-  --text-sm: var(--ds-text-sm);
-  --text-base: var(--ds-text-base);
-  --text-lg: var(--ds-text-lg);
-  --text-xl: var(--ds-text-xl);
-  --text-2xl: var(--ds-text-2xl);
-  --text-3xl: var(--ds-text-3xl);
-
-  /* Line heights → leading-tight etc */
-  --leading-tight: var(--ds-leading-tight);
-  --leading-normal: var(--ds-leading-normal);
-  --leading-relaxed: var(--ds-leading-relaxed);
-
-  /* Font weights → font-normal, font-medium etc */
-  --font-weight-normal: var(--ds-font-normal);
-  --font-weight-medium: var(--ds-font-medium);
-  --font-weight-semibold: var(--ds-font-semibold);
-  --font-weight-bold: var(--ds-font-bold);
-}
-
-/* Color mappings — semantic tokens from globals.css (loaded after tokens) */
-@theme inline {
+  /* 1. Core surface & text */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
+
+  /* 2. Brand & interactions */
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
@@ -138,6 +35,12 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-link: var(--link);
   --color-link-foreground: var(--link-foreground);
+  --color-press: var(--press);
+  --color-press-foreground: var(--press-foreground);
+  --color-selection: var(--selection);
+  --color-selection-foreground: var(--selection-foreground);
+
+  /* 3. State */
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-success: var(--success);
@@ -146,22 +49,13 @@
   --color-warning-foreground: var(--warning-foreground);
   --color-info: var(--info);
   --color-info-foreground: var(--info-foreground);
+
+  /* 4. Border & focus */
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-press: var(--press);
-  --color-press-foreground: var(--press-foreground);
-  --color-selection: var(--selection);
-  --color-selection-foreground: var(--selection-foreground);
 
-  /* dataSyntax — visual grammar */
+  /* 5. Data syntax */
   --color-data-primary:          var(--data-primary);
   --color-data-secondary:        var(--data-secondary);
   --color-data-currency:         var(--data-currency);
@@ -169,229 +63,315 @@
   --color-data-identifier:       var(--data-identifier);
   --color-data-category:         var(--data-category);
   --color-data-datetime:         var(--data-datetime);
-
   --color-data-status-positive:  var(--data-status-positive);
   --color-data-status-negative:  var(--data-status-negative);
   --color-data-status-warning:   var(--data-status-warning);
   --color-data-status-neutral:   var(--data-status-neutral);
-
   --color-data-value-positive:   var(--data-value-positive);
   --color-data-value-negative:   var(--data-value-negative);
   --color-data-value-neutral:    var(--data-value-neutral);
 
-  /* Component tokens — overlay, slider, table */
-  --color-dialog-overlay: var(--dialog-overlay-bg);
-  --color-drawer-overlay: var(--drawer-overlay-bg);
-  --color-alert-dialog-overlay: var(--alert-dialog-overlay-bg);
-  --color-sheet-overlay: var(--sheet-overlay-bg);
-  --color-slider-thumb: var(--slider-thumb-bg);
-  --color-table-row-fg-selected: var(--table-row-fg-selected);
-  --color-table-row-bg-selected: var(--table-row-bg-selected);
-  --color-table-checkbox-in-selected-bg: var(--table-checkbox-in-selected-bg);
-  --color-table-checkbox-in-selected-fg: var(--table-checkbox-in-selected-fg);
-  --color-data-table-row-fg-selected: var(--data-table-row-fg-selected);
+  /* 6. Chart */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
 
-  /* Component tokens — button */
-  --color-button-primary-bg: var(--button-primary-bg);
-  --color-button-primary-fg: var(--button-primary-fg);
-  --color-button-primary-border: var(--button-primary-border);
-  --color-button-primary-bg-hover: var(--button-primary-bg-hover);
-  --color-button-secondary-bg: var(--button-secondary-bg);
-  --color-button-secondary-fg: var(--button-secondary-fg);
-  --color-button-secondary-border: var(--button-secondary-border);
-  --color-button-secondary-bg-hover: var(--button-secondary-bg-hover);
-  --color-button-ghost-bg: var(--button-ghost-bg);
-  --color-button-ghost-fg: var(--button-ghost-fg);
-  --color-button-ghost-bg-hover: var(--button-ghost-bg-hover);
-  --color-button-ghost-fg-hover: var(--button-ghost-fg-hover);
-  --color-button-link-fg: var(--button-link-fg);
-  --color-button-link-fg-hover: var(--button-link-fg-hover);
-  --color-button-destructive-bg: var(--button-destructive-bg);
-  --color-button-destructive-fg: var(--button-destructive-fg);
-  --color-button-destructive-border: var(--button-destructive-border);
-  --color-button-destructive-bg-hover: var(--button-destructive-bg-hover);
-  --color-button-cta-bg: var(--button-cta-bg);
-  --color-button-cta-fg: var(--button-cta-fg);
-  --color-button-cta-border: var(--button-cta-border);
-  --color-button-cta-bg-hover: var(--button-cta-bg-hover);
-  --color-button-rag-green-bg: var(--button-rag-green-bg);
-  --color-button-rag-green-fg: var(--button-rag-green-fg);
-  --color-button-rag-yellow-bg: var(--button-rag-yellow-bg);
-  --color-button-rag-yellow-fg: var(--button-rag-yellow-fg);
-  --color-button-rag-red-bg: var(--button-rag-red-bg);
-  --color-button-rag-red-fg: var(--button-rag-red-fg);
+  /* 7. Transparency */
+  --color-black-5:  var(--color-black-5);
+  --color-black-10: var(--color-black-10);
+  --color-black-20: var(--color-black-20);
+  --color-black-30: var(--color-black-30);
+  --color-black-40: var(--color-black-40);
+  --color-black-50: var(--color-black-50);
+  --color-black-60: var(--color-black-60);
+  --color-black-70: var(--color-black-70);
+  --color-black-80: var(--color-black-80);
+  --color-black-90: var(--color-black-90);
+  --color-white-5:  var(--color-white-5);
+  --color-white-10: var(--color-white-10);
+  --color-white-20: var(--color-white-20);
+  --color-white-30: var(--color-white-30);
+  --color-white-40: var(--color-white-40);
+  --color-white-50: var(--color-white-50);
+  --color-white-60: var(--color-white-60);
+  --color-white-70: var(--color-white-70);
+  --color-white-80: var(--color-white-80);
+  --color-white-90: var(--color-white-90);
 
-  /* Component tokens — input */
-  --color-input-bg: var(--input-bg);
-  --color-input-fg: var(--input-fg);
-  --color-input-placeholder: var(--input-placeholder);
-  --color-input-border: var(--input-border);
-  --color-input-border-hover: var(--input-border-hover);
-  --color-input-border-focus: var(--input-border-focus);
-  --color-input-border-error: var(--input-border-error);
-  --color-input-bg-disabled: var(--input-bg-disabled);
-  --color-input-fg-disabled: var(--input-fg-disabled);
+  /* 8. Overlays */
+  --color-dialog-overlay:        var(--dialog-overlay-bg);
+  --color-drawer-overlay:        var(--drawer-overlay-bg);
+  --color-alert-dialog-overlay:  var(--alert-dialog-overlay-bg);
+  --color-sheet-overlay:         var(--sheet-overlay-bg);
 
-  /* Component tokens — card */
-  --color-card-bg: var(--card-bg);
-  --color-card-fg: var(--card-fg);
-  --color-card-border: var(--card-border);
-  --color-card-bg-hover: var(--card-bg-hover);
-  --color-card-fg-hover: var(--card-fg-hover);
+  /* 9. Components */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-slider-thumb:                    var(--slider-thumb-bg);
+  --color-table-row-bg-selected:           var(--table-row-bg-selected);
+  --color-table-row-fg-selected:           var(--table-row-fg-selected);
+  --color-table-checkbox-in-selected-bg:   var(--table-checkbox-in-selected-bg);
+  --color-table-checkbox-in-selected-fg:   var(--table-checkbox-in-selected-fg);
+  --color-data-table-header:             var(--data-table-header-bg);
+  --color-data-table-header-foreground:  var(--data-table-header-fg);
+  --color-data-table-row-hover:          var(--data-table-row-bg-hover);
+  --color-data-table-row-fg-selected:    var(--data-table-row-fg-selected);
 
-  /* Component tokens — badge */
-  --color-badge-bg: var(--badge-bg);
-  --color-badge-fg: var(--badge-fg);
-  --color-badge-border: var(--badge-border);
-  --color-badge-bg-hover: var(--badge-bg-hover);
-  --color-badge-fg-hover: var(--badge-fg-hover);
+}
 
-  /* Component tokens — dialog, popover, toast, tooltip */
-  --color-dialog-bg: var(--dialog-bg);
-  --color-dialog-fg: var(--dialog-fg);
-  --color-dialog-border: var(--dialog-border);
-  --color-popover-bg: var(--popover-bg);
-  --color-popover-fg: var(--popover-fg);
-  --color-popover-border: var(--popover-border-color);
-  --color-toast-bg: var(--toast-bg);
-  --color-toast-fg: var(--toast-fg);
-  --color-toast-border: var(--toast-border);
-  --color-toast-bg-hover: var(--toast-bg-hover);
-  --color-tooltip-bg: var(--tooltip-bg);
-  --color-tooltip-fg: var(--tooltip-fg);
-  --color-tooltip-border: var(--tooltip-border);
+/* --------------------------------------------------------------------------
+   :root — semantic tokens
+   -------------------------------------------------------------------------- */
+:root {
+  /* 1. Core surface & text */
+  --background: var(--color-white);
+  --foreground: var(--color-neutral-950);
+  --card: var(--color-white);
+  --card-foreground: var(--color-neutral-950);
+  --popover: var(--color-white);
+  --popover-foreground: var(--color-neutral-950);
 
-  /* Component tokens — select, dropdown, tabs */
-  --color-select-bg: var(--select-bg);
-  --color-select-fg: var(--select-fg);
-  --color-select-placeholder: var(--select-placeholder);
-  --color-select-border: var(--select-border);
-  --color-select-item-bg-hover: var(--select-item-bg-hover);
-  --color-select-item-fg-hover: var(--select-item-fg-hover);
-  --color-dropdown-bg: var(--dropdown-bg);
-  --color-dropdown-fg: var(--dropdown-fg);
-  --color-dropdown-border: var(--dropdown-border);
-  --color-dropdown-item-bg-hover: var(--dropdown-item-bg-hover);
-  --color-dropdown-item-fg-hover: var(--dropdown-item-fg-hover);
-  --color-tabs-list-bg: var(--tabs-list-bg);
-  --color-tabs-list-fg: var(--tabs-list-fg);
-  --color-tabs-trigger-bg-active: var(--tabs-trigger-bg-active);
-  --color-tabs-trigger-fg-active: var(--tabs-trigger-fg-active);
-  --color-tabs-trigger-bg-hover: var(--tabs-trigger-bg-hover);
-  --color-tabs-trigger-fg-hover: var(--tabs-trigger-fg-hover);
-  --color-tabs-border: var(--tabs-border);
+  /* 2. Brand & interactions */
+  --primary: var(--color-neutral-900);
+  --primary-foreground: var(--color-neutral-50);
+  --secondary: var(--color-neutral-100);
+  --secondary-foreground: var(--color-neutral-900);
+  --secondary-hover: var(--color-neutral-200);
+  --muted: var(--color-neutral-100);
+  --muted-foreground: var(--color-neutral-500);
+  --accent: var(--color-neutral-100);
+  --accent-foreground: var(--color-neutral-900);
+  --link: var(--color-blue-700);
+  --link-foreground: var(--color-neutral-50);
+  --press: var(--color-blue-800);
+  --press-foreground: var(--color-neutral-50);
+  --selection: var(--color-blue-600);
+  --selection-foreground: var(--color-white);
 
-  /* Component tokens — table */
-  --color-table-header-bg: var(--table-header-bg);
-  --color-table-header-fg: var(--table-header-fg);
-  --color-table-row-bg: var(--table-row-bg);
-  --color-table-row-bg-hover: var(--table-row-bg-hover);
-  --color-table-row-bg-striped: var(--table-row-bg-striped);
-  --color-table-row-fg: var(--table-row-fg);
-  --color-table-row-fg-hover: var(--table-row-fg-hover);
-  --color-table-border: var(--table-border);
+  /* 3. State */
+  --destructive: var(--color-red-600);
+  --destructive-foreground: var(--color-neutral-50);
+  --success: var(--color-green-600);
+  --success-foreground: var(--color-neutral-50);
+  --warning: var(--color-amber-400);
+  --warning-foreground: var(--color-amber-950);
+  --info: var(--color-sky-600);
+  --info-foreground: var(--color-neutral-50);
 
-  /* Component tokens — sidebar */
-  --color-sidebar-bg: var(--sidebar-bg);
-  --color-sidebar-fg: var(--sidebar-fg);
-  --color-sidebar-border: var(--sidebar-border-color);
-  --color-sidebar-item-bg-hover: var(--sidebar-item-bg-hover);
-  --color-sidebar-item-fg-hover: var(--sidebar-item-fg-hover);
-  --color-sidebar-item-bg-active: var(--sidebar-item-bg-active);
-  --color-sidebar-item-fg-active: var(--sidebar-item-fg-active);
+  /* 4. Border & focus */
+  --border: var(--color-neutral-200);
+  --input: var(--color-neutral-200);
+  --ring: var(--color-blue-600);
 
-  /* Component tokens — avatar, checkbox, switch, slider, progress */
-  --color-avatar-bg: var(--avatar-bg);
-  --color-avatar-fg: var(--avatar-fg);
-  --color-avatar-border: var(--avatar-border);
-  --color-checkbox-bg: var(--checkbox-bg);
-  --color-checkbox-bg-hover: var(--checkbox-bg-hover);
-  --color-checkbox-bg-checked: var(--checkbox-bg-checked);
-  --color-checkbox-fg-checked: var(--checkbox-fg-checked);
-  --color-checkbox-border: var(--checkbox-border);
-  --color-checkbox-border-hover: var(--checkbox-border-hover);
-  --color-checkbox-border-checked: var(--checkbox-border-checked);
-  --color-switch-track-bg: var(--switch-track-bg);
-  --color-switch-track-bg-hover: var(--switch-track-bg-hover);
-  --color-switch-track-bg-checked: var(--switch-track-bg-checked);
-  --color-switch-thumb-bg: var(--switch-thumb-bg);
-  --color-slider-track-bg: var(--slider-track-bg);
-  --color-slider-track-filled: var(--slider-track-filled);
-  --color-slider-thumb-border: var(--slider-thumb-border);
-  --color-slider-thumb-border-hover: var(--slider-thumb-border-hover);
-  --color-progress-track-bg: var(--progress-track-bg);
-  --color-progress-fill-bg: var(--progress-fill-bg);
+  /* 5. Data syntax */
+  --data-primary:           var(--color-neutral-900);
+  --data-secondary:         var(--color-neutral-600);
+  --data-currency:          var(--color-yellow-600);
+  --data-entity:            var(--color-blue-600);
+  --data-identifier:        var(--color-cyan-600);
+  --data-category:          var(--color-purple-600);
+  --data-datetime:          var(--color-teal-600);
+  --data-status-positive:   var(--color-green-600);
+  --data-status-negative:   var(--color-red-600);
+  --data-status-warning:    var(--color-amber-500);
+  --data-status-neutral:    var(--color-neutral-500);
+  --data-value-positive:    var(--color-green-600);
+  --data-value-negative:    var(--color-red-600);
+  --data-value-neutral:     var(--color-neutral-900);
 
-  /* Component tokens — alert, skeleton, separator */
-  --color-alert-bg: var(--alert-bg);
-  --color-alert-fg: var(--alert-fg);
-  --color-alert-border: var(--alert-border);
-  --color-skeleton-bg: var(--skeleton-bg);
-  --color-separator-bg: var(--separator-bg);
+  /* 6. Chart */
+  --chart-1: var(--color-orange-600);
+  --chart-2: var(--color-teal-600);
+  --chart-3: var(--color-cyan-900);
+  --chart-4: var(--color-amber-400);
+  --chart-5: var(--color-amber-500);
 
-  /* Component tokens — accordion, sheet, command, nav, pagination */
-  --color-accordion-bg: var(--accordion-bg);
-  --color-accordion-bg-hover: var(--accordion-bg-hover);
-  --color-accordion-fg: var(--accordion-fg);
-  --color-accordion-fg-hover: var(--accordion-fg-hover);
-  --color-accordion-border: var(--accordion-border);
-  --color-sheet-bg: var(--sheet-bg);
-  --color-sheet-fg: var(--sheet-fg);
-  --color-sheet-border: var(--sheet-border);
-  --color-command-bg: var(--command-bg);
-  --color-command-fg: var(--command-fg);
-  --color-command-border: var(--command-border);
-  --color-command-item-bg-hover: var(--command-item-bg-hover);
-  --color-command-item-fg-hover: var(--command-item-fg-hover);
-  --color-nav-bg: var(--nav-bg);
-  --color-nav-fg: var(--nav-fg);
-  --color-nav-border: var(--nav-border);
-  --color-nav-item-bg-hover: var(--nav-item-bg-hover);
-  --color-nav-item-fg-hover: var(--nav-item-fg-hover);
-  --color-pagination-bg: var(--pagination-bg);
-  --color-pagination-fg: var(--pagination-fg);
-  --color-pagination-border: var(--pagination-border);
-  --color-pagination-bg-hover: var(--pagination-bg-hover);
-  --color-pagination-fg-hover: var(--pagination-fg-hover);
-  --color-pagination-bg-active: var(--pagination-bg-active);
-  --color-pagination-fg-active: var(--pagination-fg-active);
+  /* 7. Transparency */
+  --color-black-5:  rgba(0, 0, 0, 0.05);
+  --color-black-10: rgba(0, 0, 0, 0.10);
+  --color-black-20: rgba(0, 0, 0, 0.20);
+  --color-black-30: rgba(0, 0, 0, 0.30);
+  --color-black-40: rgba(0, 0, 0, 0.40);
+  --color-black-50: rgba(0, 0, 0, 0.50);
+  --color-black-60: rgba(0, 0, 0, 0.60);
+  --color-black-70: rgba(0, 0, 0, 0.70);
+  --color-black-80: rgba(0, 0, 0, 0.80);
+  --color-black-90: rgba(0, 0, 0, 0.90);
+  --color-white-5:  rgba(255, 255, 255, 0.05);
+  --color-white-10: rgba(255, 255, 255, 0.10);
+  --color-white-20: rgba(255, 255, 255, 0.20);
+  --color-white-30: rgba(255, 255, 255, 0.30);
+  --color-white-40: rgba(255, 255, 255, 0.40);
+  --color-white-50: rgba(255, 255, 255, 0.50);
+  --color-white-60: rgba(255, 255, 255, 0.60);
+  --color-white-70: rgba(255, 255, 255, 0.70);
+  --color-white-80: rgba(255, 255, 255, 0.80);
+  --color-white-90: rgba(255, 255, 255, 0.90);
 
-  /* Component tokens — breadcrumb, calendar, toggle, scroll */
-  --color-breadcrumb-fg: var(--breadcrumb-fg);
-  --color-breadcrumb-fg-hover: var(--breadcrumb-fg-hover);
-  --color-breadcrumb-separator-fg: var(--breadcrumb-separator-fg);
-  --color-breadcrumb-fg-active: var(--breadcrumb-fg-active);
-  --color-calendar-bg: var(--calendar-bg);
-  --color-calendar-fg: var(--calendar-fg);
-  --color-calendar-border: var(--calendar-border);
-  --color-calendar-day-bg-hover: var(--calendar-day-bg-hover);
-  --color-calendar-day-fg-hover: var(--calendar-day-fg-hover);
-  --color-calendar-day-bg-selected: var(--calendar-day-bg-selected);
-  --color-calendar-day-fg-selected: var(--calendar-day-fg-selected);
-  --color-calendar-day-bg-today: var(--calendar-day-bg-today);
-  --color-calendar-day-fg-today: var(--calendar-day-fg-today);
-  --color-toggle-bg: var(--toggle-bg);
-  --color-toggle-fg: var(--toggle-fg);
-  --color-toggle-bg-hover: var(--toggle-bg-hover);
-  --color-toggle-fg-hover: var(--toggle-fg-hover);
-  --color-toggle-bg-active: var(--toggle-bg-active);
-  --color-toggle-fg-active: var(--toggle-fg-active);
-  --color-scroll-thumb-bg: var(--scroll-thumb-bg);
-  --color-scroll-thumb-bg-hover: var(--scroll-thumb-bg-hover);
+  /* 8. Overlays */
+  --dialog-overlay-bg:       var(--color-black-50);
+  --drawer-overlay-bg:       var(--color-black-50);
+  --alert-dialog-overlay-bg: var(--color-black-10);
+  --sheet-overlay-bg:        var(--color-black-10);
 
-  /* Component tokens — data-table */
-  --color-data-table-header-bg: var(--data-table-header-bg);
-  --color-data-table-header-fg: var(--data-table-header-fg);
-  --color-data-table-row-bg: var(--data-table-row-bg);
-  --color-data-table-row-bg-hover: var(--data-table-row-bg-hover);
-  --color-data-table-row-bg-striped: var(--data-table-row-bg-striped);
-  --color-data-table-row-fg: var(--data-table-row-fg);
-  --color-data-table-row-bg-selected: var(--data-table-row-bg-selected);
-  --color-data-table-border: var(--data-table-border);
+  /* 9. Radius */
+  /*
+   * Radius — scale lives in :root (single source). Prefer semantic tokens in components:
+   *   --radius-container | --radius-control | --radius-inset | --radius-pill
+   * Use var(--radius-sm|md|lg|xl|full) when a step is needed instead of a semantic role.
+   */
+  --radius-md: 0.1875rem;
+  --radius-sm: calc(var(--radius-md) - 2px);
+  --radius-lg: calc(var(--radius-md) + 3px);
+  --radius-xl: calc(var(--radius-md) + 6px);
+  --radius-full: 9999px;
+  --radius-container: var(--radius-lg);
+  --radius-control: var(--radius-md);
+  --radius-inset: var(--radius-sm);
+  --radius-pill: var(--radius-full);
 
-  /* Spacing/size mappings for components */
-  --spacing-component-height-sm: var(--component-height-sm);
-  --spacing-component-height-md: var(--component-height-md);
-  --spacing-component-height-lg: var(--component-height-lg);
-  --radius-component: var(--component-radius);
+  /* 10. Shadows */
+  /* Shadows — use shadow-[var(--shadow-xs)] etc. in components; not in @theme (non–light/dark) */
+  --shadow-xs: 0 1px rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 2px 0 oklch(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px oklch(0 0 0 / 0.1), 0 2px 4px -2px oklch(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px oklch(0 0 0 / 0.1), 0 4px 6px -4px oklch(0 0 0 / 0.1);
+
+  /* 11. Spacing — controls */
+  --control-height-sm: --spacing(6);
+  --control-height-md: --spacing(8);
+  --control-height-lg: --spacing(10);
+  --control-px-sm: --spacing(3);
+  --control-px-md: --spacing(4);
+  --control-px-lg: --spacing(6);
+  --control-gap-x: --spacing(2);
+  --control-gap-y: --spacing(2);
+  --control-gap: var(--control-gap-x);
+
+  /* 12. Spacing — structural */
+  --card-padding: --spacing(6);
+  --content-padding: --spacing(4);
+  --menu-padding: --spacing(1);
+  --menu-item-px: --spacing(2);
+  --menu-item-py: --spacing(2);
+  --badge-height: --spacing(5);
+  --badge-px: --spacing(3);
+  --icon-size: --spacing(4);
+  --disabled-opacity: 0.5;
+  --avatar-size-sm: --spacing(8);
+  --avatar-size-md: --spacing(10);
+  --avatar-size-lg: --spacing(14);
+  --sidebar-width: --spacing(64);
+
+  /* 13. Components — sidebar, slider, table colours */
+  --sidebar: var(--color-neutral-50);
+  --sidebar-foreground: var(--color-neutral-950);
+  --slider-thumb-bg: var(--background);
+  --table-row-bg-selected: var(--color-blue-600);
+  --table-row-fg-selected: var(--color-white);
+  --table-checkbox-in-selected-bg: var(--color-white);
+  --table-checkbox-in-selected-fg: var(--color-neutral-900);
+
+  /* 14. Data table */
+  /* Sizing */
+  --data-table-row-height-sm: --spacing(5);
+  --data-table-row-height-md: --spacing(6);
+  --data-table-row-height-lg: --spacing(8);
+  --data-table-header-height: --spacing(10);
+  --data-table-row-divider-width: --spacing(0);
+  --data-table-cell-px: --spacing(2);
+  --data-table-cell-py: --spacing(0);
+  /* Typography */
+  --data-table-font-size: 0.9375rem;
+  --data-table-header-font-size: var(--text-xs);
+  --data-table-font-weight: var(--font-weight-medium);
+  --data-table-header-font-weight: var(--font-weight-semibold);
+  /* Colors */
+  --data-table-header-bg: var(--background);
+  --data-table-header-fg: var(--muted-foreground);
+  --data-table-row-bg-hover: var(--accent);
+  --data-table-row-fg-selected: var(--color-white);
+}
+
+/* --------------------------------------------------------------------------
+   Dark mode — color overrides only
+   -------------------------------------------------------------------------- */
+.dark {
+  /* 1. Core surface & text */
+  --background: var(--color-black);
+  --foreground: var(--color-neutral-50);
+  --card: var(--color-neutral-950);
+  --card-foreground: var(--color-neutral-50);
+  --popover: var(--color-neutral-800);
+  --popover-foreground: var(--color-neutral-50);
+
+  /* 2. Brand & interactions */
+  --primary: var(--color-neutral-200);
+  --primary-foreground: var(--color-neutral-900);
+  --secondary: var(--color-neutral-800);
+  --secondary-foreground: var(--color-neutral-50);
+  --secondary-hover: var(--color-neutral-700);
+  --muted: var(--color-neutral-800);
+  --muted-foreground: var(--color-neutral-400);
+  --accent: var(--color-neutral-700);
+  --accent-foreground: var(--color-neutral-50);
+  --link: var(--color-blue-400);
+  --link-foreground: var(--color-neutral-950);
+  --press: var(--color-blue-600);
+  --press-foreground: var(--color-neutral-50);
+  --selection: var(--color-blue-800);
+  --selection-foreground: var(--color-neutral-50);
+
+  /* 3. State */
+  --destructive: var(--color-red-400);
+  --destructive-foreground: var(--color-neutral-50);
+  --success: var(--color-green-500);
+  --success-foreground: var(--color-neutral-50);
+  --warning: var(--color-amber-500);
+  --warning-foreground: var(--color-neutral-900);
+  --info: var(--color-sky-400);
+  --info-foreground: var(--color-neutral-50);
+
+  /* 4. Border & focus */
+  --border: var(--color-neutral-800);
+  --input: var(--color-neutral-800);
+  --ring: var(--color-blue-600);
+
+  /* 5. Data syntax */
+  --data-primary:           var(--color-neutral-50);
+  --data-secondary:         var(--color-neutral-400);
+  --data-currency:          var(--color-yellow-400);
+  --data-entity:            var(--color-blue-400);
+  --data-identifier:        var(--color-cyan-400);
+  --data-category:          var(--color-purple-400);
+  --data-datetime:          var(--color-teal-500);
+  --data-status-positive:   var(--color-green-400);
+  --data-status-negative:   var(--color-red-400);
+  --data-status-warning:    var(--color-amber-400);
+  --data-status-neutral:    var(--color-neutral-400);
+  --data-value-positive:    var(--color-green-400);
+  --data-value-negative:    var(--color-red-400);
+  --data-value-neutral:     var(--color-neutral-50);
+
+  /* 6. Chart */
+  --chart-1: var(--color-blue-700);
+  --chart-2: var(--color-emerald-500);
+  --chart-3: var(--color-amber-500);
+  --chart-4: var(--color-purple-500);
+  --chart-5: var(--color-rose-500);
+
+  /* 7-12 inherited from default theme */
+  /* 13. Components */
+  --sidebar: var(--color-neutral-900);
+  --sidebar-foreground: var(--color-neutral-50);
+  --table-row-bg-selected: var(--color-blue-500);
+  --table-row-fg-selected: var(--color-white);
+  --table-checkbox-in-selected-bg: var(--color-white);
+  --table-checkbox-in-selected-fg: var(--color-neutral-900);
+
+  /* 14. Data table */
+  --data-table-row-bg-hover: var(--color-neutral-800);
+  --data-table-row-fg-selected: var(--color-white);
 }

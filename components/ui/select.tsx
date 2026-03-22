@@ -37,7 +37,7 @@ function SelectTrigger({
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
       className={cn(
-        "flex h-[var(--control-height-md)] w-full items-center justify-between gap-1.5 rounded-[var(--radius-control)] border border-input bg-transparent px-3 py-2 text-sm whitespace-nowrap shadow-sm outline-none focus-ring placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 data-placeholder:text-muted-foreground *:data-[slot=select-value]:line-clamp-1 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "flex h-[var(--control-height-md)] w-full items-center justify-between gap-1.5 rounded-[var(--radius-control)] border border-input bg-transparent px-3 py-2 text-sm whitespace-nowrap shadow-[var(--shadow-sm)] outline-none focus-ring placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 data-placeholder:text-muted-foreground *:data-[slot=select-value]:line-clamp-1 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -80,7 +80,7 @@ function SelectContent({
           data-slot="select-content"
           data-align-trigger={alignItemWithTrigger}
           className={cn(
-            "relative z-50 max-h-96 min-w-[8rem] origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-[var(--radius-container)] border bg-popover text-popover-foreground shadow-md data-[align-trigger=true]:animate-none data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+            "relative z-50 max-h-96 min-w-[8rem] origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-[var(--radius-container)] border bg-popover text-popover-foreground shadow-[var(--shadow-md)] data-[align-trigger=true]:animate-none data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
             className
           )}
           {...props}

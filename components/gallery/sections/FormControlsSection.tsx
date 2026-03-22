@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef, useEffect, useLayoutEffect, useCallback } from "react";
 import { format } from "date-fns";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -62,19 +62,69 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
+/** cmdk calls scrollIntoView on items; that can scroll the window. No-op inside our popover. */
+let galleryComboboxScrollGuardDepth = 0;
+let galleryComboboxSavedScrollIntoView: typeof Element.prototype.scrollIntoView | null =
+  null;
+
+function installGalleryComboboxScrollGuard() {
+  if (galleryComboboxScrollGuardDepth === 0) {
+    galleryComboboxSavedScrollIntoView = Element.prototype.scrollIntoView;
+    Element.prototype.scrollIntoView = function (
+      this: Element,
+      ...args: Parameters<Element["scrollIntoView"]>
+    ) {
+      if (this.closest("[data-gallery-combobox-no-document-scroll]")) {
+        return;
+      }
+      return galleryComboboxSavedScrollIntoView!.apply(this, args);
+    };
+  }
+  galleryComboboxScrollGuardDepth += 1;
+}
+
+function removeGalleryComboboxScrollGuard() {
+  galleryComboboxScrollGuardDepth = Math.max(0, galleryComboboxScrollGuardDepth - 1);
+  if (
+    galleryComboboxScrollGuardDepth === 0 &&
+    galleryComboboxSavedScrollIntoView != null
+  ) {
+    Element.prototype.scrollIntoView = galleryComboboxSavedScrollIntoView;
+    galleryComboboxSavedScrollIntoView = null;
+  }
+}
+
 export function FormControlsSection() {
   const [comboboxOpen, setComboboxOpen] = useState(false);
   const [comboboxValue, setComboboxValue] = useState("");
   const [date, setDate] = useState<Date | undefined>(new Date());
-  const scrollBeforeOpen = useRef(0);
+  const comboboxInputRef = useRef<HTMLInputElement>(null);
 
-  // Prevent page jump when Combobox opens (focus on CommandInput triggers scroll)
-  useEffect(() => {
-    if (comboboxOpen) {
-      const id = setTimeout(() => window.scrollTo(0, scrollBeforeOpen.current), 0);
-      return () => clearTimeout(id);
+  const handleComboboxOpenChange = useCallback((open: boolean) => {
+    if (open) {
+      // Must run before React commits cmdk (same tick), or first scrollIntoView wins.
+      installGalleryComboboxScrollGuard();
+    } else {
+      removeGalleryComboboxScrollGuard();
     }
+    setComboboxOpen(open);
+  }, []);
+
+  useLayoutEffect(() => {
+    if (!comboboxOpen) return;
+    const id = requestAnimationFrame(() => {
+      comboboxInputRef.current?.focus({ preventScroll: true });
+    });
+    return () => cancelAnimationFrame(id);
   }, [comboboxOpen]);
+
+  useEffect(() => {
+    return () => {
+      while (galleryComboboxScrollGuardDepth > 0) {
+        removeGalleryComboboxScrollGuard();
+      }
+    };
+  }, []);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -126,22 +176,33 @@ export function FormControlsSection() {
         <div className="space-y-4">
           <h3 className="text-sm font-medium text-muted-foreground">Combobox (Popover + Command)</h3>
           <Popover
+            modal={false}
             open={comboboxOpen}
-            onOpenChange={(open) => {
-              if (open) scrollBeforeOpen.current = window.scrollY;
-              setComboboxOpen(open);
-            }}
+            onOpenChange={handleComboboxOpenChange}
           >
             <PopoverTrigger asChild>
-              <Button variant="outline" role="combobox" aria-expanded={comboboxOpen}>
+              <Button
+                type="button"
+                variant="outline"
+                role="combobox"
+                aria-expanded={comboboxOpen}
+              >
                 {comboboxValue
                   ? frameworks.find((f) => f.value === comboboxValue)?.label
                   : "Select framework..."}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-[200px] p-0" align="start">
+            <PopoverContent
+              className="w-[200px] p-0"
+              align="start"
+              initialFocus={false}
+              data-gallery-combobox-no-document-scroll=""
+            >
               <Command>
-                <CommandInput placeholder="Search framework..." />
+                <CommandInput
+                  ref={comboboxInputRef}
+                  placeholder="Search framework..."
+                />
                 <CommandList>
                   <CommandEmpty>No framework found.</CommandEmpty>
                   <CommandGroup>

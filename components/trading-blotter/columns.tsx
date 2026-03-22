@@ -1,11 +1,21 @@
 "use client";
 
-import { createColumnHelper } from "@tanstack/react-table";
+import {
+  createColumnHelper,
+  type Row,
+} from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { TradingBlotterRow } from "./data";
 import { cn } from "@/lib/utils";
 
 const columnHelper = createColumnHelper<TradingBlotterRow>();
+
+/** Column `meta` for trading blotter — use on `<TableCell>` when backgrounds must span full cell width. */
+export type BlotterColumnMeta = {
+  align?: "right";
+  /** Background on `<td>` so fills edge-to-edge (not clipped by cell padding). */
+  blotterCellBackground?: (row: Row<TradingBlotterRow>) => string;
+};
 
 export const columns = [
   columnHelper.display({
@@ -37,27 +47,30 @@ export const columns = [
 
   columnHelper.accessor("status", {
     header: "Status",
+    meta: {
+      blotterCellBackground: (row) => {
+        if (row.getIsSelected()) return "bg-transparent";
+        const status = row.getValue("status") as TradingBlotterRow["status"];
+        const map: Record<TradingBlotterRow["status"], string> = {
+          FILL: "bg-data-status-positive",
+          REJ: "bg-data-status-negative",
+          WRK: "bg-data-status-warning",
+        };
+        return map[status] ?? "bg-data-status-neutral";
+      },
+    } satisfies BlotterColumnMeta,
     cell: ({ row }) => {
-      const status = row.getValue("status") as TradingBlotterRow["status"];
       const isSelected = row.getIsSelected();
-      const statusClasses: Record<TradingBlotterRow["status"], string> = {
-        FILL: "bg-data-status-positive",
-        REJ: "bg-data-status-negative",
-        WRK: "bg-data-status-warning",
-      };
-      const baseClasses =
-        "flex h-full w-full items-center px-[calc(var(--spacing-data-table-cell-px)/2)] py-data-table-cell-py font-bold";
-      const selectedClasses = "bg-transparent text-data-table-row-fg-selected";
-      const unselectedClasses = "text-primary-foreground";
       return (
         <div
           className={cn(
-            baseClasses,
-            isSelected ? selectedClasses : unselectedClasses,
-            !isSelected && (statusClasses[status] ?? "bg-data-status-neutral")
+            "flex h-full w-full items-center font-bold",
+            isSelected
+              ? "text-data-table-row-fg-selected"
+              : "text-primary-foreground"
           )}
         >
-          {status}
+          {row.getValue("status")}
         </div>
       );
     },
@@ -80,18 +93,31 @@ export const columns = [
 
   columnHelper.accessor("side", {
     header: "Side",
+    meta: {
+      blotterCellBackground: (row) => {
+        if (row.getIsSelected()) return "bg-transparent";
+        const side = row.getValue("side") as TradingBlotterRow["side"];
+        const map: Record<TradingBlotterRow["side"], string> = {
+          BUY: "bg-data-value-positive/20",
+          SELL: "bg-data-value-negative/20",
+        };
+        return map[side] ?? "bg-data-value-neutral/20";
+      },
+    } satisfies BlotterColumnMeta,
     cell: ({ row }) => {
       const side = row.getValue("side") as TradingBlotterRow["side"];
       const isSelected = row.getIsSelected();
-      const sideClasses: Record<TradingBlotterRow["side"], string> = {
-        BUY: "text-data-value-positive bg-data-value-positive/20",
-        SELL: "text-data-value-negative bg-data-value-negative/20",
+      const sideText: Record<TradingBlotterRow["side"], string> = {
+        BUY: "text-data-value-positive",
+        SELL: "text-data-value-negative",
       };
       return (
         <div
           className={cn(
-            "flex h-full w-full items-center px-[calc(var(--spacing-data-table-cell-px)/2)] py-data-table-cell-py font-bold",
-            isSelected ? "bg-transparent text-data-table-row-fg-selected" : sideClasses[side] ?? "text-data-value-neutral bg-data-value-neutral/20"
+            "flex h-full w-full items-center font-bold",
+            isSelected
+              ? "text-data-table-row-fg-selected"
+              : sideText[side] ?? "text-data-value-neutral"
           )}
         >
           {side}
@@ -105,7 +131,7 @@ export const columns = [
     cell: ({ row }) => (
       <span className="text-data-primary">{row.getValue("execAmount")}</span>
     ),
-    meta: { align: "right" },
+    meta: { align: "right" } satisfies BlotterColumnMeta,
   }),
 
   columnHelper.accessor("execPrice", {
@@ -113,7 +139,7 @@ export const columns = [
     cell: ({ row }) => (
       <span className="text-data-primary">{row.getValue("execPrice")}</span>
     ),
-    meta: { align: "right" },
+    meta: { align: "right" } satisfies BlotterColumnMeta,
   }),
 
   columnHelper.accessor("spotPrice", {
@@ -121,7 +147,7 @@ export const columns = [
     cell: ({ row }) => (
       <span className="text-data-primary">{row.getValue("spotPrice")}</span>
     ),
-    meta: { align: "right" },
+    meta: { align: "right" } satisfies BlotterColumnMeta,
   }),
 
   columnHelper.accessor("fwdPoints", {
