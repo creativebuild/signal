@@ -186,15 +186,15 @@
   --warning-foreground: var(--color-amber-950);
   --info: var(--color-sky-600);
   --info-foreground: var(--color-neutral-50);
-  /* Tinted state surfaces (outline / soft buttons, badges, menu destructive row) */
-  --destructive-subtle: color-mix(in oklch, var(--destructive) 10%, transparent);
-  --destructive-subtle-hover: color-mix(in oklch, var(--destructive) 20%, transparent);
-  --success-subtle: color-mix(in oklch, var(--success) 10%, transparent);
-  --success-subtle-hover: color-mix(in oklch, var(--success) 20%, transparent);
-  --warning-subtle: color-mix(in oklch, var(--warning) 10%, transparent);
-  --warning-subtle-hover: color-mix(in oklch, var(--warning) 20%, transparent);
-  --info-subtle: color-mix(in oklch, var(--info) 10%, transparent);
-  --info-subtle-hover: color-mix(in oklch, var(--info) 20%, transparent);
+  /* Tinted state surfaces — use sRGB for mixing (Safari mis-renders many oklch color-mix() fills) */
+  --destructive-subtle: color-mix(in srgb, var(--destructive) 10%, var(--background));
+  --destructive-subtle-hover: color-mix(in srgb, var(--destructive) 20%, var(--background));
+  --success-subtle: color-mix(in srgb, var(--success) 10%, var(--background));
+  --success-subtle-hover: color-mix(in srgb, var(--success) 20%, var(--background));
+  --warning-subtle: color-mix(in srgb, var(--warning) 10%, var(--background));
+  --warning-subtle-hover: color-mix(in srgb, var(--warning) 20%, var(--background));
+  --info-subtle: color-mix(in srgb, var(--info) 10%, var(--background));
+  --info-subtle-hover: color-mix(in srgb, var(--info) 20%, var(--background));
 
   /* 4. Border & focus */
   --border: var(--color-neutral-200);
@@ -383,14 +383,14 @@
   --warning-foreground: var(--color-neutral-900);
   --info: var(--color-sky-400);
   --info-foreground: var(--color-neutral-50);
-  --destructive-subtle: color-mix(in oklch, var(--destructive) 20%, transparent);
-  --destructive-subtle-hover: color-mix(in oklch, var(--destructive) 30%, transparent);
-  --success-subtle: color-mix(in oklch, var(--success) 20%, transparent);
-  --success-subtle-hover: color-mix(in oklch, var(--success) 30%, transparent);
-  --warning-subtle: color-mix(in oklch, var(--warning) 20%, transparent);
-  --warning-subtle-hover: color-mix(in oklch, var(--warning) 30%, transparent);
-  --info-subtle: color-mix(in oklch, var(--info) 20%, transparent);
-  --info-subtle-hover: color-mix(in oklch, var(--info) 30%, transparent);
+  --destructive-subtle: color-mix(in srgb, var(--destructive) 20%, var(--background));
+  --destructive-subtle-hover: color-mix(in srgb, var(--destructive) 30%, var(--background));
+  --success-subtle: color-mix(in srgb, var(--success) 20%, var(--background));
+  --success-subtle-hover: color-mix(in srgb, var(--success) 30%, var(--background));
+  --warning-subtle: color-mix(in srgb, var(--warning) 20%, var(--background));
+  --warning-subtle-hover: color-mix(in srgb, var(--warning) 30%, var(--background));
+  --info-subtle: color-mix(in srgb, var(--info) 20%, var(--background));
+  --info-subtle-hover: color-mix(in srgb, var(--info) 30%, var(--background));
 
   /* 4. Border & focus */
   --border: var(--color-neutral-800);
