@@ -6,10 +6,11 @@ import { GallerySection } from "@/components/gallery/GallerySection";
 import {
   Area,
   AreaChart,
-  Bar,
-  BarChart,
   CartesianGrid,
+  Line,
+  LineChart,
   XAxis,
+  YAxis,
 } from "recharts";
 
 import {
@@ -34,268 +35,498 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 
-// 90 days of data: 2024-04-01 to 2024-06-30 (from shadcn area chart example, extended)
-const areaChartData = [
-  { date: "2024-04-01", desktop: 222, mobile: 150 },
-  { date: "2024-04-02", desktop: 97, mobile: 180 },
-  { date: "2024-04-03", desktop: 167, mobile: 120 },
-  { date: "2024-04-04", desktop: 242, mobile: 260 },
-  { date: "2024-04-05", desktop: 373, mobile: 290 },
-  { date: "2024-04-06", desktop: 301, mobile: 340 },
-  { date: "2024-04-07", desktop: 245, mobile: 180 },
-  { date: "2024-04-08", desktop: 409, mobile: 320 },
-  { date: "2024-04-09", desktop: 59, mobile: 110 },
-  { date: "2024-04-10", desktop: 261, mobile: 190 },
-  { date: "2024-04-11", desktop: 327, mobile: 350 },
-  { date: "2024-04-12", desktop: 292, mobile: 210 },
-  { date: "2024-04-13", desktop: 342, mobile: 380 },
-  { date: "2024-04-14", desktop: 137, mobile: 220 },
-  { date: "2024-04-15", desktop: 120, mobile: 170 },
-  { date: "2024-04-16", desktop: 138, mobile: 190 },
-  { date: "2024-04-17", desktop: 446, mobile: 360 },
-  { date: "2024-04-18", desktop: 364, mobile: 410 },
-  { date: "2024-04-19", desktop: 243, mobile: 180 },
-  { date: "2024-04-20", desktop: 89, mobile: 150 },
-  { date: "2024-04-21", desktop: 137, mobile: 200 },
-  { date: "2024-04-22", desktop: 224, mobile: 170 },
-  { date: "2024-04-23", desktop: 138, mobile: 230 },
-  { date: "2024-04-24", desktop: 387, mobile: 290 },
-  { date: "2024-04-25", desktop: 215, mobile: 250 },
-  { date: "2024-04-26", desktop: 75, mobile: 130 },
-  { date: "2024-04-27", desktop: 383, mobile: 420 },
-  { date: "2024-04-28", desktop: 122, mobile: 180 },
-  { date: "2024-04-29", desktop: 315, mobile: 240 },
-  { date: "2024-04-30", desktop: 454, mobile: 380 },
-  { date: "2024-05-01", desktop: 289, mobile: 210 },
-  { date: "2024-05-02", desktop: 156, mobile: 175 },
-  { date: "2024-05-03", desktop: 198, mobile: 245 },
-  { date: "2024-05-04", desktop: 334, mobile: 295 },
-  { date: "2024-05-05", desktop: 267, mobile: 185 },
-  { date: "2024-05-06", desktop: 412, mobile: 330 },
-  { date: "2024-05-07", desktop: 178, mobile: 195 },
-  { date: "2024-05-08", desktop: 223, mobile: 265 },
-  { date: "2024-05-09", desktop: 356, mobile: 310 },
-  { date: "2024-05-10", desktop: 145, mobile: 155 },
-  { date: "2024-05-11", desktop: 278, mobile: 225 },
-  { date: "2024-05-12", desktop: 391, mobile: 365 },
-  { date: "2024-05-13", desktop: 134, mobile: 205 },
-  { date: "2024-05-14", desktop: 245, mobile: 275 },
-  { date: "2024-05-15", desktop: 367, mobile: 340 },
-  { date: "2024-05-16", desktop: 189, mobile: 165 },
-  { date: "2024-05-17", desktop: 312, mobile: 285 },
-  { date: "2024-05-18", desktop: 423, mobile: 395 },
-  { date: "2024-05-19", desktop: 167, mobile: 215 },
-  { date: "2024-05-20", desktop: 256, mobile: 255 },
-  { date: "2024-05-21", desktop: 378, mobile: 355 },
-  { date: "2024-05-22", desktop: 201, mobile: 195 },
-  { date: "2024-05-23", desktop: 289, mobile: 305 },
-  { date: "2024-05-24", desktop: 401, mobile: 375 },
-  { date: "2024-05-25", desktop: 156, mobile: 175 },
-  { date: "2024-05-26", desktop: 234, mobile: 235 },
-  { date: "2024-05-27", desktop: 345, mobile: 325 },
-  { date: "2024-05-28", desktop: 178, mobile: 205 },
-  { date: "2024-05-29", desktop: 267, mobile: 285 },
-  { date: "2024-05-30", desktop: 389, mobile: 365 },
-  { date: "2024-05-31", desktop: 212, mobile: 245 },
-  { date: "2024-06-01", desktop: 323, mobile: 295 },
-  { date: "2024-06-02", desktop: 445, mobile: 385 },
-  { date: "2024-06-03", desktop: 167, mobile: 185 },
-  { date: "2024-06-04", desktop: 256, mobile: 265 },
-  { date: "2024-06-05", desktop: 378, mobile: 345 },
-  { date: "2024-06-06", desktop: 201, mobile: 225 },
-  { date: "2024-06-07", desktop: 312, mobile: 315 },
-  { date: "2024-06-08", desktop: 434, mobile: 395 },
-  { date: "2024-06-09", desktop: 178, mobile: 195 },
-  { date: "2024-06-10", desktop: 289, mobile: 275 },
-  { date: "2024-06-11", desktop: 401, mobile: 355 },
-  { date: "2024-06-12", desktop: 223, mobile: 245 },
-  { date: "2024-06-13", desktop: 334, mobile: 325 },
-  { date: "2024-06-14", desktop: 456, mobile: 405 },
-  { date: "2024-06-15", desktop: 189, mobile: 215 },
-  { date: "2024-06-16", desktop: 278, mobile: 295 },
-  { date: "2024-06-17", desktop: 390, mobile: 375 },
-  { date: "2024-06-18", desktop: 212, mobile: 255 },
-  { date: "2024-06-19", desktop: 323, mobile: 335 },
-  { date: "2024-06-20", desktop: 445, mobile: 415 },
-  { date: "2024-06-21", desktop: 167, mobile: 195 },
-  { date: "2024-06-22", desktop: 256, mobile: 275 },
-  { date: "2024-06-23", desktop: 378, mobile: 355 },
-  { date: "2024-06-24", desktop: 201, mobile: 235 },
-  { date: "2024-06-25", desktop: 312, mobile: 315 },
-  { date: "2024-06-26", desktop: 434, mobile: 395 },
-  { date: "2024-06-27", desktop: 178, mobile: 225 },
-  { date: "2024-06-28", desktop: 289, mobile: 305 },
-  { date: "2024-06-29", desktop: 401, mobile: 385 },
-  { date: "2024-06-30", desktop: 234, mobile: 265 },
-];
+const usd = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
 
-const areaChartConfig = {
-  desktop: {
-    label: "Desktop",
+type StockRow = { date: string; close: number; ma20: number | null };
+
+/** Deterministic pseudo-random in [0, 1). */
+function mulberry32(seed: number) {
+  return () => {
+    let t = (seed += 0x6d2b79f5);
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/** ~18 months of weekday closes: noisy daily returns + gaps / regime shifts (not a smooth wave). */
+function generateAdjustedCloseSeries(): Array<{ date: string; close: number }> {
+  const result: Array<{ date: string; close: number }> = [];
+  let price = 118.06;
+  const cursor = new Date(2023, 0, 3);
+  const end = new Date(2024, 5, 28);
+  let i = 0;
+  const rand = mulberry32(0x5_1a6e13);
+
+  const ymd = (d: Date) =>
+    `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+
+  while (cursor <= end) {
+    const dow = cursor.getDay();
+    if (dow !== 0 && dow !== 6) {
+      const u = rand();
+      const v = rand();
+      // Fat-tailed-ish daily move: mostly small noise, occasional larger jumps
+      const base =
+        (u - 0.5) * 0.052 +
+        (v - 0.5) * 0.038 +
+        (rand() - 0.5) * 0.022;
+      const regime = i < 85 ? 0.00015 : i < 200 ? -0.00025 : 0.00035;
+      const event =
+        i % 113 === 47 ? (rand() - 0.3) * 0.045 : i % 211 === 19 ? (rand() - 0.7) * 0.062 : 0;
+      const ret = regime + base + event;
+      price = Math.max(28.5, price * (1 + ret));
+      price = Math.round(price * 100) / 100;
+      result.push({ date: ymd(cursor), close: price });
+      i += 1;
+    }
+    cursor.setDate(cursor.getDate() + 1);
+  }
+  return result;
+}
+
+function withSimpleMovingAverage(
+  rows: Array<{ date: string; close: number }>,
+  window: number
+): StockRow[] {
+  return rows.map((row, i) => {
+    if (i < window - 1) {
+      return { ...row, ma20: null };
+    }
+    let sum = 0;
+    for (let j = i - window + 1; j <= i; j += 1) {
+      sum += rows[j].close;
+    }
+    const ma = Math.round((sum / window) * 100) / 100;
+    return { ...row, ma20: ma };
+  });
+}
+
+const stockChartData: StockRow[] = withSimpleMovingAverage(
+  generateAdjustedCloseSeries(),
+  20
+);
+
+const MA_PERIOD = 20;
+
+const stockChartConfig = {
+  close: {
+    label: "Adj. close",
     color: "var(--color-chart-1)",
   },
-  mobile: {
-    label: "Mobile",
+  ma20: {
+    label: `${MA_PERIOD}-day SMA`,
     color: "var(--color-chart-2)",
   },
 } satisfies ChartConfig;
 
-const barChartData = [
-  { month: "January", saas: 186, services: 80, other: 45 },
-  { month: "February", saas: 305, services: 200, other: 100 },
-  { month: "March", saas: 237, services: 120, other: 60 },
-  { month: "April", saas: 73, services: 190, other: 90 },
-  { month: "May", saas: 209, services: 130, other: 75 },
-  { month: "June", saas: 214, services: 140, other: 55 },
-];
+/** Last N trading sessions (rows), not calendar days. */
+const SESSION_RANGE: Record<string, number> = {
+  "7d": 7,
+  "30d": 30,
+  "90d": 90,
+  "1y": 252,
+};
 
-const barChartConfig = {
-  saas: {
-    label: "SaaS",
+/** Stacked area: opaque stroke, translucent fill (Recharts applies fillOpacity to fill only). */
+const STACKED_AREA_FILL_OPACITY = 0.42;
+
+type AllocationMonth = {
+  period: string;
+  equities: number;
+  fixedIncome: number;
+  cash: number;
+  alternatives: number;
+  commodities: number;
+  multiStrat: number;
+};
+
+const ALLOCATION_KEYS = [
+  "equities",
+  "fixedIncome",
+  "cash",
+  "alternatives",
+  "commodities",
+  "multiStrat",
+] as const;
+
+/** 36 months of evolving sleeve weights (diverse mix, regime shifts — expand normalizes to 100%). */
+function generateAllocationTimeline(monthCount: number): AllocationMonth[] {
+  const rand = mulberry32(0x5ca1e);
+  const out: AllocationMonth[] = [];
+  const start = new Date(2022, 0, 1);
+
+  for (let m = 0; m < monthCount; m += 1) {
+    const d = new Date(start);
+    d.setMonth(start.getMonth() + m);
+    const t = monthCount > 1 ? m / (monthCount - 1) : 0;
+
+    const riskCycle = Math.sin(t * Math.PI * 2.4) * 14 + Math.cos(t * Math.PI * 0.9) * 6;
+    const rateShock = m >= 8 && m <= 16 ? -6 : m >= 24 && m <= 30 ? 5 : 0;
+    const altSeason = Math.sin((m / 6) * Math.PI) * 5;
+
+    let equities = 36 + riskCycle * 0.45 + rateShock * 0.4 + (rand() - 0.5) * 6;
+    let fixedIncome = 30 - riskCycle * 0.25 + rateShock * 0.35 + (rand() - 0.5) * 5;
+    let cash = 7 + (m > 18 && m < 26 ? 9 : 0) - riskCycle * 0.08 + (rand() - 0.5) * 3;
+    let alternatives = 11 + altSeason + (rand() - 0.5) * 4;
+    let commodities = 6 + Math.sin(t * Math.PI * 3) * 3 + (rand() - 0.5) * 2.5;
+    let multiStrat = 10 - altSeason * 0.2 + (rand() - 0.5) * 2;
+
+    if (m > 20 && m < 28) {
+      equities -= 5;
+      cash += 4;
+      fixedIncome += 2;
+    }
+
+    const floor = 0.8;
+    equities = Math.max(floor, equities);
+    fixedIncome = Math.max(floor, fixedIncome);
+    cash = Math.max(floor, cash);
+    alternatives = Math.max(floor, alternatives);
+    commodities = Math.max(floor, commodities);
+    multiStrat = Math.max(floor, multiStrat);
+
+    const period = d.toLocaleDateString("en-US", {
+      month: "short",
+      year: "2-digit",
+    });
+
+    out.push({
+      period,
+      equities: Math.round(equities * 10) / 10,
+      fixedIncome: Math.round(fixedIncome * 10) / 10,
+      cash: Math.round(cash * 10) / 10,
+      alternatives: Math.round(alternatives * 10) / 10,
+      commodities: Math.round(commodities * 10) / 10,
+      multiStrat: Math.round(multiStrat * 10) / 10,
+    });
+  }
+  return out;
+}
+
+const allocationTimelineData = generateAllocationTimeline(36);
+
+const allocationChartConfig = {
+  equities: {
+    label: "Equities",
     color: "var(--color-chart-1)",
   },
-  services: {
-    label: "Services",
+  fixedIncome: {
+    label: "Fixed income",
     color: "var(--color-chart-2)",
   },
-  other: {
-    label: "Other",
+  cash: {
+    label: "Cash & equivalents",
     color: "var(--color-chart-3)",
   },
+  alternatives: {
+    label: "Alternatives",
+    color: "var(--color-chart-4)",
+  },
+  commodities: {
+    label: "Commodities",
+    color: "var(--color-chart-5)",
+  },
+  multiStrat: {
+    label: "Multi-strategy",
+    color: "var(--color-primary)",
+  },
 } satisfies ChartConfig;
+
+/** Legend row above plot: padded like header/footer, divider under legend. */
+const chartFlushLegendClass =
+  "w-full justify-start border-b border-border/50 px-[var(--card-padding)] pt-3 pb-3";
+
+const chartFlushContainerClass =
+  "!aspect-auto h-[320px] w-full min-h-[280px] max-w-none justify-stretch";
+
+const areaChartFlushContainerClass =
+  "!aspect-auto h-[360px] w-full min-h-[300px] max-w-none justify-stretch";
 
 export function ChartsSection() {
   const [timeRange, setTimeRange] = React.useState("90d");
 
-  const filteredData = React.useMemo(() => {
-    const referenceDate = new Date("2024-06-30");
-    let daysToSubtract = 90;
-    if (timeRange === "30d") daysToSubtract = 30;
-    else if (timeRange === "7d") daysToSubtract = 7;
-    const startDate = new Date(referenceDate);
-    startDate.setDate(startDate.getDate() - daysToSubtract);
-
-    return areaChartData.filter((item) => {
-      const date = new Date(item.date);
-      return date >= startDate;
-    });
+  const filteredStockData = React.useMemo(() => {
+    const n = SESSION_RANGE[timeRange] ?? 90;
+    return stockChartData.slice(-n);
   }, [timeRange]);
 
   return (
     <GallerySection
       id="charts"
       title="Charts"
-      description="Interactive area and bar charts using design tokens"
+      description="Interactive line and area charts using design tokens"
     >
       <div className="flex flex-col gap-6 w-full">
-        <Card className="w-full">
-          <CardHeader>
-            <div className="flex items-center justify-between">
+        <Card className="w-full gap-0 overflow-hidden p-0">
+          <CardHeader className="border-b border-border/60 px-[var(--card-padding)] pt-[var(--card-padding)] pb-4">
+            <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
               <div>
-                <CardTitle>Visitor Traffic</CardTitle>
+                <CardTitle className="font-mono text-base tracking-tight">
+                  SGNL
+                </CardTitle>
                 <CardDescription>
-                  Desktop vs mobile — April 2024
+                  Adj. close & {MA_PERIOD}-day SMA (USD) · NYSE
                 </CardDescription>
               </div>
               <Select value={timeRange} onValueChange={(v) => setTimeRange(v ?? timeRange)}>
-                <SelectTrigger className="w-[160px]">
-                  <SelectValue placeholder="Last 3 months" />
+                <SelectTrigger className="w-[160px] sm:mt-0">
+                  <SelectValue placeholder="Range" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="90d">Last 3 months</SelectItem>
-                  <SelectItem value="30d">Last 30 days</SelectItem>
-                  <SelectItem value="7d">Last 7 days</SelectItem>
+                  <SelectItem value="1y">Last 252 sessions (~1Y)</SelectItem>
+                  <SelectItem value="90d">Last 90 sessions (~3M)</SelectItem>
+                  <SelectItem value="30d">Last 30 sessions</SelectItem>
+                  <SelectItem value="7d">Last 7 sessions</SelectItem>
                 </SelectContent>
               </Select>
             </div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-0 pb-0 pt-0">
             <ChartContainer
-              config={areaChartConfig}
-              className="h-[300px] w-full"
+              config={stockChartConfig}
+              className={chartFlushContainerClass}
             >
-              <AreaChart
-                data={filteredData}
-                margin={{ left: 12, right: 12 }}
+              <LineChart
+                data={filteredStockData}
+                margin={{ left: 4, right: 8, top: 4, bottom: 0 }}
                 accessibilityLayer
               >
-                <CartesianGrid vertical={false} />
+                <ChartLegend
+                  verticalAlign="top"
+                  align="left"
+                  content={(props) => (
+                    <ChartLegendContent
+                      payload={props.payload}
+                      verticalAlign={props.verticalAlign}
+                      className={cn(
+                        "flex flex-wrap gap-x-5 gap-y-1",
+                        chartFlushLegendClass
+                      )}
+                    />
+                  )}
+                />
+                <CartesianGrid vertical={false} strokeDasharray="3 3" />
                 <XAxis
                   dataKey="date"
                   tickLine={false}
                   axisLine={false}
+                  minTickGap={timeRange === "7d" ? 8 : timeRange === "1y" ? 40 : 20}
                   tickFormatter={(value) => {
-                    const date = new Date(value);
+                    const date = new Date(value + "T12:00:00");
                     return date.toLocaleDateString("en-US", {
                       month: "short",
                       day: "numeric",
                     });
                   }}
                 />
+                <YAxis
+                  orientation="right"
+                  tickLine={false}
+                  axisLine={false}
+                  width={56}
+                  tickFormatter={(v) =>
+                    typeof v === "number" ? `$${v.toFixed(0)}` : String(v)
+                  }
+                  domain={["auto", "auto"]}
+                />
                 <ChartTooltip
                   content={
                     <ChartTooltipContent
                       labelFormatter={(value) =>
-                        new Date(value).toLocaleDateString("en-US", {
-                          month: "short",
-                          day: "numeric",
-                          year: "numeric",
-                        })
+                        new Date(String(value) + "T12:00:00").toLocaleDateString(
+                          "en-US",
+                          {
+                            weekday: "short",
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric",
+                          }
+                        )
                       }
+                      formatter={(value, name) => (
+                        <div className="flex w-full min-w-[11rem] items-center justify-between gap-4 leading-none">
+                          <span className="text-muted-foreground">{name}</span>
+                          <span className="font-mono font-medium text-foreground tabular-nums">
+                            {typeof value === "number" ? usd.format(value) : String(value)}
+                          </span>
+                        </div>
+                      )}
                     />
                   }
                 />
-                <ChartLegend content={<ChartLegendContent />} />
-                <Area
-                  dataKey="desktop"
-                  type="natural"
-                  fill="var(--color-desktop)"
-                  fillOpacity={0.4}
-                  stroke="var(--color-desktop)"
+                <Line
+                  name="Adj. close"
+                  dataKey="close"
+                  type="linear"
+                  stroke="var(--color-chart-1)"
+                  strokeWidth={1.15}
+                  dot={false}
+                  isAnimationActive={false}
+                  activeDot={{ r: 3, strokeWidth: 1 }}
                 />
-                <Area
-                  dataKey="mobile"
-                  type="natural"
-                  fill="var(--color-mobile)"
-                  fillOpacity={0.4}
-                  stroke="var(--color-mobile)"
+                <Line
+                  name={`${MA_PERIOD}-day SMA`}
+                  dataKey="ma20"
+                  type="monotone"
+                  stroke="var(--color-chart-2)"
+                  strokeWidth={2}
+                  dot={false}
+                  connectNulls
+                  isAnimationActive={false}
                 />
-              </AreaChart>
+              </LineChart>
             </ChartContainer>
           </CardContent>
         </Card>
 
-        <Card className="w-full">
-          <CardHeader>
-            <CardTitle>Monthly Revenue</CardTitle>
+        <Card className="w-full gap-0 overflow-hidden p-0">
+          <CardHeader className="border-b border-border/60 px-[var(--card-padding)] pt-[var(--card-padding)] pb-4">
+            <CardTitle>Model portfolio — sleeve mix over time</CardTitle>
             <CardDescription>
-              Breakdown by revenue stream — H1 2024
+              100% stacked (expanded): monthly notional weights across asset classes · illustrative
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-0 pb-0 pt-0">
             <ChartContainer
-              config={barChartConfig}
-              className="h-[300px] w-full"
+              config={allocationChartConfig}
+              className={areaChartFlushContainerClass}
             >
-              <BarChart
-                data={barChartData}
-                margin={{ left: 12, right: 12 }}
+              <AreaChart
+                data={allocationTimelineData}
+                stackOffset="expand"
+                margin={{ left: 4, right: 8, top: 4, bottom: 0 }}
                 accessibilityLayer
               >
-                <CartesianGrid vertical={false} />
+                <ChartLegend
+                  verticalAlign="top"
+                  align="left"
+                  content={(props) => (
+                    <ChartLegendContent
+                      payload={props.payload}
+                      verticalAlign={props.verticalAlign}
+                      className={cn(
+                        "flex flex-wrap gap-x-4 gap-y-1",
+                        chartFlushLegendClass
+                      )}
+                    />
+                  )}
+                />
+                <CartesianGrid vertical={false} strokeDasharray="3 3" />
                 <XAxis
-                  dataKey="month"
+                  dataKey="period"
                   tickLine={false}
                   axisLine={false}
-                  tickFormatter={(value) => value.slice(0, 3)}
+                  minTickGap={10}
+                  interval="preserveStartEnd"
                 />
-                <ChartTooltip content={<ChartTooltipContent />} />
-                <ChartLegend content={<ChartLegendContent />} />
-                <Bar dataKey="saas" fill="var(--color-saas)" radius={4} />
-                <Bar dataKey="services" fill="var(--color-services)" radius={4} />
-                <Bar dataKey="other" fill="var(--color-other)" radius={4} />
-              </BarChart>
+                <YAxis
+                  orientation="right"
+                  tickLine={false}
+                  axisLine={false}
+                  width={44}
+                  tickFormatter={(v) =>
+                    typeof v === "number" ? `${Math.round(v * 100)}%` : String(v)
+                  }
+                  domain={[0, 1]}
+                />
+                <ChartTooltip
+                  content={
+                    <ChartTooltipContent
+                      formatter={(value, name, item) => {
+                        const row = item?.payload as Record<string, number> | undefined;
+                        const total = ALLOCATION_KEYS.reduce(
+                          (s, k) => s + (Number(row?.[k]) || 0),
+                          0
+                        );
+                        const raw = typeof value === "number" ? value : Number(value);
+                        const pct = total > 0 ? (raw / total) * 100 : 0;
+                        return (
+                          <div className="flex w-full min-w-[12rem] items-center justify-between gap-4 leading-none">
+                            <span className="text-muted-foreground">{name}</span>
+                            <span className="font-mono font-medium tabular-nums text-foreground">
+                              {pct.toFixed(1)}% · {raw}
+                            </span>
+                          </div>
+                        );
+                      }}
+                    />
+                  }
+                />
+                <Area
+                  dataKey="equities"
+                  type="monotone"
+                  stackId="allocation"
+                  stroke="var(--color-equities)"
+                  strokeWidth={1.25}
+                  strokeOpacity={1}
+                  fill="var(--color-equities)"
+                  fillOpacity={STACKED_AREA_FILL_OPACITY}
+                  isAnimationActive={false}
+                />
+                <Area
+                  dataKey="fixedIncome"
+                  type="monotone"
+                  stackId="allocation"
+                  stroke="var(--color-fixedIncome)"
+                  strokeWidth={1.25}
+                  strokeOpacity={1}
+                  fill="var(--color-fixedIncome)"
+                  fillOpacity={STACKED_AREA_FILL_OPACITY}
+                  isAnimationActive={false}
+                />
+                <Area
+                  dataKey="cash"
+                  type="monotone"
+                  stackId="allocation"
+                  stroke="var(--color-cash)"
+                  strokeWidth={1.25}
+                  strokeOpacity={1}
+                  fill="var(--color-cash)"
+                  fillOpacity={STACKED_AREA_FILL_OPACITY}
+                  isAnimationActive={false}
+                />
+                <Area
+                  dataKey="alternatives"
+                  type="monotone"
+                  stackId="allocation"
+                  stroke="var(--color-alternatives)"
+                  strokeWidth={1.25}
+                  strokeOpacity={1}
+                  fill="var(--color-alternatives)"
+                  fillOpacity={STACKED_AREA_FILL_OPACITY}
+                  isAnimationActive={false}
+                />
+                <Area
+                  dataKey="commodities"
+                  type="monotone"
+                  stackId="allocation"
+                  stroke="var(--color-commodities)"
+                  strokeWidth={1.25}
+                  strokeOpacity={1}
+                  fill="var(--color-commodities)"
+                  fillOpacity={STACKED_AREA_FILL_OPACITY}
+                  isAnimationActive={false}
+                />
+                <Area
+                  dataKey="multiStrat"
+                  type="monotone"
+                  stackId="allocation"
+                  stroke="var(--color-multiStrat)"
+                  strokeWidth={1.25}
+                  strokeOpacity={1}
+                  fill="var(--color-multiStrat)"
+                  fillOpacity={STACKED_AREA_FILL_OPACITY}
+                  isAnimationActive={false}
+                />
+              </AreaChart>
             </ChartContainer>
           </CardContent>
         </Card>

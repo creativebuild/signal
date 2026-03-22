@@ -58,6 +58,7 @@ Contains `@reference "./tokens.css"`, base resets, `@layer base` / `@layer utili
 Components
   ├── Tailwind color utilities     ← @theme inline (--color-* → bg-*, text-*, …)
   │       └── var(--background), var(--primary), …  ← :root definitions, .dark overrides
+  ├── font-sans / font-mono        ← @theme (--font-sans → var(--font-family-sans) from :root)
   └── Arbitrary + structural       ← var(--radius-*), var(--shadow-*), var(--control-*), …
           └── :root (and .dark only where needed)
 ```
@@ -78,6 +79,7 @@ Components
 All sections are commented in **`app/tokens.css`**. In outline:
 
 - **Semantic colors** — Core surfaces, brand, state, borders, data-syntax palette, charts, transparency scales, overlays, component-specific colors (sidebar, table, data-table, slider, …).  
+- **Typography** — `--font-family-sans` (Inter-led stack) and `--font-family-mono`; exposed as `font-sans` / `font-mono` via `@theme`.  
 - **Radius / shadows** — Stepped radius (`--radius-md`, …) and semantic aliases (`--radius-control`, …); shadow scales (`--shadow-xs` … `--shadow-lg`).  
 - **Spacing** — Control heights, padding, gaps; structural (`--card-padding`, `--menu-item-*`, `--avatar-size-*`, …).  
 - **Data table** — Row/header heights, cell padding, typography tokens for dense grids.

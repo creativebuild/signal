@@ -517,18 +517,11 @@ function resolveTokenValue(name, ctx, paletteHexByVar, depth = 0) {
       return { kind: "palette", path: "primitive.color.white" };
     if (vn === "--color-black")
       return { kind: "palette", path: "primitive.color.black" };
-    const blackAlphaM = vn.match(/^--color-black-(\d+)$/);
-    if (blackAlphaM) {
+    const primaryAlphaM = vn.match(/^--primary-(\d+)$/);
+    if (primaryAlphaM) {
       return {
         kind: "palette",
-        path: `primitive.color.black-alpha.${blackAlphaM[1]}`,
-      };
-    }
-    const whiteAlphaM = vn.match(/^--color-white-(\d+)$/);
-    if (whiteAlphaM) {
-      return {
-        kind: "palette",
-        path: `primitive.color.white-alpha.${whiteAlphaM[1]}`,
+        path: `primitive.color.primary-alpha.${primaryAlphaM[1]}`,
       };
     }
     const rest = vn.slice("--color-".length);
@@ -1345,27 +1338,23 @@ function countColorSwatches(colorRoot) {
   return n;
 }
 
-/** Black/white transparency scales from :root → primitives + hexByVar for overlay resolution. */
+/** Primary alpha scale (--primary-5 … --primary-90) from :root → primitives + hexByVar. */
 function applyAlphaPrimitivesFromRoot(primitive, hexByVar, rootVars) {
-  const blackAlpha = {};
-  const whiteAlpha = {};
+  const primaryAlpha = {};
   for (const [k, raw] of Object.entries(rootVars)) {
-    const m = k.match(/^--color-(black|white)-(\d+)$/i);
+    const m = k.match(/^--primary-(\d+)$/i);
     if (!m) continue;
     const hx = normalizeColorForFigma(String(raw).trim());
     if (typeof hx !== "string" || !hx.startsWith("#")) continue;
     hexByVar[k.toLowerCase()] = hx;
-    const step = m[2];
-    const token = {
+    const step = m[1];
+    primaryAlpha[step] = {
       $type: "color",
       $value: modePair(hx, hx),
       $extensions: { "com.figma.scopes": figmaScopes(["ALL_FILLS"]) },
     };
-    if (m[1].toLowerCase() === "black") blackAlpha[step] = token;
-    else whiteAlpha[step] = token;
   }
-  primitive.color["black-alpha"] = blackAlpha;
-  primitive.color["white-alpha"] = whiteAlpha;
+  primitive.color["primary-alpha"] = primaryAlpha;
 }
 
 function buildPrimitives(themeVars) {
@@ -1591,8 +1580,7 @@ function main() {
   // Warn for :root vars not exported
   for (const k of Object.keys(lightRoot)) {
     if (k === "--control-gap") continue; // alias of control-gap-x, skip duplicate
-    if (/^--color-black-\d+$/i.test(k) || /^--color-white-\d+$/i.test(k))
-      continue;
+    if (/^--primary-\d+$/i.test(k)) continue;
     if (/^--spacing-scale-\d+$/i.test(k)) continue;
     /* Stepped radius (except md — also a semantic token) → primitive/radius/* only */
     if (/^--radius-(sm|lg|xl|full)$/i.test(k)) continue;
