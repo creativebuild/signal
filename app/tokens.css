@@ -174,7 +174,7 @@
   --link-foreground: var(--color-neutral-50);
   --press: var(--color-blue-800);
   --press-foreground: var(--color-neutral-50);
-  --selection: var(--color-blue-600);
+  --selection: var(--color-blue-800);
   --selection-foreground: var(--color-white);
 
   /* 3. State */
@@ -371,7 +371,7 @@
   --link-foreground: var(--color-neutral-950);
   --press: var(--color-blue-600);
   --press-foreground: var(--color-neutral-50);
-  --selection: var(--color-blue-800);
+  --selection: var(--color-blue-600);
   --selection-foreground: var(--color-neutral-50);
 
   /* 3. State */
