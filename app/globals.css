@@ -1,11 +1,61 @@
-@reference "./tokens.css";
+@import "./styles/layers.css";
+@import "./tokens.css";
+@import "./tailwind-bridge.css";
+@import "./styles/reset.css";
+@import "./styles/base.css";
+@import "./styles/components/accordion.css";
+@import "./styles/components/alert-dialog.css";
+@import "./styles/components/alert.css";
+@import "./styles/components/aspect-ratio.css";
+@import "./styles/components/avatar.css";
+@import "./styles/components/badge.css";
+@import "./styles/components/breadcrumb.css";
+@import "./styles/components/button-group.css";
+@import "./styles/components/button.css";
+@import "./styles/components/calendar.css";
+@import "./styles/components/card.css";
+@import "./styles/components/carousel.css";
+@import "./styles/components/chart.css";
+@import "./styles/components/checkbox.css";
+@import "./styles/components/collapsible.css";
+@import "./styles/components/command.css";
+@import "./styles/components/context-menu.css";
+@import "./styles/components/data-table.css";
+@import "./styles/components/dialog.css";
+@import "./styles/components/drawer.css";
+@import "./styles/components/dropdown-menu.css";
+@import "./styles/components/form.css";
+@import "./styles/components/hover-card.css";
+@import "./styles/components/input-otp.css";
+@import "./styles/components/input.css";
+@import "./styles/components/label.css";
+@import "./styles/components/menubar.css";
+@import "./styles/components/navigation-menu.css";
+@import "./styles/components/pagination.css";
+@import "./styles/components/popover.css";
+@import "./styles/components/progress.css";
+@import "./styles/components/radio-group.css";
+@import "./styles/components/resizable.css";
+@import "./styles/components/scroll-area.css";
+@import "./styles/components/select.css";
+@import "./styles/components/separator.css";
+@import "./styles/components/sheet.css";
+@import "./styles/components/sidebar.css";
+@import "./styles/components/skeleton.css";
+@import "./styles/components/slider.css";
+@import "./styles/components/sonner.css";
+@import "./styles/components/switch.css";
+@import "./styles/components/table.css";
+@import "./styles/components/tabs.css";
+@import "./styles/components/textarea.css";
+@import "./styles/components/toggle-group.css";
+@import "./styles/components/toggle.css";
+@import "./styles/components/tooltip.css";
 
 /* ==========================================================================
-   GLOBAL STYLES — Base resets, utilities, keyframes, and global selectors.
-   All design tokens live in tokens.css.
+   GLOBAL STYLES — Keyframes and utilities (tokens live in tokens.css).
    ========================================================================== */
 
-/* Accordion animations */
 @keyframes accordion-down {
   from {
     height: 0;
@@ -23,26 +73,28 @@
   }
 }
 
-/* Base styles */
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground antialiased;
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
   }
 }
 
 @layer utilities {
-  .focus-ring {
-    @apply focus-visible:outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50;
+  .focus-ring:focus-visible {
+    outline: none;
+    border-color: var(--ring);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--ring) 50%, transparent);
   }
 
   .animate-accordion-down {
-    animation: accordion-down 0.2s ease-out;
+    animation: accordion-down var(--duration-normal) var(--ease-out);
   }
   .animate-accordion-up {
-    animation: accordion-up 0.2s ease-out;
+    animation: accordion-up var(--duration-normal) var(--ease-out);
+  }
+
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 }
 

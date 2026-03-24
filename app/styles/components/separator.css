@@ -1,0 +1,16 @@
+@layer components {
+  .separator {
+    flex-shrink: 0;
+    background-color: var(--border);
+  }
+
+  .separator[aria-orientation="horizontal"] {
+    height: 1px;
+    width: 100%;
+  }
+
+  .separator[aria-orientation="vertical"] {
+    width: 1px;
+    align-self: stretch;
+  }
+}

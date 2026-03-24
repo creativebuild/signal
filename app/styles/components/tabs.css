@@ -1,0 +1,82 @@
+@layer components {
+  .tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .tabs[data-orientation="vertical"] {
+    flex-direction: row;
+  }
+
+  .tabs-list {
+    display: inline-flex;
+    height: 2.25rem;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-control);
+    background-color: var(--muted);
+    padding: 0.25rem;
+    font-size: var(--text-sm);
+    color: var(--muted-foreground);
+  }
+
+  .tabs-list--line {
+    height: auto;
+    border-radius: 0;
+    background-color: transparent;
+    padding: 0;
+  }
+
+  .tabs-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    border-radius: var(--radius-control);
+    border: 1px solid transparent;
+    padding-inline: 0.75rem;
+    padding-block: 0.25rem;
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    transition-property: background-color, color, box-shadow, opacity;
+    transition-duration: var(--duration-fast);
+    transition-timing-function: var(--ease-standard);
+  }
+
+  .tabs-trigger:focus-visible {
+    outline: none;
+    border-color: var(--ring);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--ring) 50%, transparent);
+  }
+
+  .tabs-trigger:disabled {
+    pointer-events: none;
+    opacity: var(--disabled-opacity);
+  }
+
+  .tabs-trigger[aria-selected="true"] {
+    background-color: var(--background);
+    color: var(--foreground);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .tabs-trigger svg {
+    pointer-events: none;
+    flex-shrink: 0;
+    width: var(--icon-size);
+    height: var(--icon-size);
+  }
+
+  .tabs-content {
+    margin-top: 0.5rem;
+    outline: none;
+  }
+
+  .tabs-content:focus-visible {
+    outline: none;
+    border-color: var(--ring);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--ring) 50%, transparent);
+  }
+}

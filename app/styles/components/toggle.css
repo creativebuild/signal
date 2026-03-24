@@ -1,0 +1,91 @@
+@layer components {
+  .toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--control-gap);
+    border-radius: var(--radius-control);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    white-space: nowrap;
+    transition-property: background-color, color, border-color, box-shadow, opacity;
+    transition-duration: var(--duration-fast);
+    transition-timing-function: var(--ease-standard);
+    outline: none;
+  }
+
+  .toggle:hover {
+    background-color: var(--muted);
+    color: var(--muted-foreground);
+  }
+
+  .toggle:active {
+    background-color: var(--press);
+    color: var(--press-foreground);
+  }
+
+  .toggle:focus-visible {
+    outline: none;
+    border-color: var(--ring);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--ring) 50%, transparent);
+  }
+
+  .toggle:disabled {
+    pointer-events: none;
+    opacity: var(--disabled-opacity);
+  }
+
+  .toggle[aria-invalid="true"] {
+    border-color: var(--destructive);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--destructive) 20%, transparent);
+  }
+
+  .toggle[aria-pressed="true"] {
+    background-color: var(--accent);
+    color: var(--accent-foreground);
+  }
+
+  .toggle[aria-pressed="true"]:active {
+    background-color: var(--press);
+    color: var(--press-foreground);
+  }
+
+  .toggle svg {
+    pointer-events: none;
+    flex-shrink: 0;
+    width: var(--icon-size);
+    height: var(--icon-size);
+  }
+
+  .toggle--default {
+    background-color: transparent;
+  }
+
+  .toggle--outline {
+    border: 1px solid var(--input);
+    background-color: transparent;
+    box-shadow: var(--shadow-xs);
+  }
+
+  .toggle--outline:hover {
+    background-color: var(--muted);
+  }
+
+  .toggle--sm {
+    height: var(--control-height-sm);
+    min-width: var(--control-height-sm);
+    padding-inline: var(--control-px-sm);
+  }
+
+  .toggle--default-size {
+    height: var(--control-height-md);
+    min-width: var(--control-height-md);
+    padding-inline: var(--control-px-md);
+  }
+
+  .toggle--lg {
+    height: var(--control-height-lg);
+    min-width: var(--control-height-lg);
+    padding-inline: var(--control-px-lg);
+  }
+}
