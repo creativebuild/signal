@@ -1,1 +1,9 @@
-@layer components {}
+@layer components {
+  [data-slot="context-menu-content"] {
+    min-width: 9rem;
+  }
+
+  [data-slot="context-menu-trigger"] {
+    user-select: none;
+  }
+}

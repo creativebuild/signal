@@ -19,11 +19,11 @@
 @import "./styles/components/checkbox.css";
 @import "./styles/components/collapsible.css";
 @import "./styles/components/command.css";
-@import "./styles/components/context-menu.css";
 @import "./styles/components/data-table.css";
 @import "./styles/components/dialog.css";
 @import "./styles/components/drawer.css";
 @import "./styles/components/dropdown-menu.css";
+@import "./styles/components/context-menu.css";
 @import "./styles/components/form.css";
 @import "./styles/components/hover-card.css";
 @import "./styles/components/input-otp.css";

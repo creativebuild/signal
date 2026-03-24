@@ -1,1 +1,262 @@
-@layer components {}
+@layer components {
+  .menu-positioner {
+    isolation: isolate;
+    z-index: var(--z-dropdown);
+    outline: none;
+  }
+
+  [data-slot="dropdown-menu-content"],
+  [data-slot="dropdown-menu-sub-content"],
+  [data-slot="context-menu-content"],
+  [data-slot="context-menu-sub-content"] {
+    position: relative;
+    z-index: var(--z-dropdown);
+    max-height: var(--available-height, min(24rem, 100dvh));
+    min-width: 8rem;
+    width: var(--anchor-width, auto);
+    transform-origin: var(--transform-origin, center);
+    overflow-x: hidden;
+    overflow-y: auto;
+    border-radius: var(--radius-container);
+    border: 1px solid var(--border);
+    background-color: var(--popover);
+    padding: var(--menu-padding);
+    color: var(--popover-foreground);
+    box-shadow: var(--shadow-md);
+    outline: none;
+  }
+
+  [data-slot="dropdown-menu-sub-content"],
+  [data-slot="context-menu-sub-content"] {
+    width: auto;
+    min-width: 6rem;
+    box-shadow: var(--shadow-lg);
+  }
+
+  [data-slot="dropdown-menu-label"],
+  [data-slot="context-menu-label"] {
+    padding-inline: var(--menu-item-px);
+    padding-block: var(--menu-item-py);
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--muted-foreground);
+  }
+
+  [data-slot="dropdown-menu-label"][data-inset="true"],
+  [data-slot="context-menu-label"][data-inset="true"] {
+    padding-inline-start: 2rem;
+  }
+
+  [data-slot="dropdown-menu-item"],
+  [data-slot="context-menu-item"] {
+    position: relative;
+    display: flex;
+    cursor: default;
+    align-items: center;
+    gap: var(--control-gap);
+    border-radius: var(--radius-inset);
+    padding-inline: var(--menu-item-px);
+    padding-block: var(--menu-item-py);
+    font-size: var(--text-sm);
+    outline: none;
+    user-select: none;
+  }
+
+  [data-slot="dropdown-menu-item"]:focus,
+  [data-slot="dropdown-menu-item"]:focus-visible,
+  [data-slot="context-menu-item"]:focus,
+  [data-slot="context-menu-item"]:focus-visible {
+    background-color: var(--accent);
+    color: var(--accent-foreground);
+    outline: none;
+  }
+
+  [data-slot="dropdown-menu-item"]:not([data-variant="destructive"]):focus svg,
+  [data-slot="dropdown-menu-item"]:not([data-variant="destructive"]):focus-visible svg,
+  [data-slot="context-menu-item"]:not([data-variant="destructive"]):focus svg,
+  [data-slot="context-menu-item"]:not([data-variant="destructive"]):focus-visible svg {
+    color: var(--accent-foreground);
+  }
+
+  [data-slot="dropdown-menu-item"][data-variant="destructive"],
+  [data-slot="context-menu-item"][data-variant="destructive"] {
+    color: var(--destructive);
+  }
+
+  [data-slot="dropdown-menu-item"][data-variant="destructive"]:focus,
+  [data-slot="dropdown-menu-item"][data-variant="destructive"]:focus-visible,
+  [data-slot="context-menu-item"][data-variant="destructive"]:focus,
+  [data-slot="context-menu-item"][data-variant="destructive"]:focus-visible {
+    background-color: var(--destructive-subtle);
+    color: var(--destructive);
+  }
+
+  [data-slot="dropdown-menu-item"][data-variant="destructive"] svg,
+  [data-slot="context-menu-item"][data-variant="destructive"] svg {
+    color: var(--destructive);
+  }
+
+  [data-slot="dropdown-menu-item"][data-inset="true"],
+  [data-slot="context-menu-item"][data-inset="true"] {
+    padding-inline-start: 2rem;
+  }
+
+  [data-slot="dropdown-menu-item"][data-disabled],
+  [data-slot="context-menu-item"][data-disabled] {
+    pointer-events: none;
+    opacity: var(--disabled-opacity);
+  }
+
+  [data-slot="dropdown-menu-item"] svg,
+  [data-slot="context-menu-item"] svg {
+    pointer-events: none;
+    flex-shrink: 0;
+    width: var(--icon-size);
+    height: var(--icon-size);
+  }
+
+  [data-slot="dropdown-menu-sub-trigger"],
+  [data-slot="context-menu-sub-trigger"] {
+    display: flex;
+    cursor: default;
+    align-items: center;
+    gap: var(--control-gap);
+    border-radius: var(--radius-inset);
+    padding-inline: var(--menu-item-px);
+    padding-block: var(--menu-item-py);
+    font-size: var(--text-sm);
+    outline: none;
+    user-select: none;
+  }
+
+  [data-slot="dropdown-menu-sub-trigger"]:focus,
+  [data-slot="dropdown-menu-sub-trigger"]:focus-visible,
+  [data-slot="context-menu-sub-trigger"]:focus,
+  [data-slot="context-menu-sub-trigger"]:focus-visible {
+    background-color: var(--accent);
+    color: var(--accent-foreground);
+    outline: none;
+  }
+
+  [data-slot="dropdown-menu-sub-trigger"][data-popup-open],
+  [data-slot="dropdown-menu-sub-trigger"][data-open],
+  [data-slot="context-menu-sub-trigger"][data-open] {
+    background-color: var(--accent);
+    color: var(--accent-foreground);
+  }
+
+  [data-slot="dropdown-menu-sub-trigger"][data-inset="true"],
+  [data-slot="context-menu-sub-trigger"][data-inset="true"] {
+    padding-inline-start: 2rem;
+  }
+
+  [data-slot="dropdown-menu-sub-trigger"] svg,
+  [data-slot="context-menu-sub-trigger"] svg {
+    pointer-events: none;
+    flex-shrink: 0;
+    width: var(--icon-size);
+    height: var(--icon-size);
+  }
+
+  .menu-sub-trigger-chevron {
+    margin-left: auto;
+  }
+
+  [data-slot="dropdown-menu-checkbox-item"],
+  [data-slot="context-menu-checkbox-item"],
+  [data-slot="dropdown-menu-radio-item"],
+  [data-slot="context-menu-radio-item"] {
+    position: relative;
+    display: flex;
+    cursor: default;
+    align-items: center;
+    gap: var(--control-gap);
+    border-radius: var(--radius-inset);
+    padding-block: var(--menu-item-py);
+    padding-inline-end: 2rem;
+    padding-inline-start: var(--menu-item-px);
+    font-size: var(--text-sm);
+    outline: none;
+    user-select: none;
+  }
+
+  [data-slot="dropdown-menu-checkbox-item"]:focus,
+  [data-slot="dropdown-menu-checkbox-item"]:focus-visible,
+  [data-slot="context-menu-checkbox-item"]:focus,
+  [data-slot="context-menu-checkbox-item"]:focus-visible,
+  [data-slot="dropdown-menu-radio-item"]:focus,
+  [data-slot="dropdown-menu-radio-item"]:focus-visible,
+  [data-slot="context-menu-radio-item"]:focus,
+  [data-slot="context-menu-radio-item"]:focus-visible {
+    background-color: var(--accent);
+    color: var(--accent-foreground);
+    outline: none;
+  }
+
+  [data-slot="dropdown-menu-checkbox-item"]:focus *,
+  [data-slot="dropdown-menu-radio-item"]:focus *,
+  [data-slot="context-menu-checkbox-item"]:focus *,
+  [data-slot="context-menu-radio-item"]:focus * {
+    color: inherit;
+  }
+
+  [data-slot="dropdown-menu-checkbox-item"][data-inset="true"],
+  [data-slot="context-menu-checkbox-item"][data-inset="true"],
+  [data-slot="dropdown-menu-radio-item"][data-inset="true"],
+  [data-slot="context-menu-radio-item"][data-inset="true"] {
+    padding-inline-start: 2rem;
+  }
+
+  [data-slot="dropdown-menu-checkbox-item"][data-disabled],
+  [data-slot="context-menu-checkbox-item"][data-disabled],
+  [data-slot="dropdown-menu-radio-item"][data-disabled],
+  [data-slot="context-menu-radio-item"][data-disabled] {
+    pointer-events: none;
+    opacity: var(--disabled-opacity);
+  }
+
+  [data-slot="dropdown-menu-checkbox-item"] svg,
+  [data-slot="context-menu-checkbox-item"] svg,
+  [data-slot="dropdown-menu-radio-item"] svg,
+  [data-slot="context-menu-radio-item"] svg {
+    pointer-events: none;
+    flex-shrink: 0;
+    width: var(--icon-size);
+    height: var(--icon-size);
+  }
+
+  [data-slot="dropdown-menu-checkbox-item-indicator"],
+  [data-slot="dropdown-menu-radio-item-indicator"],
+  [data-slot="context-menu-checkbox-item-indicator"],
+  [data-slot="context-menu-radio-item-indicator"] {
+    pointer-events: none;
+    position: absolute;
+    right: var(--menu-item-px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  [data-slot="dropdown-menu-separator"],
+  [data-slot="context-menu-separator"] {
+    margin-inline: -0.25rem;
+    margin-block: 0.25rem;
+    height: 1px;
+    background-color: var(--border);
+  }
+
+  [data-slot="dropdown-menu-shortcut"],
+  [data-slot="context-menu-shortcut"] {
+    margin-left: auto;
+    font-size: var(--text-xs);
+    letter-spacing: 0.1em;
+    color: var(--muted-foreground);
+  }
+
+  [data-slot="dropdown-menu-item"]:focus [data-slot="dropdown-menu-shortcut"],
+  [data-slot="dropdown-menu-item"]:focus-visible [data-slot="dropdown-menu-shortcut"],
+  [data-slot="context-menu-item"]:focus [data-slot="context-menu-shortcut"],
+  [data-slot="context-menu-item"]:focus-visible [data-slot="context-menu-shortcut"] {
+    color: var(--accent-foreground);
+  }
+}
