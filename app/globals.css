@@ -79,6 +79,12 @@
   }
 }
 
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @layer utilities {
   .focus-ring:focus-visible {
     outline: none;
@@ -96,10 +102,28 @@
   .animate-pulse {
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
+
+  .animate-spin {
+    animation: spin 1s linear infinite;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
 }
 
 /* Light mode: selected row checkbox — inverted for contrast */
-:root:not(.dark) [data-in-selected-row] [data-slot="checkbox"][data-checked] {
+:root:not(.dark)
+  [data-in-selected-row]
+  [data-slot="checkbox"][aria-checked="true"] {
   background-color: var(--table-checkbox-in-selected-bg);
   border-color: var(--table-checkbox-in-selected-bg);
   color: var(--table-checkbox-in-selected-fg);

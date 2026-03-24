@@ -1,1 +1,100 @@
-@layer components {}
+@layer components {
+  .switch {
+    position: relative;
+    display: inline-flex;
+    flex-shrink: 0;
+    cursor: pointer;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 2px;
+    box-sizing: border-box;
+    border-radius: var(--radius-full);
+    border: 1px solid transparent;
+    box-shadow: var(--shadow-xs);
+    transition-property: background-color, opacity;
+    transition-duration: 150ms;
+    transition-timing-function: var(--ease-standard);
+    outline: none;
+  }
+
+  .switch::after {
+    content: "";
+    position: absolute;
+    inset-inline: -0.75rem;
+    inset-block: -0.5rem;
+  }
+
+  .switch:focus-visible {
+    outline: none;
+    border-color: var(--ring);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--ring) 50%, transparent);
+  }
+
+  .switch[aria-invalid="true"] {
+    border-color: color-mix(in oklch, var(--destructive) 80%, transparent);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--destructive) 30%, transparent);
+  }
+
+  .switch[data-size="default"] {
+    height: 18.4px;
+    width: 32px;
+  }
+
+  .switch[data-size="sm"] {
+    height: 14px;
+    width: 24px;
+  }
+
+  .switch[aria-checked="true"],
+  .switch[data-checked] {
+    background-color: var(--selection);
+  }
+
+  .switch[aria-checked="false"],
+  .switch[data-unchecked] {
+    background-color: var(--switch-track-unchecked);
+  }
+
+  .switch[data-disabled],
+  .switch:disabled {
+    cursor: not-allowed;
+    opacity: var(--disabled-opacity);
+  }
+
+  .switch-thumb {
+    pointer-events: none;
+    display: block;
+    flex-shrink: 0;
+    border-radius: var(--radius-full);
+    margin-inline-start: 0;
+    transition-property: margin-inline-start, background-color;
+    transition-duration: 150ms;
+    transition-timing-function: var(--ease-out);
+  }
+
+  .switch[data-size="default"] .switch-thumb {
+    width: var(--icon-size);
+    height: var(--icon-size);
+  }
+
+  .switch[data-size="sm"] .switch-thumb {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+
+  .switch[aria-checked="true"] .switch-thumb,
+  .switch[data-checked] .switch-thumb {
+    margin-inline-start: auto;
+    background-color: var(--selection-foreground);
+  }
+
+  .switch[aria-checked="false"] .switch-thumb,
+  .switch[data-unchecked] .switch-thumb {
+    background-color: var(--switch-thumb-unchecked);
+  }
+
+  .switch:active[aria-checked="false"] .switch-thumb,
+  .switch:active[data-unchecked] .switch-thumb {
+    background-color: var(--press);
+  }
+}

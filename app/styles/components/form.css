@@ -1,1 +1,16 @@
-@layer components {}
+@layer components {
+  .form-item {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .form-description {
+    font-size: var(--text-sm);
+    color: var(--muted-foreground);
+  }
+
+  .form-message {
+    font-size: var(--text-sm);
+    color: var(--destructive);
+  }
+}

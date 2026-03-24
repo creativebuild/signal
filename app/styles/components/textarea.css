@@ -1,1 +1,26 @@
-@layer components {}
+@layer components {
+  .textarea {
+    display: flex;
+    min-height: calc(var(--control-height-md) * 2);
+    width: 100%;
+    border-radius: var(--radius-control);
+    border: 1px solid var(--input);
+    background-color: transparent;
+    padding-inline: 0.75rem;
+    padding-block: 0.5rem;
+    font-size: var(--text-sm);
+    box-shadow: var(--shadow-sm);
+    transition-property: color, background-color, border-color, box-shadow, opacity;
+    transition-duration: var(--duration-fast);
+    transition-timing-function: var(--ease-standard);
+  }
+
+  .textarea::placeholder {
+    color: var(--muted-foreground);
+  }
+
+  .textarea:disabled {
+    cursor: not-allowed;
+    opacity: var(--disabled-opacity);
+  }
+}

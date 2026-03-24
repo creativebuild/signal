@@ -1,1 +1,25 @@
-@layer components {}
+@layer components {
+  .label {
+    display: flex;
+    align-items: center;
+    gap: var(--control-gap);
+    font-size: var(--text-sm);
+    line-height: 1;
+    font-weight: var(--font-weight-medium);
+    user-select: none;
+  }
+
+  .group[data-disabled="true"] .label {
+    pointer-events: none;
+    opacity: var(--disabled-opacity);
+  }
+
+  .peer:disabled ~ .label {
+    cursor: not-allowed;
+    opacity: var(--disabled-opacity);
+  }
+
+  .label[data-error="true"] {
+    color: var(--destructive);
+  }
+}

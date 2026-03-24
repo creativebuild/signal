@@ -1,1 +1,122 @@
-@layer components {}
+@layer components {
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow: hidden;
+    border-radius: var(--radius-container);
+    background-color: var(--card);
+    padding: var(--card-padding);
+    font-size: var(--text-sm);
+    color: var(--card-foreground);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+  }
+
+  .card:has([data-slot="card-footer"]) {
+    padding-bottom: 0;
+  }
+
+  .card:has(> img:first-child) {
+    padding-top: 0;
+  }
+
+  .card[data-size="sm"] {
+    gap: 0.75rem;
+    padding-block: 0.75rem;
+  }
+
+  .card[data-size="sm"]:has([data-slot="card-footer"]) {
+    padding-bottom: 0;
+  }
+
+  .card > img:first-child {
+    border-top-left-radius: var(--radius-container);
+    border-top-right-radius: var(--radius-container);
+  }
+
+  .card > img:last-child {
+    border-bottom-left-radius: var(--radius-container);
+    border-bottom-right-radius: var(--radius-container);
+  }
+
+  .card-header {
+    container-type: inline-size;
+    container-name: card-header;
+    display: grid;
+    grid-auto-rows: min-content;
+    align-items: start;
+    gap: 0.25rem;
+    border-top-left-radius: var(--radius-container);
+    border-top-right-radius: var(--radius-container);
+    padding-inline: 1rem;
+  }
+
+  .card[data-size="sm"] .card-header {
+    padding-inline: 0.75rem;
+  }
+
+  .card-header:has([data-slot="card-action"]) {
+    grid-template-columns: 1fr auto;
+  }
+
+  .card-header:has([data-slot="card-description"]) {
+    grid-template-rows: auto auto;
+  }
+
+  .card-header.border-b {
+    padding-bottom: 1rem;
+  }
+
+  .card[data-size="sm"] .card-header.border-b {
+    padding-bottom: 0.75rem;
+  }
+
+  .card-title {
+    font-size: var(--text-base);
+    line-height: 1.375;
+    font-weight: var(--font-weight-medium);
+  }
+
+  .card[data-size="sm"] .card-title {
+    font-size: var(--text-sm);
+  }
+
+  .card-description {
+    font-size: var(--text-sm);
+    color: var(--muted-foreground);
+  }
+
+  .card-action {
+    grid-column-start: 2;
+    grid-row: span 2 / span 2;
+    grid-row-start: 1;
+    align-self: start;
+    justify-self: end;
+  }
+
+  .card-content {
+    padding-inline: 1rem;
+  }
+
+  .card[data-size="sm"] .card-content {
+    padding-inline: 0.75rem;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    border-bottom-left-radius: var(--radius-container);
+    border-bottom-right-radius: var(--radius-container);
+    border-top: 1px solid var(--border);
+    background-color: color-mix(in oklch, var(--muted) 50%, transparent);
+    margin-inline: calc(-1 * var(--card-padding));
+    padding-inline: calc(var(--card-padding) + 1rem);
+    padding-block: 1rem;
+  }
+
+  .card[data-size="sm"] .card-footer {
+    padding-inline: calc(var(--card-padding) + 0.75rem);
+    padding-block: 0.75rem;
+  }
+}
