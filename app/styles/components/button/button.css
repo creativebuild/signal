@@ -12,7 +12,7 @@
     background-clip: padding-box;
     font-weight: var(--font-weight-medium);
     white-space: nowrap;
-    transition: var(--transition-colors);
+    transition: var(--transition-control);
     user-select: none;
   }
 

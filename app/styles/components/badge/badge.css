@@ -14,7 +14,7 @@
     font-size: var(--font-size-xs);
     font-weight: var(--font-weight-medium);
     white-space: nowrap;
-    transition: var(--transition-colors);
+    transition: var(--transition-control);
   }
 
   .badge:focus-visible {

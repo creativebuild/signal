@@ -185,12 +185,17 @@
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
   --ease-in: cubic-bezier(0.4, 0, 1, 1);
 
-  --transition-colors: color var(--duration-fast) var(--ease-standard),
+  /*
+   * Default transition for interactive controls (buttons, inputs, rows, etc.).
+   * Not “color only”: the same duration/easing is applied to every property that
+   * typically changes together on hover/focus (fill, border, focus ring shadow, opacity).
+   * Name avoids Tailwind’s misleading `transition-colors` label.
+   */
+  --transition-control: color var(--duration-fast) var(--ease-standard),
     background-color var(--duration-fast) var(--ease-standard),
     border-color var(--duration-fast) var(--ease-standard),
     box-shadow var(--duration-fast) var(--ease-standard),
     opacity var(--duration-fast) var(--ease-standard);
-  --transition-all: all var(--duration-fast) var(--ease-standard);
 
   /* Z-index */
   --z-base: 0;

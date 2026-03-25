@@ -74,7 +74,7 @@ Open [http://localhost:3000](http://localhost:3000) for the component gallery. U
 /* app/styles/components/button/button.css */
 .btn {
   border-radius: var(--radius-control);
-  transition: var(--transition-colors);
+  transition: var(--transition-control);
   background-color: var(--color-primary);
   color: var(--color-primary-fg);
 }
@@ -104,7 +104,7 @@ Open [http://localhost:3000](http://localhost:3000) for the component gallery. U
 | In token CSS | In `globals.css` only |
 |--------------|------------------------|
 | Colors, type scale, radii, shadows, spacing, motion, z-index, data/chart tokens | Keyframes, third-party widget overrides, small utility classes |
-| `--transition-colors` / `--transition-all` (composed from duration + ease) live in **semantic.css** | Anything that is not a design token |
+| **`--transition-control`** — one shared `transition` value (duration + easing) for properties that change together on hover/focus: color, background, border, box-shadow, opacity. Not “colors only”; name reflects interactive controls. | Anything that is not a design token |
 
 ---
 

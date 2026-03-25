@@ -46,7 +46,7 @@
 
   .table-row {
     border-bottom: 1px solid var(--color-border);
-    transition: var(--transition-colors);
+    transition: var(--transition-control);
   }
 
   .table-row:hover {

@@ -35,7 +35,7 @@
   .data-table .data-table-body-row {
     height: var(--data-table-row-height-sm);
     border-bottom: none;
-    transition: var(--transition-colors);
+    transition: var(--transition-control);
   }
 
   .data-table .data-table-body-row:hover {

@@ -10,7 +10,7 @@
     padding-block: 0.5rem;
     font-size: var(--font-size-sm);
     box-shadow: var(--shadow-sm);
-    transition: var(--transition-colors);
+    transition: var(--transition-control);
   }
 
   .textarea:hover:not(:disabled) {

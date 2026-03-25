@@ -68,7 +68,7 @@
     border: 1px solid var(--color-primary);
     background-color: var(--slider-thumb-bg);
     box-shadow: var(--shadow-sm);
-    transition: var(--transition-colors);
+    transition: var(--transition-control);
     user-select: none;
   }
 

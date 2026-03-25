@@ -9,7 +9,7 @@
     padding-inline: var(--space-control-x-sm);
     height: var(--size-control-md);
     font-size: var(--font-size-sm);
-    transition: var(--transition-colors);
+    transition: var(--transition-control);
   }
 
   .input:hover:not(:disabled):not([aria-invalid="true"]) {
