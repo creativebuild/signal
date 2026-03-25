@@ -120,7 +120,7 @@ function Carousel({
     >
       <div
         onKeyDownCapture={handleKeyDown}
-        className={cn("relative", className)}
+        className={cn(className)}
         role="region"
         aria-roledescription="carousel"
         data-slot="carousel"
@@ -136,15 +136,11 @@ function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
   const { carouselRef, orientation } = useCarousel()
 
   return (
-    <div
-      ref={carouselRef}
-      className="overflow-hidden"
-      data-slot="carousel-content"
-    >
+    <div ref={carouselRef} data-slot="carousel-content">
       <div
         className={cn(
-          "flex",
-          orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col",
+          "carousel-track",
+          orientation === "vertical" && "carousel-track--vertical",
           className
         )}
         {...props}
@@ -162,8 +158,8 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
       aria-roledescription="slide"
       data-slot="carousel-item"
       className={cn(
-        "min-w-0 shrink-0 grow-0 basis-full",
-        orientation === "horizontal" ? "pl-4" : "pt-4",
+        "carousel-item",
+        orientation === "vertical" && "carousel-item--vertical",
         className
       )}
       {...props}
@@ -186,10 +182,8 @@ function CarouselPrevious({
       variant={variant}
       size={size}
       className={cn(
-        "absolute z-10 size-8 rounded-full",
-        orientation === "horizontal"
-          ? "top-1/2 -left-12 -translate-y-1/2"
-          : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
+        "carousel-nav carousel-nav--prev",
+        orientation === "vertical" && "carousel-nav--vertical",
         className
       )}
       disabled={!canScrollPrev}
@@ -221,10 +215,8 @@ function CarouselNext({
       variant={variant}
       size={size}
       className={cn(
-        "absolute z-10 size-8 rounded-full",
-        orientation === "horizontal"
-          ? "top-1/2 -right-12 -translate-y-1/2"
-          : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
+        "carousel-nav carousel-nav--next",
+        orientation === "vertical" && "carousel-nav--vertical",
         className
       )}
       disabled={!canScrollNext}

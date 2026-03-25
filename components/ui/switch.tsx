@@ -15,7 +15,7 @@ function Switch({
     <SwitchPrimitive.Root
       data-slot="switch"
       data-size={size}
-      className={cn("switch peer group/switch focus-ring", className)}
+      className={cn("switch focus-ring", className)}
       {...props}
     >
       <SwitchPrimitive.Thumb

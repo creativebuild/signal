@@ -57,6 +57,9 @@
   --border: var(--primitive-neutral-200);
   --input: var(--primitive-neutral-200);
   --ring: var(--primitive-blue-600);
+  /* Box-shadow spread for .focus-ring and invalid/state rings; outline-offset for :focus-visible */
+  --focus-ring-width: 3px;
+  --focus-ring-offset: 2px;
 
   /* 5. Data syntax */
   --data-primary:           var(--primitive-neutral-900);
@@ -173,6 +176,8 @@
   --sidebar-foreground: var(--primitive-neutral-950);
   --slider-thumb-bg: var(--background);
   --control-input-bg: transparent;
+  --control-input-bg-hover: color-mix(in oklch, var(--accent) 40%, var(--background));
+  --control-input-bg-focus: var(--control-input-bg);
   --control-input-bg-disabled: color-mix(in oklch, var(--input) 50%, transparent);
   --switch-track-unchecked: var(--input);
   --switch-thumb-unchecked: var(--background);
@@ -182,8 +187,9 @@
   --table-checkbox-in-selected-fg: var(--primitive-neutral-900);
 
   /* 15. Data table */
+  /* Typography refs (--text-xs, --font-weight-*) resolve at computed-value time (later in this :root). */
   /* Sizing */
-  --data-table-row-height-sm: 1.25rem;
+  --data-table-row-height-sm: 20px;
   --data-table-row-height-md: 1.5rem;
   --data-table-row-height-lg: 2rem;
   --data-table-header-height: 2.5rem;
@@ -454,7 +460,7 @@
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
   --ease-in: cubic-bezier(0.4, 0, 1, 1);
-  
+
   /* Z-index scale */
   --z-base: 0;
   --z-raised: 10;
@@ -579,11 +585,15 @@
   --chart-13: var(--primitive-orange-600);
   --chart-14: var(--primitive-violet-300);
 
-  /* 8–14 inherited from default theme */
-  /* 14. Components */
+  /* 7. Primary alpha — inherited; mixes use .dark --primary */
+  /* 8. Overlays — inherited (same scrims as light) */
+  /* 9–13. Typography, radius, shadows, spacing — inherited */
+  /* 14. Components — dark overrides */
   --sidebar: var(--primitive-neutral-900);
   --sidebar-foreground: var(--primitive-neutral-50);
   --control-input-bg: color-mix(in oklch, var(--input) 30%, transparent);
+  --control-input-bg-hover: color-mix(in oklch, var(--accent) 50%, var(--control-input-bg));
+  --control-input-bg-focus: var(--control-input-bg);
   --control-input-bg-disabled: color-mix(in oklch, var(--input) 80%, transparent);
   --switch-track-unchecked: color-mix(in oklch, var(--input) 80%, transparent);
   --switch-thumb-unchecked: var(--foreground);

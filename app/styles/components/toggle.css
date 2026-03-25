@@ -8,9 +8,7 @@
     font-size: var(--text-sm);
     font-weight: var(--font-weight-medium);
     white-space: nowrap;
-    transition-property: background-color, color, border-color, box-shadow, opacity;
-    transition-duration: var(--duration-fast);
-    transition-timing-function: var(--ease-standard);
+    transition: var(--transition-colors);
     outline: none;
   }
 
@@ -27,7 +25,7 @@
   .toggle:focus-visible {
     outline: none;
     border-color: var(--ring);
-    box-shadow: 0 0 0 3px color-mix(in oklch, var(--ring) 50%, transparent);
+    box-shadow: 0 0 0 var(--focus-ring-width) color-mix(in oklch, var(--ring) 50%, transparent);
   }
 
   .toggle:disabled {
@@ -37,7 +35,7 @@
 
   .toggle[aria-invalid="true"] {
     border-color: var(--destructive);
-    box-shadow: 0 0 0 3px color-mix(in oklch, var(--destructive) 20%, transparent);
+    box-shadow: 0 0 0 var(--focus-ring-width) color-mix(in oklch, var(--destructive) 20%, transparent);
   }
 
   .toggle[aria-pressed="true"] {

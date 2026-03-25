@@ -26,10 +26,7 @@ function Menubar({ className, ...props }: MenubarPrimitive.Props) {
   return (
     <MenubarPrimitive
       data-slot="menubar"
-      className={cn(
-        "flex h-9 items-center gap-1 rounded-[var(--radius-control)] border p-[var(--menu-padding)] shadow-[var(--shadow-xs)]",
-        className
-      )}
+      className={cn(className)}
       {...props}
     />
   )
@@ -58,10 +55,7 @@ function MenubarTrigger({
   return (
     <DropdownMenuTrigger
       data-slot="menubar-trigger"
-      className={cn(
-        "flex items-center rounded-[var(--radius-inset)] px-[var(--menu-item-px)] py-1 text-sm font-medium outline-hidden select-none hover:bg-muted aria-expanded:bg-muted",
-        className
-      )}
+      className={cn(className)}
       {...props}
     />
   )
@@ -80,7 +74,7 @@ function MenubarContent({
       align={align}
       alignOffset={alignOffset}
       sideOffset={sideOffset}
-      className={cn("min-w-36 rounded-[var(--radius-control)] bg-popover p-[var(--menu-padding)] text-popover-foreground shadow-[var(--shadow-md)] ring-1 ring-foreground/10 duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95", className )}
+      className={cn("menubar-flyout", className)}
       {...props}
     />
   )
@@ -97,10 +91,7 @@ function MenubarItem({
       data-slot="menubar-item"
       data-inset={inset}
       data-variant={variant}
-      className={cn(
-        "group/menubar-item gap-2 rounded-[var(--radius-inset)] px-[var(--menu-item-px)] py-[var(--menu-item-py)] text-sm focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground data-inset:pl-8 data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive-subtle data-[variant=destructive]:focus:text-destructive data-disabled:opacity-50 [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:*:[svg]:text-destructive!",
-        className
-      )}
+      className={cn(className)}
       {...props}
     />
   )
@@ -119,14 +110,11 @@ function MenubarCheckboxItem({
     <MenuPrimitive.CheckboxItem
       data-slot="menubar-checkbox-item"
       data-inset={inset}
-      className={cn(
-        "relative flex cursor-default items-center gap-2 rounded-[var(--radius-inset)] py-[var(--menu-item-py)] pr-[var(--menu-item-px)] pl-8 text-sm outline-hidden select-none focus:bg-accent focus:text-accent-foreground focus:**:text-accent-foreground data-inset:pl-8 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
-        className
-      )}
+      className={cn(className)}
       checked={checked}
       {...props}
     >
-      <span className="pointer-events-none absolute left-2 flex size-4 items-center justify-center [&_svg:not([class*='size-'])]:size-4">
+      <span data-slot="menubar-checkbox-item-indicator">
         <MenuPrimitive.CheckboxItemIndicator>
           <CheckIcon
           />
@@ -155,13 +143,10 @@ function MenubarRadioItem({
     <MenuPrimitive.RadioItem
       data-slot="menubar-radio-item"
       data-inset={inset}
-      className={cn(
-        "relative flex cursor-default items-center gap-2 rounded-[var(--radius-inset)] py-[var(--menu-item-py)] pr-[var(--menu-item-px)] pl-8 text-sm outline-hidden select-none focus:bg-accent focus:text-accent-foreground focus:**:text-accent-foreground data-inset:pl-8 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-        className
-      )}
+      className={cn(className)}
       {...props}
     >
-      <span className="pointer-events-none absolute left-2 flex size-4 items-center justify-center [&_svg:not([class*='size-'])]:size-4">
+      <span data-slot="menubar-radio-item-indicator">
         <MenuPrimitive.RadioItemIndicator>
           <CheckIcon
           />
@@ -183,10 +168,7 @@ function MenubarLabel({
     <DropdownMenuLabel
       data-slot="menubar-label"
       data-inset={inset}
-      className={cn(
-        "px-[var(--menu-item-px)] py-[var(--menu-item-py)] text-sm font-medium data-inset:pl-8",
-        className
-      )}
+      className={cn("menubar-label", className)}
       {...props}
     />
   )
@@ -199,7 +181,7 @@ function MenubarSeparator({
   return (
     <DropdownMenuSeparator
       data-slot="menubar-separator"
-      className={cn("-mx-1 my-1 h-px bg-border", className)}
+      className={cn(className)}
       {...props}
     />
   )
@@ -212,10 +194,7 @@ function MenubarShortcut({
   return (
     <DropdownMenuShortcut
       data-slot="menubar-shortcut"
-      className={cn(
-        "ml-auto text-xs tracking-widest text-muted-foreground group-focus/menubar-item:text-accent-foreground",
-        className
-      )}
+      className={cn(className)}
       {...props}
     />
   )
@@ -238,10 +217,7 @@ function MenubarSubTrigger({
     <DropdownMenuSubTrigger
       data-slot="menubar-sub-trigger"
       data-inset={inset}
-      className={cn(
-        "gap-2 rounded-[var(--radius-inset)] px-[var(--menu-item-px)] py-[var(--menu-item-py)] text-sm focus:bg-accent focus:text-accent-foreground data-inset:pl-8 data-open:bg-accent data-open:text-accent-foreground [&_svg:not([class*='size-'])]:size-4",
-        className
-      )}
+      className={cn(className)}
       {...props}
     />
   )
@@ -254,7 +230,7 @@ function MenubarSubContent({
   return (
     <DropdownMenuSubContent
       data-slot="menubar-sub-content"
-      className={cn("min-w-32 rounded-[var(--radius-control)] bg-popover p-[var(--menu-padding)] text-popover-foreground shadow-[var(--shadow-lg)] ring-1 ring-foreground/10 duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95", className )}
+      className={cn("menubar-sub-flyout", className)}
       {...props}
     />
   )

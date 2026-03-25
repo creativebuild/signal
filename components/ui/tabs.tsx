@@ -14,7 +14,7 @@ function Tabs({
     <TabsPrimitive.Root
       data-slot="tabs"
       data-orientation={orientation}
-      className={cn("tabs group/tabs", className)}
+      className={cn("tabs", className)}
       {...props}
     />
   )
@@ -32,7 +32,7 @@ function tabsListVariants({
   variant?: keyof typeof listVariantClass
   className?: ClassValue
 } = {}) {
-  return cn("tabs-list group/tabs-list", listVariantClass[variant], className)
+  return cn("tabs-list", listVariantClass[variant], className)
 }
 
 function TabsList({

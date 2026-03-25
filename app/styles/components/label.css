@@ -14,7 +14,9 @@
     opacity: var(--disabled-opacity);
   }
 
-  .peer:disabled ~ .label {
+  [data-slot="checkbox"]:disabled ~ .label,
+  [data-slot="switch"]:disabled ~ .label,
+  [data-slot="radio-group-item"]:disabled ~ .label {
     cursor: not-allowed;
     opacity: var(--disabled-opacity);
   }

@@ -137,32 +137,32 @@ export function FormControlsSection() {
       title="Form Controls"
       description="Input, Textarea, Label, Select, Combobox, Date Picker, Input OTP, Form"
     >
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Input</h3>
-          <div className="space-y-2">
+      <div className="gallery-grid">
+        <div className="gallery-stack-loose">
+          <h3 className="gallery-sample-title">Input</h3>
+          <div className="gallery-stack">
             <Input placeholder="Enter text..." />
             <Input placeholder="Disabled" disabled />
           </div>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Textarea</h3>
+        <div className="gallery-stack-loose">
+          <h3 className="gallery-sample-title">Textarea</h3>
           <Textarea placeholder="Type your message here..." />
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Label</h3>
-          <div className="space-y-2">
+        <div className="gallery-stack-loose">
+          <h3 className="gallery-sample-title">Label</h3>
+          <div className="gallery-stack">
             <Label htmlFor="demo-input">Email address</Label>
             <Input id="demo-input" type="email" placeholder="you@example.com" />
           </div>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Select</h3>
+        <div className="gallery-stack-loose">
+          <h3 className="gallery-sample-title">Select</h3>
           <Select>
-            <SelectTrigger>
+            <SelectTrigger className="select-trigger--full">
               <SelectValue placeholder="Select a fruit" />
             </SelectTrigger>
             <SelectContent>
@@ -173,8 +173,8 @@ export function FormControlsSection() {
           </Select>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Combobox (Popover + Command)</h3>
+        <div className="gallery-stack-loose">
+          <h3 className="gallery-sample-title">Combobox (Popover + Command)</h3>
           <Popover
             modal={false}
             open={comboboxOpen}
@@ -193,7 +193,8 @@ export function FormControlsSection() {
               </Button>
             </PopoverTrigger>
             <PopoverContent
-              className="w-[200px] p-0"
+              variant="command"
+              className="gallery-popover-combobox-width"
               align="start"
               initialFocus={false}
               data-gallery-combobox-no-document-scroll=""
@@ -225,22 +226,22 @@ export function FormControlsSection() {
           </Popover>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Date Picker (Popover + Calendar)</h3>
+        <div className="gallery-stack-loose">
+          <h3 className="gallery-sample-title">Date Picker (Popover + Calendar)</h3>
           <Popover>
             <PopoverTrigger asChild>
               <Button variant="outline">
                 {date ? format(date, "PPP") : "Pick a date"}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
+            <PopoverContent variant="flush" align="start">
               <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
             </PopoverContent>
           </Popover>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Input OTP</h3>
+        <div className="gallery-stack-loose">
+          <h3 className="gallery-sample-title">Input OTP</h3>
           <InputOTP maxLength={6}>
             <InputOTPGroup>
               <InputOTPSlot index={0} />
@@ -253,10 +254,10 @@ export function FormControlsSection() {
           </InputOTP>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Form (with validation)</h3>
+        <div className="gallery-stack-loose">
+          <h3 className="gallery-sample-title">Form (with validation)</h3>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(() => {})} className="space-y-4">
+            <form onSubmit={form.handleSubmit(() => {})} className="gallery-form">
               <FormField
                 control={form.control}
                 name="username"

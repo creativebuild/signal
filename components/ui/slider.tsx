@@ -25,7 +25,7 @@ function Slider({
 
   return (
     <SliderPrimitive.Root
-      className={cn("data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full", className)}
+      className={cn("slider-root", className)}
       data-slot="slider"
       defaultValue={defaultValue}
       value={value}
@@ -34,21 +34,18 @@ function Slider({
       thumbAlignment="edge"
       {...props}
     >
-      <SliderPrimitive.Control className="relative flex w-full touch-none items-center select-none data-disabled:opacity-50 data-[orientation=vertical]:h-full data-[orientation=vertical]:min-h-40 data-[orientation=vertical]:w-auto data-[orientation=vertical]:flex-col">
-        <SliderPrimitive.Track
-          data-slot="slider-track"
-          className="relative grow overflow-hidden rounded-full bg-muted select-none data-[orientation=horizontal]:h-1.5 data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-1.5"
-        >
+      <SliderPrimitive.Control className="slider-control">
+        <SliderPrimitive.Track data-slot="slider-track" className="slider-track">
           <SliderPrimitive.Indicator
             data-slot="slider-range"
-            className="bg-primary select-none data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full"
+            className="slider-range"
           />
         </SliderPrimitive.Track>
         {Array.from({ length: _values.length }, (_, index) => (
           <SliderPrimitive.Thumb
             data-slot="slider-thumb"
             key={index}
-            className="block size-4 shrink-0 rounded-full border border-primary bg-slider-thumb shadow-[var(--shadow-sm)] ring-ring/50 transition-[color,box-shadow,background-color,border-color] select-none hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden active:border-press active:bg-press active:ring-press/30 disabled:pointer-events-none disabled:opacity-50"
+            className="slider-thumb"
           />
         ))}
       </SliderPrimitive.Control>

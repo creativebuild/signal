@@ -1,4 +1,11 @@
 @layer components {
+  [data-slot="dropdown-menu-trigger"] {
+    display: inline-flex;
+    width: auto;
+    max-width: 100%;
+    flex-shrink: 0;
+  }
+
   .menu-positioner {
     isolation: isolate;
     z-index: var(--z-dropdown);
@@ -48,7 +55,8 @@
   }
 
   [data-slot="dropdown-menu-item"],
-  [data-slot="context-menu-item"] {
+  [data-slot="context-menu-item"],
+  [data-slot="menubar-item"] {
     position: relative;
     display: flex;
     cursor: default;
@@ -65,7 +73,9 @@
   [data-slot="dropdown-menu-item"]:focus,
   [data-slot="dropdown-menu-item"]:focus-visible,
   [data-slot="context-menu-item"]:focus,
-  [data-slot="context-menu-item"]:focus-visible {
+  [data-slot="context-menu-item"]:focus-visible,
+  [data-slot="menubar-item"]:focus,
+  [data-slot="menubar-item"]:focus-visible {
     background-color: var(--accent);
     color: var(--accent-foreground);
     outline: none;
@@ -74,41 +84,50 @@
   [data-slot="dropdown-menu-item"]:not([data-variant="destructive"]):focus svg,
   [data-slot="dropdown-menu-item"]:not([data-variant="destructive"]):focus-visible svg,
   [data-slot="context-menu-item"]:not([data-variant="destructive"]):focus svg,
-  [data-slot="context-menu-item"]:not([data-variant="destructive"]):focus-visible svg {
+  [data-slot="context-menu-item"]:not([data-variant="destructive"]):focus-visible svg,
+  [data-slot="menubar-item"]:not([data-variant="destructive"]):focus svg,
+  [data-slot="menubar-item"]:not([data-variant="destructive"]):focus-visible svg {
     color: var(--accent-foreground);
   }
 
   [data-slot="dropdown-menu-item"][data-variant="destructive"],
-  [data-slot="context-menu-item"][data-variant="destructive"] {
+  [data-slot="context-menu-item"][data-variant="destructive"],
+  [data-slot="menubar-item"][data-variant="destructive"] {
     color: var(--destructive);
   }
 
   [data-slot="dropdown-menu-item"][data-variant="destructive"]:focus,
   [data-slot="dropdown-menu-item"][data-variant="destructive"]:focus-visible,
   [data-slot="context-menu-item"][data-variant="destructive"]:focus,
-  [data-slot="context-menu-item"][data-variant="destructive"]:focus-visible {
+  [data-slot="context-menu-item"][data-variant="destructive"]:focus-visible,
+  [data-slot="menubar-item"][data-variant="destructive"]:focus,
+  [data-slot="menubar-item"][data-variant="destructive"]:focus-visible {
     background-color: var(--destructive-subtle);
     color: var(--destructive);
   }
 
   [data-slot="dropdown-menu-item"][data-variant="destructive"] svg,
-  [data-slot="context-menu-item"][data-variant="destructive"] svg {
+  [data-slot="context-menu-item"][data-variant="destructive"] svg,
+  [data-slot="menubar-item"][data-variant="destructive"] svg {
     color: var(--destructive);
   }
 
   [data-slot="dropdown-menu-item"][data-inset="true"],
-  [data-slot="context-menu-item"][data-inset="true"] {
+  [data-slot="context-menu-item"][data-inset="true"],
+  [data-slot="menubar-item"][data-inset="true"] {
     padding-inline-start: 2rem;
   }
 
   [data-slot="dropdown-menu-item"][data-disabled],
-  [data-slot="context-menu-item"][data-disabled] {
+  [data-slot="context-menu-item"][data-disabled],
+  [data-slot="menubar-item"][data-disabled] {
     pointer-events: none;
     opacity: var(--disabled-opacity);
   }
 
   [data-slot="dropdown-menu-item"] svg,
-  [data-slot="context-menu-item"] svg {
+  [data-slot="context-menu-item"] svg,
+  [data-slot="menubar-item"] svg {
     pointer-events: none;
     flex-shrink: 0;
     width: var(--icon-size);
@@ -246,7 +265,8 @@
   }
 
   [data-slot="dropdown-menu-shortcut"],
-  [data-slot="context-menu-shortcut"] {
+  [data-slot="context-menu-shortcut"],
+  [data-slot="menubar-shortcut"] {
     margin-left: auto;
     font-size: var(--text-xs);
     letter-spacing: 0.1em;
@@ -256,7 +276,11 @@
   [data-slot="dropdown-menu-item"]:focus [data-slot="dropdown-menu-shortcut"],
   [data-slot="dropdown-menu-item"]:focus-visible [data-slot="dropdown-menu-shortcut"],
   [data-slot="context-menu-item"]:focus [data-slot="context-menu-shortcut"],
-  [data-slot="context-menu-item"]:focus-visible [data-slot="context-menu-shortcut"] {
+  [data-slot="context-menu-item"]:focus-visible [data-slot="context-menu-shortcut"],
+  [data-slot="menubar-item"]:focus [data-slot="dropdown-menu-shortcut"],
+  [data-slot="menubar-item"]:focus-visible [data-slot="dropdown-menu-shortcut"],
+  [data-slot="menubar-item"]:focus [data-slot="menubar-shortcut"],
+  [data-slot="menubar-item"]:focus-visible [data-slot="menubar-shortcut"] {
     color: var(--accent-foreground);
   }
 }

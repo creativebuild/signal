@@ -1,1 +1,94 @@
-@layer components {}
+@layer components {
+  .slider-root[data-orientation="horizontal"] {
+    width: 100%;
+  }
+
+  .slider-root[data-orientation="vertical"] {
+    height: 100%;
+  }
+
+  .slider-control {
+    position: relative;
+    display: flex;
+    width: 100%;
+    touch-action: none;
+    align-items: center;
+    user-select: none;
+  }
+
+  .slider-root[data-orientation="vertical"] .slider-control {
+    height: 100%;
+    min-height: 10rem;
+    width: auto;
+    flex-direction: column;
+  }
+
+  .slider-control[data-disabled] {
+    opacity: var(--disabled-opacity);
+  }
+
+  .slider-track {
+    position: relative;
+    flex-grow: 1;
+    overflow: hidden;
+    border-radius: var(--radius-full);
+    background-color: var(--muted);
+    user-select: none;
+  }
+
+  .slider-root[data-orientation="horizontal"] .slider-track {
+    height: 0.375rem;
+    width: 100%;
+  }
+
+  .slider-root[data-orientation="vertical"] .slider-track {
+    height: 100%;
+    width: 0.375rem;
+  }
+
+  .slider-range {
+    background-color: var(--primary);
+    user-select: none;
+  }
+
+  .slider-root[data-orientation="horizontal"] .slider-range {
+    height: 100%;
+  }
+
+  .slider-root[data-orientation="vertical"] .slider-range {
+    width: 100%;
+  }
+
+  .slider-thumb {
+    display: block;
+    width: var(--icon-size);
+    height: var(--icon-size);
+    flex-shrink: 0;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--primary);
+    background-color: var(--slider-thumb-bg);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-colors);
+    user-select: none;
+  }
+
+  .slider-thumb:hover {
+    box-shadow: 0 0 0 4px color-mix(in oklch, var(--ring) 50%, transparent);
+  }
+
+  .slider-thumb:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px color-mix(in oklch, var(--ring) 50%, transparent);
+  }
+
+  .slider-thumb:active {
+    border-color: var(--press);
+    background-color: var(--press);
+    box-shadow: 0 0 0 4px color-mix(in oklch, var(--press) 30%, transparent);
+  }
+
+  .slider-thumb:disabled {
+    pointer-events: none;
+    opacity: var(--disabled-opacity);
+  }
+}

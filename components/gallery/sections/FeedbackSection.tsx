@@ -26,10 +26,10 @@ export function FeedbackSection() {
       title="Feedback"
       description="Alert, AlertDialog, Badge, Sonner toast, Spinner"
     >
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Alert</h3>
-          <div className="space-y-2">
+      <div className="gallery-grid">
+        <div className="gallery-sample">
+          <h3 className="gallery-sample-title">Alert</h3>
+          <div className="gallery-stack">
             <Alert>
               <AlertTitle>Heads up!</AlertTitle>
               <AlertDescription>
@@ -45,8 +45,8 @@ export function FeedbackSection() {
           </div>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">AlertDialog</h3>
+        <div className="gallery-sample">
+          <h3 className="gallery-sample-title">AlertDialog</h3>
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button variant="outline">Show Alert Dialog</Button>
@@ -67,9 +67,9 @@ export function FeedbackSection() {
           </AlertDialog>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Badge variants</h3>
-          <div className="flex flex-wrap gap-2">
+        <div className="gallery-sample">
+          <h3 className="gallery-sample-title">Badge variants</h3>
+          <div className="gallery-row">
             <Badge>Default</Badge>
             <Badge variant="secondary">Secondary</Badge>
             <Badge variant="outline">Outline</Badge>
@@ -80,9 +80,9 @@ export function FeedbackSection() {
           </div>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Toast (Sonner)</h3>
-          <div className="flex flex-wrap gap-2">
+        <div className="gallery-sample">
+          <h3 className="gallery-sample-title">Toast (Sonner)</h3>
+          <div className="gallery-row">
             <Button
               variant="outline"
               onClick={() => toast.success("Success toast!")}
@@ -98,13 +98,13 @@ export function FeedbackSection() {
           </div>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Spinner</h3>
-          <div className="flex items-center gap-4">
-            <Spinner className="size-6" />
-            <Spinner className="size-8" />
+        <div className="gallery-sample">
+          <h3 className="gallery-sample-title">Spinner</h3>
+          <div className="gallery-inline">
+            <Spinner className="spinner--6" />
+            <Spinner className="spinner--8" />
             <Button disabled>
-              <Spinner className="mr-2 size-4" />
+              <Spinner className="spinner--btn" />
               Loading
             </Button>
           </div>

@@ -54,29 +54,29 @@ export function NavigationSection() {
       title="Navigation"
       description="Tabs, Breadcrumb, Pagination, Accordion, Collapsible, Menubar, Navigation Menu"
     >
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Tabs</h3>
+      <div className="gallery-grid">
+        <div className="gallery-stack-loose">
+          <h3 className="gallery-sample-title">Tabs</h3>
           <Tabs defaultValue="tab1">
             <TabsList>
               <TabsTrigger value="tab1">Tab 1</TabsTrigger>
               <TabsTrigger value="tab2">Tab 2</TabsTrigger>
               <TabsTrigger value="tab3">Tab 3</TabsTrigger>
             </TabsList>
-            <TabsContent value="tab1" className="rounded-md border p-4">
+            <TabsContent value="tab1" className="gallery-tabs-content">
               Content for tab 1
             </TabsContent>
-            <TabsContent value="tab2" className="rounded-md border p-4">
+            <TabsContent value="tab2" className="gallery-tabs-content">
               Content for tab 2
             </TabsContent>
-            <TabsContent value="tab3" className="rounded-md border p-4">
+            <TabsContent value="tab3" className="gallery-tabs-content">
               Content for tab 3
             </TabsContent>
           </Tabs>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Breadcrumb</h3>
+        <div className="gallery-stack-loose">
+          <h3 className="gallery-sample-title">Breadcrumb</h3>
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
@@ -100,8 +100,8 @@ export function NavigationSection() {
           </Breadcrumb>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Pagination</h3>
+        <div className="gallery-stack-loose">
+          <h3 className="gallery-sample-title">Pagination</h3>
           <Pagination>
             <PaginationContent>
               <PaginationItem>
@@ -123,8 +123,8 @@ export function NavigationSection() {
           </Pagination>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Accordion</h3>
+        <div className="gallery-stack-loose">
+          <h3 className="gallery-sample-title">Accordion</h3>
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
               <AccordionTrigger>Is it accessible?</AccordionTrigger>
@@ -141,25 +141,25 @@ export function NavigationSection() {
           </Accordion>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Collapsible</h3>
+        <div className="gallery-stack-loose">
+          <h3 className="gallery-sample-title">Collapsible</h3>
           <Collapsible>
             <CollapsibleTrigger asChild>
-              <Button variant="outline" className="w-full justify-between">
+              <Button variant="outline" className="gallery-collapsible-trigger">
                 Toggle to expand
-                <ChevronDownIcon className="size-4" />
+                <ChevronDownIcon className="gallery-icon" />
               </Button>
             </CollapsibleTrigger>
-            <CollapsibleContent className="rounded-md border p-4">
-              <p className="text-sm">
+            <CollapsibleContent className="gallery-tabs-content">
+              <p className="gallery-text-sm">
                 This is the collapsible content. It can be shown or hidden.
               </p>
             </CollapsibleContent>
           </Collapsible>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Menubar</h3>
+        <div className="gallery-stack-loose">
+          <h3 className="gallery-sample-title">Menubar</h3>
           <Menubar>
             <MenubarMenu>
               <MenubarTrigger>File</MenubarTrigger>
@@ -182,14 +182,14 @@ export function NavigationSection() {
           </Menubar>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Navigation Menu</h3>
+        <div className="gallery-stack-loose">
+          <h3 className="gallery-sample-title">Navigation Menu</h3>
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
                 <NavigationMenuTrigger>Getting Started</NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <div className="grid gap-3 p-4 w-[400px]">
+                  <div className="gallery-nav-popover">
                     <NavigationMenuLink href="#">Introduction</NavigationMenuLink>
                     <NavigationMenuLink href="#">Installation</NavigationMenuLink>
                     <NavigationMenuLink href="#">Theming</NavigationMenuLink>
@@ -199,7 +199,7 @@ export function NavigationSection() {
               <NavigationMenuItem>
                 <NavigationMenuTrigger>Components</NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <div className="grid gap-3 p-4 w-[400px]">
+                  <div className="gallery-nav-popover">
                     <NavigationMenuLink href="#">Buttons</NavigationMenuLink>
                     <NavigationMenuLink href="#">Forms</NavigationMenuLink>
                     <NavigationMenuLink href="#">Cards</NavigationMenuLink>

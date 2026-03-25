@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Signal — DTCG JSON for Figma Variables: separate light.json + dark.json
- * from app/tokens.css + Tailwind theme.css
+ * from app/tokens.css (primitives + semantics; no Tailwind).
  */
 
 const fs = require("fs");
@@ -9,7 +9,6 @@ const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
 const TOKENS_CSS = path.join(ROOT, "app", "tokens.css");
-const THEME_CSS = path.join(ROOT, "node_modules", "tailwindcss", "theme.css");
 const TOKENS_DIR = path.join(ROOT, "tokens");
 const OUTPUT_LIGHT = path.join(TOKENS_DIR, "light.json");
 const OUTPUT_DARK = path.join(TOKENS_DIR, "dark.json");
@@ -147,6 +146,10 @@ function colorValueToHex(value, paletteHexByVar) {
   if (varM && paletteHexByVar[`--${varM[1].toLowerCase()}`]) {
     return paletteHexByVar[`--${varM[1].toLowerCase()}`];
   }
+  const primM = v.match(/^var\(--(primitive-[a-z0-9-]+)\)$/i);
+  if (primM && paletteHexByVar[`--${primM[1].toLowerCase()}`]) {
+    return paletteHexByVar[`--${primM[1].toLowerCase()}`];
+  }
   if (/^rgba?\(/i.test(v)) return v.replace(/\s+/g, "");
   return null;
 }
@@ -179,24 +182,8 @@ function extractVars(cssBlock) {
   return vars;
 }
 
-function parseThemeDefaultBlock(themeCss) {
-  const idx = themeCss.indexOf("@theme default");
-  if (idx === -1) return {};
-  const sub = themeCss.slice(idx);
-  const open = sub.indexOf("{");
-  if (open === -1) return {};
-  let depth = 1;
-  let pos = open + 1;
-  while (pos < sub.length && depth > 0) {
-    if (sub[pos] === "{") depth++;
-    else if (sub[pos] === "}") depth--;
-    pos++;
-  }
-  return extractVars(sub.slice(open + 1, pos - 1));
-}
-
 /** ------------------------------------------------------------------ */
-/** Tailwind palette → hex map + primitive tree */
+/** Optional Tailwind @theme palette (unused when empty) + tokens.css primitives */
 /** ------------------------------------------------------------------ */
 const PALETTE_FAMILIES = new Set([
   "slate",
@@ -256,6 +243,35 @@ function buildPaletteFromTheme(themeVars) {
   hexByVar["--color-black"] = "#000000";
 
   return { hexByVar, primitiveColor };
+}
+
+/**
+ * Fill --color-* + primitive Figma tree from tokens.css --primitive-{family}-{shade}
+ * (replaces Tailwind theme.css @theme default palette).
+ */
+function mergePaletteFromPrimitiveVars(ctx, hexByVar, primitiveColor) {
+  for (const [name, raw] of Object.entries(ctx)) {
+    if (name === "--primitive-black" || name === "--primitive-white") {
+      const hx = colorValueToHex(String(raw).trim(), hexByVar);
+      if (hx) hexByVar[name.toLowerCase()] = hx;
+    }
+  }
+
+  const re = /^--primitive-([a-z]+)-(\d+)$/i;
+  for (const [name, raw] of Object.entries(ctx)) {
+    const m = name.match(re);
+    if (!m) continue;
+    const family = m[1].toLowerCase();
+    const shade = m[2];
+    if (!PALETTE_FAMILIES.has(family)) continue;
+    const hx = colorValueToHex(String(raw).trim(), hexByVar);
+    if (!hx) continue;
+    const lname = name.toLowerCase();
+    hexByVar[lname] = hx;
+    hexByVar[`--color-${family}-${shade}`.toLowerCase()] = hx;
+    if (!primitiveColor[family]) primitiveColor[family] = {};
+    primitiveColor[family][shade] = hx;
+  }
 }
 
 /** ------------------------------------------------------------------ */
@@ -1359,6 +1375,7 @@ function applyAlphaPrimitivesFromRoot(primitive, hexByVar, rootVars) {
 
 function buildPrimitives(themeVars) {
   const { hexByVar, primitiveColor } = buildPaletteFromTheme(themeVars);
+  mergePaletteFromPrimitiveVars(themeVars, hexByVar, primitiveColor);
 
   const spacing = {};
   for (const k of SPACING_SCALE_STEPS) {
@@ -1470,19 +1487,14 @@ function numPrim(n, scope) {
 function main() {
   const warnings = [];
 
-  if (!fs.existsSync(THEME_CSS)) {
-    console.error("Missing", THEME_CSS);
-    process.exit(1);
-  }
   if (!fs.existsSync(TOKENS_CSS)) {
     console.error("Missing", TOKENS_CSS);
     process.exit(1);
   }
 
-  const themeCss = fs.readFileSync(THEME_CSS, "utf8");
   const tokensCss = fs.readFileSync(TOKENS_CSS, "utf8");
 
-  const themeVars = parseThemeDefaultBlock(themeCss);
+  const themeVars = {};
   const rootBlock = extractBlock(tokensCss, ":root {");
   const darkBlock = extractBlock(tokensCss, ".dark");
   const lightRoot = extractVars(rootBlock || "");

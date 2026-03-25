@@ -26,18 +26,24 @@ function PopoverTrigger({
   )
 }
 
+type PopoverContentProps = PopoverPrimitive.Popup.Props &
+  Pick<
+    PopoverPrimitive.Positioner.Props,
+    "align" | "alignOffset" | "side" | "sideOffset"
+  > & {
+    /** `flush` / `command`: no outer padding (e.g. calendar, cmdk combobox — see popover.css / command.css). */
+    variant?: "default" | "flush" | "command"
+  }
+
 function PopoverContent({
   className,
+  variant = "default",
   align = "center",
   alignOffset = 0,
   side = "bottom",
   sideOffset = 4,
   ...props
-}: PopoverPrimitive.Popup.Props &
-  Pick<
-    PopoverPrimitive.Positioner.Props,
-    "align" | "alignOffset" | "side" | "sideOffset"
-  >) {
+}: PopoverContentProps) {
   return (
     <PopoverPrimitive.Portal>
       <PopoverPrimitive.Positioner
@@ -49,7 +55,12 @@ function PopoverContent({
       >
         <PopoverPrimitive.Popup
           data-slot="popover-content"
-          className={cn("popover-content", className)}
+          className={cn(
+            "popover-content",
+            variant === "flush" && "popover-content--flush",
+            variant === "command" && "popover-content--command",
+            className
+          )}
           {...props}
         />
       </PopoverPrimitive.Positioner>

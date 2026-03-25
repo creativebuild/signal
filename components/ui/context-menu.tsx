@@ -112,7 +112,7 @@ function ContextMenuItem({
       data-slot="context-menu-item"
       data-inset={inset ? true : undefined}
       data-variant={variant}
-      className={cn("group/context-menu-item", className)}
+      className={cn(className)}
       {...props}
     />
   )
@@ -173,10 +173,7 @@ function ContextMenuCheckboxItem({
       checked={checked}
       {...props}
     >
-      <span
-        className="pointer-events-none absolute right-2 flex items-center justify-center"
-        data-slot="context-menu-checkbox-item-indicator"
-      >
+      <span data-slot="context-menu-checkbox-item-indicator">
         <ContextMenuPrimitive.CheckboxItemIndicator>
           <CheckIcon />
         </ContextMenuPrimitive.CheckboxItemIndicator>
@@ -212,10 +209,7 @@ function ContextMenuRadioItem({
       className={cn(className)}
       {...props}
     >
-      <span
-        className="pointer-events-none absolute right-2 flex items-center justify-center"
-        data-slot="context-menu-radio-item-indicator"
-      >
+      <span data-slot="context-menu-radio-item-indicator">
         <ContextMenuPrimitive.RadioItemIndicator>
           <CheckIcon />
         </ContextMenuPrimitive.RadioItemIndicator>

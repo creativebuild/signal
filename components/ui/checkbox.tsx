@@ -9,7 +9,7 @@ function Checkbox({ className, ...props }: CheckboxPrimitive.Root.Props) {
   return (
     <CheckboxPrimitive.Root
       data-slot="checkbox"
-      className={cn("checkbox peer focus-ring", className)}
+      className={cn("checkbox focus-ring", className)}
       {...props}
     >
       <CheckboxPrimitive.Indicator

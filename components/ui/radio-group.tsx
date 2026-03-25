@@ -9,7 +9,7 @@ function RadioGroup({ className, ...props }: RadioGroupPrimitive.Props) {
   return (
     <RadioGroupPrimitive
       data-slot="radio-group"
-      className={cn("grid w-full gap-3", className)}
+      className={cn("radio-group", className)}
       {...props}
     />
   )
@@ -19,17 +19,14 @@ function RadioGroupItem({ className, ...props }: RadioPrimitive.Root.Props) {
   return (
     <RadioPrimitive.Root
       data-slot="radio-group-item"
-      className={cn(
-        "group/radio-group-item peer relative flex aspect-square size-4 shrink-0 rounded-full border border-input outline-none after:absolute after:-inset-x-3 after:-inset-y-2 focus-ring disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive/80 aria-invalid:ring-3 aria-invalid:ring-destructive/30 data-checked:border-selection data-checked:bg-selection data-checked:text-selection-foreground",
-        className
-      )}
+      className={cn("radio-group-item focus-ring", className)}
       {...props}
     >
       <RadioPrimitive.Indicator
         data-slot="radio-group-indicator"
-        className="flex size-4 items-center justify-center"
+        className="radio-group-indicator"
       >
-        <span className="absolute top-1/2 left-1/2 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-selection-foreground" />
+        <span className="radio-group-indicator-dot" />
       </RadioPrimitive.Indicator>
     </RadioPrimitive.Root>
   )

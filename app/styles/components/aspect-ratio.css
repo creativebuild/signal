@@ -1,1 +1,6 @@
-@layer components {}
+@layer components {
+  .aspect-ratio {
+    position: relative;
+    aspect-ratio: var(--ratio);
+  }
+}

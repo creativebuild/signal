@@ -1,1 +1,181 @@
-@layer components {}
+@layer components {
+  /* Gallery / demos — row height utility (matches former Tailwind spacing token) */
+  .h-data-table-row-sm {
+    height: var(--data-table-row-height-sm);
+  }
+
+  .data-table thead tr {
+    border-bottom: none;
+  }
+
+  .data-table {
+    width: 100%;
+    caption-side: bottom;
+    font-size: var(--data-table-font-size);
+    font-weight: var(--data-table-font-weight);
+    white-space: nowrap;
+  }
+
+  .data-table-header-row {
+    height: var(--data-table-header-height);
+    border-bottom: none;
+    padding-block: 0;
+    background-color: var(--data-table-header-bg);
+    color: var(--data-table-header-fg);
+  }
+
+  .data-table-head-cell {
+    height: var(--data-table-header-height);
+    padding-inline: var(--data-table-cell-px);
+    padding-block: var(--data-table-cell-py);
+    font-size: var(--data-table-header-font-size);
+    font-weight: var(--data-table-header-font-weight);
+  }
+
+  .data-table .data-table-body-row {
+    height: var(--data-table-row-height-sm);
+    border-bottom: none;
+    transition: var(--transition-colors);
+  }
+
+  .data-table .data-table-body-row:hover {
+    background-color: var(--data-table-row-bg-hover);
+  }
+
+  .data-table .data-table-body-row[data-state="selected"] {
+    background-color: var(--selection);
+    color: var(--selection-foreground);
+  }
+
+  .data-table .data-table-body-row[data-state="selected"] td:first-child {
+    color: var(--foreground);
+  }
+
+  .data-table .data-table-body-row[data-state="selected"] td:not(:first-child) {
+    color: var(--selection-foreground);
+  }
+
+  .data-table .data-table-body-row[data-state="selected"] td:not(:first-child) * {
+    color: var(--data-table-row-fg-selected);
+  }
+
+  .data-table-cell {
+    height: 100%;
+    padding-inline: var(--data-table-cell-px);
+    padding-block: var(--data-table-cell-py);
+  }
+
+  .data-table-empty-cell {
+    height: 6rem;
+    padding-inline: var(--data-table-cell-px);
+    padding-block: var(--data-table-cell-py);
+    text-align: center;
+  }
+
+  .blotter-shell {
+    width: 100%;
+    max-height: 70vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+  }
+
+  .blotter-scroll-x {
+    overflow-x: auto;
+    overflow-y: hidden;
+    min-width: 100%;
+  }
+
+  th.table-head.data-table-head-cell:has(.blotter-select-cell),
+  td.table-cell.data-table-cell:has(.blotter-select-cell) {
+    vertical-align: middle;
+  }
+
+  .blotter-select-cell {
+    display: flex;
+    box-sizing: border-box;
+    width: 2.5rem;
+    min-width: 2.5rem;
+    align-items: center;
+    justify-content: flex-start;
+    padding-inline-end: 0.5rem;
+  }
+
+  .data-table-header-row .blotter-select-cell {
+    min-height: var(--data-table-header-height);
+  }
+
+  .data-table .data-table-body-row .blotter-select-cell {
+    min-height: var(--data-table-row-height-sm);
+  }
+
+  /* Data syntax — text */
+  .text-data-primary {
+    color: var(--data-primary);
+  }
+  .text-data-secondary {
+    color: var(--data-secondary);
+  }
+  .text-data-currency {
+    color: var(--data-currency);
+  }
+  .text-data-entity {
+    color: var(--data-entity);
+  }
+  .text-data-category {
+    color: var(--data-category);
+  }
+  .text-data-datetime {
+    color: var(--data-datetime);
+  }
+  .text-data-status-positive {
+    color: var(--data-status-positive);
+  }
+  .text-data-status-negative {
+    color: var(--data-status-negative);
+  }
+  .text-data-status-warning {
+    color: var(--data-status-warning);
+  }
+  .text-data-status-neutral {
+    color: var(--data-status-neutral);
+  }
+  .text-data-value-positive {
+    color: var(--data-value-positive);
+  }
+  .text-data-value-negative {
+    color: var(--data-value-negative);
+  }
+  .text-data-value-neutral {
+    color: var(--data-value-neutral);
+  }
+  .text-data-table-row-fg-selected {
+    color: var(--data-table-row-fg-selected);
+  }
+
+  /* Status / value cell backgrounds (full td) */
+  .bg-data-status-positive {
+    background-color: var(--data-status-positive);
+  }
+  .bg-data-status-negative {
+    background-color: var(--data-status-negative);
+  }
+  .bg-data-status-warning {
+    background-color: var(--data-status-warning);
+  }
+  .bg-data-status-neutral {
+    background-color: var(--data-status-neutral);
+  }
+
+  .bg-data-value-positive-subtle {
+    background-color: color-mix(in oklch, var(--data-value-positive) 20%, transparent);
+  }
+  .bg-data-value-negative-subtle {
+    background-color: color-mix(in oklch, var(--data-value-negative) 20%, transparent);
+  }
+  .bg-data-value-neutral-subtle {
+    background-color: color-mix(in oklch, var(--data-value-neutral) 20%, transparent);
+  }
+
+}

@@ -65,9 +65,9 @@ export function OverlaySection() {
       description="Dialog, Drawer, Sheet, Popover, Tooltip, Dropdown, HoverCard, Context Menu"
     >
       <TooltipProvider>
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          <div className="space-y-4">
-            <h3 className="text-sm font-medium text-muted-foreground">Dialog</h3>
+        <div className="gallery-grid">
+          <div className="gallery-stack-loose">
+            <h3 className="gallery-sample-title">Dialog</h3>
             <Dialog>
               <DialogTrigger asChild>
                 <Button variant="outline">Open Dialog</Button>
@@ -87,8 +87,8 @@ export function OverlaySection() {
             </Dialog>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-sm font-medium text-muted-foreground">Drawer</h3>
+          <div className="gallery-stack-loose">
+            <h3 className="gallery-sample-title">Drawer</h3>
             <Drawer>
               <DrawerTrigger asChild>
                 <Button variant="outline">Open Drawer</Button>
@@ -107,8 +107,8 @@ export function OverlaySection() {
             </Drawer>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-sm font-medium text-muted-foreground">Sheet</h3>
+          <div className="gallery-stack-loose">
+            <h3 className="gallery-sample-title">Sheet</h3>
             <Sheet>
               <SheetTrigger asChild>
                 <Button variant="outline">Open Sheet</Button>
@@ -124,16 +124,16 @@ export function OverlaySection() {
             </Sheet>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-sm font-medium text-muted-foreground">Popover</h3>
+          <div className="gallery-stack-loose">
+            <h3 className="gallery-sample-title">Popover</h3>
             <Popover>
               <PopoverTrigger asChild>
                 <Button variant="outline">Open Popover</Button>
               </PopoverTrigger>
               <PopoverContent>
-                <div className="grid gap-2">
-                  <h4 className="font-medium">Popover content</h4>
-                  <p className="text-sm text-muted-foreground">
+                <div className="gallery-popover-stack">
+                  <h4 className="gallery-popover-title">Popover content</h4>
+                  <p className="gallery-text-sm gallery-text-muted">
                     This appears when you click the trigger.
                   </p>
                 </div>
@@ -141,8 +141,8 @@ export function OverlaySection() {
             </Popover>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-sm font-medium text-muted-foreground">Tooltip</h3>
+          <div className="gallery-stack-loose">
+            <h3 className="gallery-sample-title">Tooltip</h3>
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button variant="outline">Hover for tooltip</Button>
@@ -153,8 +153,8 @@ export function OverlaySection() {
             </Tooltip>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-sm font-medium text-muted-foreground">Dropdown</h3>
+          <div className="gallery-stack-loose">
+            <h3 className="gallery-sample-title">Dropdown</h3>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline">Open Dropdown</Button>
@@ -167,16 +167,16 @@ export function OverlaySection() {
             </DropdownMenu>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-sm font-medium text-muted-foreground">HoverCard</h3>
+          <div className="gallery-stack-loose">
+            <h3 className="gallery-sample-title">HoverCard</h3>
             <HoverCard>
               <HoverCardTrigger asChild>
                 <Button variant="outline">Hover for card</Button>
               </HoverCardTrigger>
               <HoverCardContent>
-                <div className="space-y-2">
-                  <h4 className="text-sm font-semibold">Hover card</h4>
-                  <p className="text-sm text-muted-foreground">
+                <div className="gallery-popover-stack-loose">
+                  <h4 className="gallery-hover-card-title">Hover card</h4>
+                  <p className="gallery-text-sm gallery-text-muted">
                     This appears when you hover over the trigger.
                   </p>
                 </div>
@@ -184,12 +184,12 @@ export function OverlaySection() {
             </HoverCard>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-sm font-medium text-muted-foreground">Context Menu (right-click)</h3>
+          <div className="gallery-stack-loose">
+            <h3 className="gallery-sample-title">Context Menu (right-click)</h3>
             <ContextMenu>
               <ContextMenuTrigger asChild>
-                <div className="flex h-24 w-full items-center justify-center rounded-md border border-dashed">
-                  <span className="text-sm text-muted-foreground">
+                <div className="gallery-context-target">
+                  <span className="gallery-text-sm gallery-text-muted">
                     Right-click here
                   </span>
                 </div>

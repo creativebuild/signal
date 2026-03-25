@@ -41,13 +41,13 @@ export function TokensDownloadButton() {
                 aria-label="Download design tokens"
                 aria-haspopup="menu"
               >
-                <DownloadIcon className="size-4" />
+                <DownloadIcon className="gallery-icon" />
               </Button>
             </DropdownMenuTrigger>
           </TooltipTrigger>
           <TooltipContent>Download design tokens</TooltipContent>
         </Tooltip>
-        <DropdownMenuContent align="end" className="min-w-56">
+        <DropdownMenuContent align="end" className="gallery-tokens-dropdown">
           <DropdownMenuItem
             onClick={() => downloadFromApi("/api/tokens", "variables-pro.json")}
           >

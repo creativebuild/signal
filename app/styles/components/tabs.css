@@ -40,15 +40,13 @@
     padding-block: 0.25rem;
     font-size: var(--text-sm);
     font-weight: var(--font-weight-medium);
-    transition-property: background-color, color, box-shadow, opacity;
-    transition-duration: var(--duration-fast);
-    transition-timing-function: var(--ease-standard);
+    transition: var(--transition-colors);
   }
 
   .tabs-trigger:focus-visible {
     outline: none;
     border-color: var(--ring);
-    box-shadow: 0 0 0 3px color-mix(in oklch, var(--ring) 50%, transparent);
+    box-shadow: 0 0 0 var(--focus-ring-width) color-mix(in oklch, var(--ring) 50%, transparent);
   }
 
   .tabs-trigger:disabled {
@@ -77,6 +75,6 @@
   .tabs-content:focus-visible {
     outline: none;
     border-color: var(--ring);
-    box-shadow: 0 0 0 3px color-mix(in oklch, var(--ring) 50%, transparent);
+    box-shadow: 0 0 0 var(--focus-ring-width) color-mix(in oklch, var(--ring) 50%, transparent);
   }
 }

@@ -32,20 +32,20 @@ export function TradingBlotter() {
   });
 
   return (
-    <div className="w-full max-h-[70vh] overflow-y-auto overflow-x-hidden rounded-md border">
-      <div className="overflow-x-auto overflow-y-hidden min-w-full">
-        <table className="w-full caption-bottom text-data-table font-data-table whitespace-nowrap">
-          <TableHeader className="[&_tr]:border-b-0">
+    <div className="blotter-shell">
+      <div className="blotter-scroll-x">
+        <table className="data-table">
+          <TableHeader className="data-table-header">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow
                 key={headerGroup.id}
-                className="h-data-table-header border-b-0 py-0 bg-data-table-header text-data-table-header-foreground"
+                className="data-table-header-row"
               >
                 {headerGroup.headers.map((header) => (
                   <TableHead
                     key={header.id}
                     className={cn(
-                      "h-data-table-header text-data-table-header font-data-table-header px-data-table-cell-px py-data-table-cell-py",
+                      "data-table-head-cell",
                       (header.column.columnDef.meta as BlotterColumnMeta | undefined)
                         ?.align === "right" && "text-right"
                     )}
@@ -67,7 +67,7 @@ export function TradingBlotter() {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  className="h-data-table-row-sm border-b-0 hover:bg-data-table-row-hover data-[state=selected]:bg-selection data-[state=selected]:text-selection-foreground data-[state=selected]:[&_td:first-child]:text-foreground data-[state=selected]:[&_td:not(:first-child)_*]:text-selection-foreground"
+                  className="data-table-body-row"
                 >
                   {row.getVisibleCells().map((cell) => {
                     const meta = cell.column.columnDef.meta as
@@ -77,7 +77,7 @@ export function TradingBlotter() {
                     <TableCell
                       key={cell.id}
                       className={cn(
-                        "h-full px-data-table-cell-px py-data-table-cell-py",
+                        "data-table-cell",
                         meta?.blotterCellBackground?.(cell.row),
                         meta?.align === "right" && "text-right"
                       )}
@@ -92,10 +92,10 @@ export function TradingBlotter() {
                 </TableRow>
               ))
             ) : (
-              <TableRow className="h-data-table-row-sm border-b-0">
+              <TableRow className="data-table-body-row">
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 px-data-table-cell-px py-data-table-cell-py text-center"
+                  className="data-table-empty-cell"
                 >
                   No results.
                 </TableCell>

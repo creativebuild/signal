@@ -102,7 +102,7 @@ function DropdownMenuItem({
       data-slot="dropdown-menu-item"
       data-inset={inset ? true : undefined}
       data-variant={variant}
-      className={cn("group/dropdown-menu-item", className)}
+      className={cn(className)}
       {...props}
     />
   )
@@ -171,10 +171,7 @@ function DropdownMenuCheckboxItem({
       checked={checked}
       {...props}
     >
-      <span
-        className="pointer-events-none absolute right-2 flex items-center justify-center"
-        data-slot="dropdown-menu-checkbox-item-indicator"
-      >
+      <span data-slot="dropdown-menu-checkbox-item-indicator">
         <MenuPrimitive.CheckboxItemIndicator>
           <CheckIcon />
         </MenuPrimitive.CheckboxItemIndicator>
@@ -208,10 +205,7 @@ function DropdownMenuRadioItem({
       className={cn(className)}
       {...props}
     >
-      <span
-        className="pointer-events-none absolute right-2 flex items-center justify-center"
-        data-slot="dropdown-menu-radio-item-indicator"
-      >
+      <span data-slot="dropdown-menu-radio-item-indicator">
         <MenuPrimitive.RadioItemIndicator>
           <CheckIcon />
         </MenuPrimitive.RadioItemIndicator>

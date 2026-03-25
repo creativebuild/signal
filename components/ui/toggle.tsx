@@ -26,7 +26,7 @@ function toggleVariants({
   className?: ClassValue
 } = {}) {
   return cn(
-    "toggle focus-ring group/toggle",
+    "toggle focus-ring",
     variantClass[variant],
     sizeClass[size],
     className

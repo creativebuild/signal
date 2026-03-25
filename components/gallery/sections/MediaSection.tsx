@@ -19,10 +19,10 @@ export function MediaSection() {
       title="Media"
       description="Progress, Separator, ScrollArea, Carousel"
     >
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Progress</h3>
-          <div className="space-y-4">
+      <div className="gallery-grid">
+        <div className="gallery-sample">
+          <h3 className="gallery-sample-title">Progress</h3>
+          <div className="gallery-stack-loose">
             <Progress value={0} />
             <Progress value={33} />
             <Progress value={66} />
@@ -30,30 +30,30 @@ export function MediaSection() {
           </div>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Separator</h3>
-          <div className="space-y-4">
+        <div className="gallery-sample">
+          <h3 className="gallery-sample-title">Separator</h3>
+          <div className="gallery-stack-loose">
             <div>
-              <p className="text-sm text-muted-foreground">Content above</p>
-              <Separator className="my-4" />
-              <p className="text-sm text-muted-foreground">Content below</p>
+              <p className="gallery-text-sm gallery-text-muted">Content above</p>
+              <Separator className="gallery-separator-my" />
+              <p className="gallery-text-sm gallery-text-muted">Content below</p>
             </div>
-            <div className="flex h-5 items-center space-x-4">
-              <span className="text-sm">Item 1</span>
+            <div className="gallery-separator-vertical-row">
+              <span className="gallery-text-sm">Item 1</span>
               <Separator orientation="vertical" />
-              <span className="text-sm">Item 2</span>
+              <span className="gallery-text-sm">Item 2</span>
               <Separator orientation="vertical" />
-              <span className="text-sm">Item 3</span>
+              <span className="gallery-text-sm">Item 3</span>
             </div>
           </div>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">ScrollArea</h3>
-          <ScrollArea className="h-32 w-48 rounded-md border">
-            <div className="space-y-2 p-4">
+        <div className="gallery-sample">
+          <h3 className="gallery-sample-title">ScrollArea</h3>
+          <ScrollArea className="gallery-scroll-demo">
+            <div className="gallery-scroll-demo-inner">
               {Array.from({ length: 20 }).map((_, i) => (
-                <p key={i} className="text-sm">
+                <p key={i} className="gallery-text-sm">
                   Item {i + 1}
                 </p>
               ))}
@@ -61,14 +61,16 @@ export function MediaSection() {
           </ScrollArea>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Carousel</h3>
-          <Carousel className="w-full max-w-xs" opts={{ loop: true }}>
+        <div className="gallery-sample">
+          <h3 className="gallery-sample-title">Carousel</h3>
+          <Carousel className="gallery-carousel" opts={{ loop: true }}>
             <CarouselContent>
               {Array.from({ length: 3 }).map((_, i) => (
                 <CarouselItem key={i}>
-                  <div className="flex aspect-square items-center justify-center rounded-md border bg-muted">
-                    <span className="text-4xl font-semibold">{i + 1}</span>
+                  <div className="gallery-carousel-slide">
+                    <span className="gallery-carousel-slide-label">
+                      {i + 1}
+                    </span>
                   </div>
                 </CarouselItem>
               ))}

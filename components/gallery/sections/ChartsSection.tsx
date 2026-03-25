@@ -35,7 +35,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { cn } from "@/lib/utils";
 
 const usd = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -119,11 +118,11 @@ const MA_PERIOD = 20;
 const stockChartConfig = {
   close: {
     label: "Adj. close",
-    color: "var(--color-chart-1)",
+    color: "var(--chart-1)",
   },
   ma20: {
     label: `${MA_PERIOD}-day SMA`,
-    color: "var(--color-chart-2)",
+    color: "var(--chart-2)",
   },
 } satisfies ChartConfig;
 
@@ -216,39 +215,29 @@ const allocationTimelineData = generateAllocationTimeline(36);
 const allocationChartConfig = {
   equities: {
     label: "Equities",
-    color: "var(--color-chart-1)",
+    color: "var(--chart-1)",
   },
   fixedIncome: {
     label: "Fixed income",
-    color: "var(--color-chart-2)",
+    color: "var(--chart-2)",
   },
   cash: {
     label: "Cash & equivalents",
-    color: "var(--color-chart-3)",
+    color: "var(--chart-3)",
   },
   alternatives: {
     label: "Alternatives",
-    color: "var(--color-chart-4)",
+    color: "var(--chart-4)",
   },
   commodities: {
     label: "Commodities",
-    color: "var(--color-chart-5)",
+    color: "var(--chart-5)",
   },
   multiStrat: {
     label: "Multi-strategy",
-    color: "var(--color-primary)",
+    color: "var(--primary)",
   },
 } satisfies ChartConfig;
-
-/** Legend row above plot: padded like header/footer, divider under legend. */
-const chartFlushLegendClass =
-  "w-full justify-start border-b border-border/50 px-[var(--card-padding)] pt-3 pb-3";
-
-const chartFlushContainerClass =
-  "!aspect-auto h-[320px] w-full min-h-[280px] max-w-none justify-stretch";
-
-const areaChartFlushContainerClass =
-  "!aspect-auto h-[360px] w-full min-h-[300px] max-w-none justify-stretch";
 
 export function ChartsSection() {
   const [timeRange, setTimeRange] = React.useState("90d");
@@ -264,20 +253,18 @@ export function ChartsSection() {
       title="Charts"
       description="Interactive line and area charts using design tokens"
     >
-      <div className="flex flex-col gap-6 w-full">
-        <Card className="w-full gap-0 overflow-hidden p-0">
-          <CardHeader className="border-b border-border/60 px-[var(--card-padding)] pt-[var(--card-padding)] pb-4">
-            <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
+      <div className="gallery-chart-stack">
+        <Card className="gallery-chart-card">
+          <CardHeader className="gallery-chart-card-header">
+            <div className="gallery-chart-header-row">
               <div>
-                <CardTitle className="font-mono text-base tracking-tight">
-                  SGNL
-                </CardTitle>
+                <CardTitle className="gallery-chart-ticker">SGNL</CardTitle>
                 <CardDescription>
                   Adj. close & {MA_PERIOD}-day SMA (USD) · NYSE
                 </CardDescription>
               </div>
               <Select value={timeRange} onValueChange={(v) => setTimeRange(v ?? timeRange)}>
-                <SelectTrigger className="w-[160px] sm:mt-0">
+                <SelectTrigger className="gallery-select-range">
                   <SelectValue placeholder="Range" />
                 </SelectTrigger>
                 <SelectContent>
@@ -289,10 +276,10 @@ export function ChartsSection() {
               </Select>
             </div>
           </CardHeader>
-          <CardContent className="px-0 pb-0 pt-0">
+          <CardContent className="gallery-chart-card-content">
             <ChartContainer
               config={stockChartConfig}
-              className={chartFlushContainerClass}
+              className="gallery-chart-flush-line"
             >
               <LineChart
                 data={filteredStockData}
@@ -306,10 +293,7 @@ export function ChartsSection() {
                     <ChartLegendContent
                       payload={props.payload}
                       verticalAlign={props.verticalAlign}
-                      className={cn(
-                        "flex flex-wrap gap-x-5 gap-y-1",
-                        chartFlushLegendClass
-                      )}
+                      className="gallery-chart-legend-row"
                     />
                   )}
                 />
@@ -352,9 +336,9 @@ export function ChartsSection() {
                         )
                       }
                       formatter={(value, name) => (
-                        <div className="flex w-full min-w-[11rem] items-center justify-between gap-4 leading-none">
-                          <span className="text-muted-foreground">{name}</span>
-                          <span className="font-mono font-medium text-foreground tabular-nums">
+                        <div className="gallery-chart-tooltip-format-row">
+                          <span className="gallery-chart-format-name">{name}</span>
+                          <span className="gallery-chart-format-value">
                             {typeof value === "number" ? usd.format(value) : String(value)}
                           </span>
                         </div>
@@ -366,7 +350,7 @@ export function ChartsSection() {
                   name="Adj. close"
                   dataKey="close"
                   type="linear"
-                  stroke="var(--color-chart-1)"
+                  stroke="var(--chart-1)"
                   strokeWidth={1.15}
                   dot={false}
                   isAnimationActive={false}
@@ -376,7 +360,7 @@ export function ChartsSection() {
                   name={`${MA_PERIOD}-day SMA`}
                   dataKey="ma20"
                   type="monotone"
-                  stroke="var(--color-chart-2)"
+                  stroke="var(--chart-2)"
                   strokeWidth={2}
                   dot={false}
                   connectNulls
@@ -387,17 +371,17 @@ export function ChartsSection() {
           </CardContent>
         </Card>
 
-        <Card className="w-full gap-0 overflow-hidden p-0">
-          <CardHeader className="border-b border-border/60 px-[var(--card-padding)] pt-[var(--card-padding)] pb-4">
+        <Card className="gallery-chart-card">
+          <CardHeader className="gallery-chart-card-header">
             <CardTitle>Model portfolio — sleeve mix over time</CardTitle>
             <CardDescription>
               100% stacked (expanded): monthly notional weights across asset classes · illustrative
             </CardDescription>
           </CardHeader>
-          <CardContent className="px-0 pb-0 pt-0">
+          <CardContent className="gallery-chart-card-content">
             <ChartContainer
               config={allocationChartConfig}
-              className={areaChartFlushContainerClass}
+              className="gallery-chart-flush-area"
             >
               <AreaChart
                 data={allocationTimelineData}
@@ -412,10 +396,7 @@ export function ChartsSection() {
                     <ChartLegendContent
                       payload={props.payload}
                       verticalAlign={props.verticalAlign}
-                      className={cn(
-                        "flex flex-wrap gap-x-4 gap-y-1",
-                        chartFlushLegendClass
-                      )}
+                      className="gallery-chart-legend-row gallery-chart-legend-row--tight"
                     />
                   )}
                 />
@@ -449,9 +430,9 @@ export function ChartsSection() {
                         const raw = typeof value === "number" ? value : Number(value);
                         const pct = total > 0 ? (raw / total) * 100 : 0;
                         return (
-                          <div className="flex w-full min-w-[12rem] items-center justify-between gap-4 leading-none">
-                            <span className="text-muted-foreground">{name}</span>
-                            <span className="font-mono font-medium tabular-nums text-foreground">
+                          <div className="gallery-chart-tooltip-format-row gallery-chart-tooltip-format-row--wide">
+                            <span className="gallery-chart-format-name">{name}</span>
+                            <span className="gallery-chart-format-value">
                               {pct.toFixed(1)}% · {raw}
                             </span>
                           </div>
@@ -464,10 +445,10 @@ export function ChartsSection() {
                   dataKey="equities"
                   type="monotone"
                   stackId="allocation"
-                  stroke="var(--color-equities)"
+                  stroke="var(--chart-1)"
                   strokeWidth={1.25}
                   strokeOpacity={1}
-                  fill="var(--color-equities)"
+                  fill="var(--chart-1)"
                   fillOpacity={STACKED_AREA_FILL_OPACITY}
                   isAnimationActive={false}
                 />
@@ -475,10 +456,10 @@ export function ChartsSection() {
                   dataKey="fixedIncome"
                   type="monotone"
                   stackId="allocation"
-                  stroke="var(--color-fixedIncome)"
+                  stroke="var(--chart-2)"
                   strokeWidth={1.25}
                   strokeOpacity={1}
-                  fill="var(--color-fixedIncome)"
+                  fill="var(--chart-2)"
                   fillOpacity={STACKED_AREA_FILL_OPACITY}
                   isAnimationActive={false}
                 />
@@ -486,10 +467,10 @@ export function ChartsSection() {
                   dataKey="cash"
                   type="monotone"
                   stackId="allocation"
-                  stroke="var(--color-cash)"
+                  stroke="var(--chart-3)"
                   strokeWidth={1.25}
                   strokeOpacity={1}
-                  fill="var(--color-cash)"
+                  fill="var(--chart-3)"
                   fillOpacity={STACKED_AREA_FILL_OPACITY}
                   isAnimationActive={false}
                 />
@@ -497,10 +478,10 @@ export function ChartsSection() {
                   dataKey="alternatives"
                   type="monotone"
                   stackId="allocation"
-                  stroke="var(--color-alternatives)"
+                  stroke="var(--chart-4)"
                   strokeWidth={1.25}
                   strokeOpacity={1}
-                  fill="var(--color-alternatives)"
+                  fill="var(--chart-4)"
                   fillOpacity={STACKED_AREA_FILL_OPACITY}
                   isAnimationActive={false}
                 />
@@ -508,10 +489,10 @@ export function ChartsSection() {
                   dataKey="commodities"
                   type="monotone"
                   stackId="allocation"
-                  stroke="var(--color-commodities)"
+                  stroke="var(--chart-5)"
                   strokeWidth={1.25}
                   strokeOpacity={1}
-                  fill="var(--color-commodities)"
+                  fill="var(--chart-5)"
                   fillOpacity={STACKED_AREA_FILL_OPACITY}
                   isAnimationActive={false}
                 />
@@ -519,10 +500,10 @@ export function ChartsSection() {
                   dataKey="multiStrat"
                   type="monotone"
                   stackId="allocation"
-                  stroke="var(--color-multiStrat)"
+                  stroke="var(--primary)"
                   strokeWidth={1.25}
                   strokeOpacity={1}
-                  fill="var(--color-multiStrat)"
+                  fill="var(--primary)"
                   fillOpacity={STACKED_AREA_FILL_OPACITY}
                   isAnimationActive={false}
                 />

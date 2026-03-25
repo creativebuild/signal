@@ -21,7 +21,7 @@ export const columns = [
   columnHelper.display({
     id: "select",
     header: ({ table }) => (
-      <div className="flex w-10 min-w-10 items-center justify-start pr-2">
+      <div className="blotter-select-cell">
         <Checkbox
           checked={table.getIsAllPageRowsSelected()}
           onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
@@ -31,7 +31,7 @@ export const columns = [
     ),
     cell: ({ row }) => (
       <div
-        className="flex w-10 min-w-10 items-center justify-start pr-2"
+        className="blotter-select-cell"
         data-in-selected-row={row.getIsSelected() || undefined}
       >
         <Checkbox
@@ -98,10 +98,10 @@ export const columns = [
         if (row.getIsSelected()) return "bg-transparent";
         const side = row.getValue("side") as TradingBlotterRow["side"];
         const map: Record<TradingBlotterRow["side"], string> = {
-          BUY: "bg-data-value-positive/20",
-          SELL: "bg-data-value-negative/20",
+          BUY: "bg-data-value-positive-subtle",
+          SELL: "bg-data-value-negative-subtle",
         };
-        return map[side] ?? "bg-data-value-neutral/20";
+        return map[side] ?? "bg-data-value-neutral-subtle";
       },
     } satisfies BlotterColumnMeta,
     cell: ({ row }) => {

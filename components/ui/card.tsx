@@ -13,7 +13,7 @@ function Card({
     <div
       data-slot="card"
       data-size={size}
-      className={cn("card group/card", className)}
+      className={cn("card", className)}
       {...props}
     />
   );
@@ -26,7 +26,7 @@ function CardHeader({
   return (
     <div
       data-slot="card-header"
-      className={cn("card-header group/card-header", className)}
+      className={cn("card-header", className)}
       {...props}
     />
   );

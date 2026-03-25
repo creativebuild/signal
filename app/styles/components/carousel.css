@@ -1,1 +1,67 @@
-@layer components {}
+@layer components {
+  [data-slot="carousel"] {
+    position: relative;
+  }
+
+  [data-slot="carousel-content"] {
+    overflow: hidden;
+  }
+
+  .carousel-track {
+    display: flex;
+    margin-left: -1rem;
+  }
+
+  .carousel-track--vertical {
+    margin-left: 0;
+    margin-top: -1rem;
+    flex-direction: column;
+  }
+
+  .carousel-item {
+    min-width: 0;
+    flex-shrink: 0;
+    flex-grow: 0;
+    flex-basis: 100%;
+    padding-left: 1rem;
+  }
+
+  .carousel-item--vertical {
+    padding-left: 0;
+    padding-top: 1rem;
+  }
+
+  .carousel-nav {
+    position: absolute;
+    z-index: 10;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9999px;
+  }
+
+  .carousel-nav--prev {
+    top: 50%;
+    left: -3rem;
+    transform: translateY(-50%);
+  }
+
+  .carousel-nav--prev.carousel-nav--vertical {
+    top: -3rem;
+    left: 50%;
+    transform: translateX(-50%) rotate(90deg);
+  }
+
+  .carousel-nav--next {
+    top: 50%;
+    right: -3rem;
+    transform: translateY(-50%);
+  }
+
+  .carousel-nav--next.carousel-nav--vertical {
+    top: auto;
+    bottom: -3rem;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%) rotate(90deg);
+  }
+}

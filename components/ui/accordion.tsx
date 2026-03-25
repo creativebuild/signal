@@ -18,7 +18,7 @@ function Accordion({
     <AccordionPrimitive.Root
       data-slot="accordion"
       data-type={type}
-      className={cn("flex w-full flex-col", className)}
+      className={cn("accordion", className)}
       multiple={type === "multiple"}
       {...props}
     />
@@ -29,7 +29,7 @@ function AccordionItem({ className, ...props }: AccordionPrimitive.Item.Props) {
   return (
     <AccordionPrimitive.Item
       data-slot="accordion-item"
-      className={cn("not-last:border-b", className)}
+      className={cn("accordion-item", className)}
       {...props}
     />
   )
@@ -41,18 +41,23 @@ function AccordionTrigger({
   ...props
 }: AccordionPrimitive.Trigger.Props) {
   return (
-    <AccordionPrimitive.Header className="flex">
+    <AccordionPrimitive.Header className="accordion-trigger-wrap">
       <AccordionPrimitive.Trigger
         data-slot="accordion-trigger"
-        className={cn(
-          "group/accordion-trigger relative flex flex-1 items-start justify-between rounded-[var(--radius-control)] border border-transparent py-4 text-left text-sm font-medium transition-all outline-none hover:underline focus-ring aria-disabled:pointer-events-none aria-disabled:opacity-50 **:data-[slot=accordion-trigger-icon]:ml-auto **:data-[slot=accordion-trigger-icon]:size-4 **:data-[slot=accordion-trigger-icon]:text-muted-foreground",
-          className
-        )}
+        className={cn("accordion-trigger focus-ring", className)}
         {...props}
       >
         {children}
-        <ChevronDownIcon data-slot="accordion-trigger-icon" className="pointer-events-none shrink-0 group-aria-expanded/accordion-trigger:hidden" />
-        <ChevronUpIcon data-slot="accordion-trigger-icon" className="pointer-events-none hidden shrink-0 group-aria-expanded/accordion-trigger:inline" />
+        <ChevronDownIcon
+          data-slot="accordion-trigger-icon"
+          className="accordion-trigger-icon accordion-trigger-icon--expand"
+          aria-hidden
+        />
+        <ChevronUpIcon
+          data-slot="accordion-trigger-icon"
+          className="accordion-trigger-icon accordion-trigger-icon--collapse"
+          aria-hidden
+        />
       </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>
   )
@@ -66,17 +71,10 @@ function AccordionContent({
   return (
     <AccordionPrimitive.Panel
       data-slot="accordion-content"
-      className="overflow-hidden text-sm data-open:animate-accordion-down data-closed:animate-accordion-up"
+      className="accordion-content"
       {...props}
     >
-      <div
-        className={cn(
-          "h-(--accordion-panel-height) pt-0 pb-4 data-ending-style:h-0 data-starting-style:h-0 [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4",
-          className
-        )}
-      >
-        {children}
-      </div>
+      <div className={cn("accordion-panel-inner", className)}>{children}</div>
     </AccordionPrimitive.Panel>
   )
 }

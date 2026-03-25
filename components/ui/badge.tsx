@@ -24,7 +24,7 @@ function badgeVariants({
   variant?: keyof typeof variantClass
   className?: ClassValue
 } = {}) {
-  return cn("badge group/badge", variantClass[variant], className)
+  return cn("badge", variantClass[variant], className)
 }
 
 function Badge({

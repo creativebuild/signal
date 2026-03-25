@@ -5,14 +5,20 @@
     width: 100%;
     border-radius: var(--radius-control);
     border: 1px solid var(--input);
-    background-color: transparent;
+    background-color: var(--control-input-bg);
     padding-inline: 0.75rem;
     padding-block: 0.5rem;
     font-size: var(--text-sm);
     box-shadow: var(--shadow-sm);
-    transition-property: color, background-color, border-color, box-shadow, opacity;
-    transition-duration: var(--duration-fast);
-    transition-timing-function: var(--ease-standard);
+    transition: var(--transition-colors);
+  }
+
+  .textarea:hover:not(:disabled) {
+    background-color: var(--control-input-bg-hover);
+  }
+
+  .textarea:focus-visible {
+    background-color: var(--control-input-bg-focus);
   }
 
   .textarea::placeholder {

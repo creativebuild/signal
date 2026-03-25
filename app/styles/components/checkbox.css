@@ -2,6 +2,7 @@
   .checkbox {
     position: relative;
     display: flex;
+    padding: 0;
     width: var(--icon-size);
     height: var(--icon-size);
     flex-shrink: 0;
@@ -10,9 +11,7 @@
     border-radius: var(--radius-inset);
     border: 1px solid var(--input);
     box-shadow: var(--shadow-xs);
-    transition-property: box-shadow, border-color, background-color, color, opacity;
-    transition-duration: var(--duration-fast);
-    transition-timing-function: var(--ease-standard);
+    transition: var(--transition-colors);
     outline: none;
   }
 
@@ -30,7 +29,7 @@
 
   .checkbox[aria-invalid="true"] {
     border-color: color-mix(in oklch, var(--destructive) 80%, transparent);
-    box-shadow: 0 0 0 3px color-mix(in oklch, var(--destructive) 30%, transparent);
+    box-shadow: 0 0 0 var(--focus-ring-width) color-mix(in oklch, var(--destructive) 30%, transparent);
   }
 
   .checkbox[aria-checked="true"],

@@ -9,9 +9,15 @@
     padding-inline: var(--control-px-sm);
     height: var(--control-height-md);
     font-size: var(--text-sm);
-    transition-property: color, background-color, border-color, box-shadow, opacity;
-    transition-duration: var(--duration-fast);
-    transition-timing-function: var(--ease-standard);
+    transition: var(--transition-colors);
+  }
+
+  .input:hover:not(:disabled):not([aria-invalid="true"]) {
+    background-color: var(--control-input-bg-hover);
+  }
+
+  .input:focus-visible {
+    background-color: var(--control-input-bg-focus);
   }
 
   .input::placeholder {
@@ -50,6 +56,7 @@
 
   .input[aria-invalid="true"] {
     border-color: color-mix(in oklch, var(--destructive) 80%, transparent);
-    box-shadow: 0 0 0 3px color-mix(in oklch, var(--destructive) 30%, transparent);
+    box-shadow: 0 0 0 var(--focus-ring-width)
+      color-mix(in oklch, var(--destructive) 30%, transparent);
   }
 }

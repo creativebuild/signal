@@ -15,10 +15,10 @@ export function ButtonsSection() {
       title="Buttons"
       description="Button variants, sizes, and button groups"
     >
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Variants</h3>
-          <div className="flex flex-wrap gap-2">
+      <div className="gallery-grid">
+        <div className="gallery-sample">
+          <h3 className="gallery-sample-title">Variants</h3>
+          <div className="gallery-row">
             <Button>Primary</Button>
             <Button variant="secondary">Secondary</Button>
             <Button variant="outline">Outline</Button>
@@ -31,18 +31,22 @@ export function ButtonsSection() {
           </div>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Sizes</h3>
-          <div className="flex flex-wrap items-center gap-2">
-            <Button variant="secondary" size="sm">Small</Button>
+        <div className="gallery-sample">
+          <h3 className="gallery-sample-title">Sizes</h3>
+          <div className="gallery-row gallery-row--center">
+            <Button variant="secondary" size="sm">
+              Small
+            </Button>
             <Button variant="secondary">Medium</Button>
-            <Button variant="secondary" size="lg">Large</Button>
+            <Button variant="secondary" size="lg">
+              Large
+            </Button>
           </div>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Icon buttons</h3>
-          <div className="flex flex-wrap items-center gap-2">
+        <div className="gallery-sample">
+          <h3 className="gallery-sample-title">Icon buttons</h3>
+          <div className="gallery-row gallery-row--center">
             <Button variant="secondary" size="icon-sm" aria-label="Add">
               <PlusIcon />
             </Button>
@@ -55,9 +59,9 @@ export function ButtonsSection() {
           </div>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">With icon</h3>
-          <div className="flex flex-wrap gap-2">
+        <div className="gallery-sample">
+          <h3 className="gallery-sample-title">With icon</h3>
+          <div className="gallery-row">
             <Button variant="secondary">
               Next
               <ArrowRightIcon data-icon="inline-end" />
@@ -65,8 +69,8 @@ export function ButtonsSection() {
           </div>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Button group</h3>
+        <div className="gallery-sample">
+          <h3 className="gallery-sample-title">Button group</h3>
           <ButtonGroup>
             <Button variant="outline">One</Button>
             <Button variant="outline">Two</Button>
@@ -74,13 +78,13 @@ export function ButtonsSection() {
           </ButtonGroup>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Toggle</h3>
-          <div className="flex flex-wrap gap-2">
+        <div className="gallery-sample">
+          <h3 className="gallery-sample-title">Toggle</h3>
+          <div className="gallery-row">
             <Toggle>Toggle</Toggle>
             <Toggle variant="outline">Outline</Toggle>
           </div>
-          <ToggleGroup type="single" className="justify-start">
+          <ToggleGroup type="single" className="gallery-toggle-group-start">
             <ToggleGroupItem value="a">Option A</ToggleGroupItem>
             <ToggleGroupItem value="b">Option B</ToggleGroupItem>
             <ToggleGroupItem value="c">Option C</ToggleGroupItem>

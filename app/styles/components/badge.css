@@ -14,19 +14,17 @@
     font-size: var(--text-xs);
     font-weight: var(--font-weight-medium);
     white-space: nowrap;
-    transition-property: background-color, color, border-color, box-shadow, opacity;
-    transition-duration: var(--duration-fast);
-    transition-timing-function: var(--ease-standard);
+    transition: var(--transition-colors);
   }
 
   .badge:focus-visible {
     border-color: var(--ring);
-    box-shadow: 0 0 0 3px color-mix(in oklch, var(--ring) 50%, transparent);
+    box-shadow: 0 0 0 var(--focus-ring-width) color-mix(in oklch, var(--ring) 50%, transparent);
   }
 
   .badge[aria-invalid="true"] {
     border-color: color-mix(in oklch, var(--destructive) 80%, transparent);
-    box-shadow: 0 0 0 3px color-mix(in oklch, var(--destructive) 30%, transparent);
+    box-shadow: 0 0 0 var(--focus-ring-width) color-mix(in oklch, var(--destructive) 30%, transparent);
   }
 
   .badge:has([data-icon="inline-end"]) {
@@ -64,7 +62,7 @@
     color: var(--destructive-foreground);
   }
   .badge--destructive:focus-visible {
-    box-shadow: 0 0 0 3px color-mix(in oklch, var(--destructive) 30%, transparent);
+    box-shadow: 0 0 0 var(--focus-ring-width) color-mix(in oklch, var(--destructive) 30%, transparent);
   }
   .badge--destructive:is(a):hover {
     background-color: var(--destructive-subtle-hover);

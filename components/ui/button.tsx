@@ -36,7 +36,7 @@ function buttonVariants({
   className?: ClassValue
 } = {}) {
   return cn(
-    "btn focus-ring group/button",
+    "btn focus-ring",
     variantClass[variant],
     sizeClass[size],
     className

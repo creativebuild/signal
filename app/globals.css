@@ -1,6 +1,5 @@
 @import "./styles/layers.css";
 @import "./tokens.css";
-@import "./tailwind-bridge.css";
 @import "./styles/reset.css";
 @import "./styles/base.css";
 @import "./styles/components/accordion.css";
@@ -25,6 +24,7 @@
 @import "./styles/components/dropdown-menu.css";
 @import "./styles/components/context-menu.css";
 @import "./styles/components/form.css";
+@import "./styles/components/gallery.css";
 @import "./styles/components/hover-card.css";
 @import "./styles/components/input-otp.css";
 @import "./styles/components/input.css";
@@ -43,6 +43,7 @@
 @import "./styles/components/sidebar.css";
 @import "./styles/components/skeleton.css";
 @import "./styles/components/slider.css";
+@import "./styles/components/spinner.css";
 @import "./styles/components/sonner.css";
 @import "./styles/components/switch.css";
 @import "./styles/components/table.css";
@@ -53,9 +54,25 @@
 @import "./styles/components/tooltip.css";
 
 /* ==========================================================================
-   GLOBAL STYLES — Keyframes and utilities (tokens live in tokens.css).
+   APP SHELL (globals.css)
+   Figma-aligned variables live in tokens.css. Below: derived CSS variables,
+   keyframes, third-party overrides, and small utilities.
    ========================================================================== */
 
+/* Composite transitions from motion tokens — convenient for component CSS, not
+   exported as separate Figma variables. Depends on tokens.css :root. */
+:root {
+  --transition-colors: color var(--duration-fast) var(--ease-standard),
+    background-color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard),
+    box-shadow var(--duration-fast) var(--ease-standard),
+    opacity var(--duration-fast) var(--ease-standard);
+  --transition-all: all var(--duration-fast) var(--ease-standard);
+}
+
+/* --------------------------------------------------------------------------
+   Keyframes
+   -------------------------------------------------------------------------- */
 @keyframes accordion-down {
   from {
     height: 0;
@@ -85,13 +102,49 @@
   }
 }
 
+/* Spinner: unlayered so @layer components can’t suppress rotation */
+@keyframes spinner-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Sonner (injected stylesheet competes with layered app CSS)
+   -------------------------------------------------------------------------- */
+[data-sonner-toaster].toaster {
+  transition: transform 0.4s ease !important;
+}
+
+[data-sonner-toaster].toaster [data-sonner-toast] {
+  transition:
+    transform 0.4s ease,
+    opacity 0.4s ease,
+    height 0.4s ease,
+    box-shadow 0.2s ease !important;
+}
+
+[data-sonner-toaster].toaster [data-sonner-toast] > * {
+  transition: opacity 0.4s ease !important;
+}
+
+[data-sonner-toaster].toaster [data-sonner-toast][data-swiping="true"] {
+  transition: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   Utilities (@layer utilities)
+   -------------------------------------------------------------------------- */
 @layer utilities {
+  /* Focus ring — pair with interactive component classes */
   .focus-ring:focus-visible {
     outline: none;
     border-color: var(--ring);
-    box-shadow: 0 0 0 3px color-mix(in oklch, var(--ring) 50%, transparent);
+    box-shadow: 0 0 0 var(--focus-ring-width)
+      color-mix(in oklch, var(--ring) 50%, transparent);
   }
 
+  /* Animation helpers */
   .animate-accordion-down {
     animation: accordion-down var(--duration-normal) var(--ease-out);
   }
@@ -107,6 +160,7 @@
     animation: spin 1s linear infinite;
   }
 
+  /* Visually hidden, available to AT */
   .sr-only {
     position: absolute;
     width: 1px;
@@ -118,9 +172,28 @@
     white-space: nowrap;
     border-width: 0;
   }
+
+  /* Minimal class hooks for TSX (e.g. trading blotter column meta / alignment) */
+  .text-left {
+    text-align: left;
+  }
+  .text-center {
+    text-align: center;
+  }
+  .text-right {
+    text-align: right;
+  }
+  .text-primary-foreground {
+    color: var(--primary-foreground);
+  }
+  .bg-transparent {
+    background-color: transparent;
+  }
 }
 
-/* Light mode: selected row checkbox — inverted for contrast */
+/* --------------------------------------------------------------------------
+   Theme-specific composition (unlayered)
+   -------------------------------------------------------------------------- */
 :root:not(.dark)
   [data-in-selected-row]
   [data-slot="checkbox"][aria-checked="true"] {

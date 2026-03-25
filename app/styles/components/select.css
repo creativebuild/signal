@@ -14,9 +14,11 @@
   }
 
   .select-trigger {
-    display: flex;
+    display: inline-flex;
     height: var(--control-height-md);
-    width: 100%;
+    width: auto;
+    max-width: 100%;
+    min-width: 0;
     align-items: center;
     justify-content: space-between;
     gap: 0.375rem;
@@ -29,15 +31,13 @@
     white-space: nowrap;
     box-shadow: var(--shadow-sm);
     outline: none;
-    transition-property: color, border-color, box-shadow, opacity;
-    transition-duration: var(--duration-fast);
-    transition-timing-function: var(--ease-standard);
+    transition: var(--transition-colors);
   }
 
   .select-trigger:focus-visible {
     outline: none;
     border-color: var(--ring);
-    box-shadow: 0 0 0 3px color-mix(in oklch, var(--ring) 50%, transparent);
+    box-shadow: 0 0 0 var(--focus-ring-width) color-mix(in oklch, var(--ring) 50%, transparent);
   }
 
   .select-trigger:disabled {
@@ -54,6 +54,12 @@
     flex-shrink: 0;
     width: var(--icon-size);
     height: var(--icon-size);
+  }
+
+  /* Opt-in full width (e.g. form fields); default matches inline shadcn triggers. */
+  .select-trigger--full {
+    display: flex;
+    width: 100%;
   }
 
   .select-trigger-icon {
@@ -145,6 +151,10 @@
     height: var(--icon-size);
     align-items: center;
     justify-content: center;
+  }
+
+  .select-item-indicator svg {
+    pointer-events: none;
   }
 
   .select-separator {

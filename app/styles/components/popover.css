@@ -20,6 +20,13 @@
     outline: none;
   }
 
+  /* Dense panels: match select popup shell (no extra chrome padding). */
+  .popover-content--flush,
+  .popover-content--command {
+    padding: 0;
+    gap: 0;
+  }
+
   .popover-header {
     display: flex;
     flex-direction: column;
