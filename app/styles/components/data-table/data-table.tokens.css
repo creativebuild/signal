@@ -1,0 +1,17 @@
+:root {
+  --data-table-row-height-sm: 1.25rem;
+  --data-table-row-height-md: 1.5rem;
+  --data-table-row-height-lg: 2rem;
+  --data-table-header-height: 2.5rem;
+  --data-table-row-divider-width: 0;
+  --data-table-cell-px: 0.5rem;
+  --data-table-cell-py: 0;
+  --data-table-font-size: var(--font-size-data);
+  --data-table-header-font-size: var(--font-size-xs);
+  --data-table-font-weight: var(--font-weight-medium);
+  --data-table-header-font-weight: var(--font-weight-semibold);
+  --data-table-header-bg: var(--color-bg);
+  --data-table-header-fg: var(--color-muted-fg);
+  --data-table-row-bg-hover: var(--color-muted);
+  --data-table-row-fg-selected: var(--color-selection-fg);
+}

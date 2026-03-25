@@ -1,0 +1,106 @@
+@layer components {
+  .accordion {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .accordion-item:not(:last-child) {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .accordion-trigger-wrap {
+    display: flex;
+  }
+
+  .accordion-trigger {
+    position: relative;
+    display: flex;
+    flex: 1 1 0%;
+    align-items: flex-start;
+    justify-content: space-between;
+    border-radius: var(--radius-control);
+    border: 1px solid transparent;
+    padding-block: 1rem;
+    text-align: left;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    transition-property: text-decoration, opacity;
+    transition-duration: var(--duration-fast);
+    transition-timing-function: var(--ease-standard);
+    outline: none;
+  }
+
+  .accordion-trigger:hover {
+    text-decoration: underline;
+  }
+
+  .accordion-trigger[aria-disabled="true"] {
+    pointer-events: none;
+    opacity: var(--opacity-disabled);
+  }
+
+  .accordion-trigger-icon {
+    pointer-events: none;
+    flex-shrink: 0;
+    margin-left: auto;
+    width: var(--size-icon);
+    height: var(--size-icon);
+    color: var(--color-muted-fg);
+  }
+
+  .accordion-trigger-icon--expand {
+    display: block;
+  }
+
+  .accordion-trigger-icon--collapse {
+    display: none;
+  }
+
+  .accordion-trigger[aria-expanded="true"] .accordion-trigger-icon--expand {
+    display: none;
+  }
+
+  .accordion-trigger[aria-expanded="true"] .accordion-trigger-icon--collapse {
+    display: block;
+  }
+
+  .accordion-content {
+    overflow: hidden;
+    font-size: var(--font-size-sm);
+  }
+
+  .accordion-content[data-open] {
+    animation: accordion-down var(--duration-normal) var(--ease-out);
+  }
+
+  .accordion-content[data-closed] {
+    animation: accordion-up var(--duration-normal) var(--ease-out);
+  }
+
+  .accordion-panel-inner {
+    height: var(--accordion-panel-height, auto);
+    padding-top: 0;
+    padding-bottom: 1rem;
+  }
+
+  .accordion-panel-inner[data-starting-style],
+  .accordion-panel-inner[data-ending-style] {
+    height: 0;
+    padding-bottom: 0;
+    overflow: hidden;
+  }
+
+  .accordion-panel-inner a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .accordion-panel-inner a:hover {
+    color: var(--color-fg);
+  }
+
+  .accordion-panel-inner p:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+}

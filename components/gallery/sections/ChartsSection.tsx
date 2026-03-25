@@ -235,7 +235,7 @@ const allocationChartConfig = {
   },
   multiStrat: {
     label: "Multi-strategy",
-    color: "var(--primary)",
+    color: "var(--color-primary)",
   },
 } satisfies ChartConfig;
 
@@ -500,10 +500,10 @@ export function ChartsSection() {
                   dataKey="multiStrat"
                   type="monotone"
                   stackId="allocation"
-                  stroke="var(--primary)"
+                  stroke="var(--color-primary)"
                   strokeWidth={1.25}
                   strokeOpacity={1}
-                  fill="var(--primary)"
+                  fill="var(--color-primary)"
                   fillOpacity={STACKED_AREA_FILL_OPACITY}
                   isAnimationActive={false}
                 />

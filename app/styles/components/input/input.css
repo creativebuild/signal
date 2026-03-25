@@ -1,0 +1,62 @@
+@layer components {
+  .input {
+    width: 100%;
+    min-width: 0;
+    border-radius: var(--radius-control);
+    border: 1px solid var(--color-input-border);
+    background-color: var(--input-bg);
+    padding-block: 0.25rem;
+    padding-inline: var(--space-control-x-sm);
+    height: var(--size-control-md);
+    font-size: var(--font-size-sm);
+    transition: var(--transition-colors);
+  }
+
+  .input:hover:not(:disabled):not([aria-invalid="true"]) {
+    background-color: var(--input-bg-hover);
+  }
+
+  .input:focus-visible {
+    background-color: var(--input-bg-focus);
+  }
+
+  .input::placeholder {
+    color: var(--color-muted-fg);
+  }
+
+  .input::file-selector-button {
+    display: inline-flex;
+    height: var(--size-control-sm);
+    border: 0;
+    background: transparent;
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    color: var(--color-fg);
+    padding: 0;
+    margin-inline-end: var(--space-gap-control);
+  }
+
+  .input::-webkit-file-upload-button {
+    display: inline-flex;
+    height: var(--size-control-sm);
+    border: 0;
+    background: transparent;
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    color: var(--color-fg);
+    padding: 0;
+    margin-inline-end: var(--space-gap-control);
+  }
+
+  .input:disabled {
+    pointer-events: none;
+    background-color: var(--input-bg-disabled);
+    opacity: var(--opacity-disabled);
+  }
+
+  .input[aria-invalid="true"] {
+    border-color: color-mix(in oklch, var(--color-destructive) 80%, transparent);
+    box-shadow: 0 0 0 var(--size-ring-width)
+      color-mix(in oklch, var(--color-destructive) 30%, transparent);
+  }
+}

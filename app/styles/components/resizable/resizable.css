@@ -1,0 +1,53 @@
+@layer components {
+  .resizable-panel-group {
+    display: flex;
+    height: 100%;
+    width: 100%;
+  }
+
+  .resizable-panel-group[data-panel-group-direction="vertical"] {
+    flex-direction: column;
+  }
+
+  .resizable-handle {
+    position: relative;
+    display: flex;
+    width: 1px;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-border);
+  }
+
+  .resizable-handle::after {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    left: 50%;
+    width: 1rem;
+    transform: translateX(-50%);
+  }
+
+  .resizable-handle:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 1px var(--color-ring),
+      0 0 0 2px var(--color-bg);
+  }
+
+  .resizable-handle-grip {
+    z-index: 10;
+    display: flex;
+    height: 1rem;
+    width: 0.75rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-inset);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-border);
+  }
+
+  .resizable-handle-grip svg {
+    width: 0.625rem;
+    height: 0.625rem;
+  }
+}

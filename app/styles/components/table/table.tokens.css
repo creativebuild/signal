@@ -1,0 +1,10 @@
+:root {
+  --table-row-bg-selected: var(--color-grid-selection);
+  --table-row-fg-selected: var(--color-selection-fg);
+  --table-checkbox-in-selected-bg: var(--color-surface-fixed-light);
+  --table-checkbox-in-selected-fg: var(--color-fg);
+}
+
+.dark {
+  --table-checkbox-in-selected-fg: var(--color-primary-fg);
+}

@@ -3459,19 +3459,6 @@
           "alpha": 1,
           "hex": "#f5f5f5"
         }
-      },
-      "sidebar": {
-        "$type": "color",
-        "$value": {
-          "colorSpace": "srgb",
-          "components": [
-            0.9804,
-            0.9804,
-            0.9804
-          ],
-          "alpha": 1,
-          "hex": "#fafafa"
-        }
       }
     },
     "text": {
@@ -3564,19 +3551,6 @@
           ],
           "alpha": 1,
           "hex": "#fafafa"
-        }
-      },
-      "on-sidebar": {
-        "$type": "color",
-        "$value": {
-          "colorSpace": "srgb",
-          "components": [
-            0.0392,
-            0.0392,
-            0.0392
-          ],
-          "alpha": 1,
-          "hex": "#0a0a0a"
         }
       }
     },
@@ -4336,12 +4310,12 @@
           "$value": {
             "colorSpace": "srgb",
             "components": [
-              0.0902,
-              0.0902,
-              0.0902
+              0.0392,
+              0.0392,
+              0.0392
             ],
             "alpha": 1,
-            "hex": "#171717"
+            "hex": "#0a0a0a"
           }
         }
       },

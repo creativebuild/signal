@@ -1,0 +1,28 @@
+@layer components {
+  .button-group {
+    display: inline-flex;
+  }
+
+  .button-group > * {
+    border-radius: 0;
+  }
+
+  .button-group > *:first-child {
+    border-top-left-radius: var(--radius-control);
+    border-bottom-left-radius: var(--radius-control);
+  }
+
+  .button-group > *:last-child {
+    border-top-right-radius: var(--radius-control);
+    border-bottom-right-radius: var(--radius-control);
+  }
+
+  .button-group > *:not(:first-child) {
+    border-left-width: 0;
+  }
+
+  .button-group > *:active {
+    background-color: var(--color-press);
+    color: var(--color-press-fg);
+  }
+}

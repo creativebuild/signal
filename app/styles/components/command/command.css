@@ -1,0 +1,195 @@
+@layer components {
+  .command {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: var(--radius-container);
+    background-color: var(--color-popover);
+    color: var(--color-popover-fg);
+  }
+
+  .command-dialog {
+    overflow: hidden;
+    padding: 0;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .command [cmdk-group-heading],
+  .command .cmdk-group-heading {
+    padding-inline: 0.5rem;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-muted-fg);
+  }
+
+  .command [cmdk-group]:not([hidden]) ~ [cmdk-group],
+  .command .cmdk-group:not([hidden]) ~ .cmdk-group {
+    padding-top: 0;
+  }
+
+  .command [cmdk-group],
+  .command .cmdk-group {
+    padding-inline: 0.5rem;
+  }
+
+  .command [cmdk-input-wrapper] svg,
+  .command .cmdk-input-wrapper svg {
+    width: var(--size-icon);
+    height: var(--size-icon);
+  }
+
+  .command [cmdk-item],
+  .command .cmdk-item {
+    padding-inline: 0.5rem;
+    padding-block: 0.75rem;
+  }
+
+  .command [cmdk-item] svg,
+  .command .cmdk-item svg {
+    width: var(--size-icon);
+    height: var(--size-icon);
+  }
+
+  .command-input-row {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--color-border);
+    padding-inline: 0.75rem;
+  }
+
+  .command-input-row svg {
+    margin-right: 0.5rem;
+    width: var(--size-icon);
+    height: var(--size-icon);
+    flex-shrink: 0;
+    opacity: 0.5;
+  }
+
+  .command [cmdk-input],
+  .command .cmdk-input,
+  .command-input {
+    display: block;
+    height: 2.5rem;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+    padding: 0;
+    font-size: var(--font-size-sm);
+    line-height: var(--leading-normal);
+    color: inherit;
+    outline: none;
+    box-shadow: none;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .command [cmdk-input]::placeholder,
+  .command .cmdk-input::placeholder,
+  .command-input::placeholder {
+    color: var(--color-muted-fg);
+  }
+
+  .command [cmdk-input]:disabled,
+  .command .cmdk-input:disabled,
+  .command-input:disabled {
+    cursor: not-allowed;
+    opacity: var(--opacity-disabled);
+  }
+
+  .command-list {
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior-y: contain;
+  }
+
+  .command-empty {
+    padding-block: 1.5rem;
+    text-align: center;
+    font-size: var(--font-size-sm);
+  }
+
+  .command-group {
+    overflow: hidden;
+    padding: 0.25rem;
+    color: var(--color-fg);
+  }
+
+  .command-group [cmdk-group-heading],
+  .command-group .cmdk-group-heading {
+    padding-inline: 0.5rem;
+    padding-block: 0.375rem;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-muted-fg);
+  }
+
+  .command-separator {
+    margin-inline: -0.25rem;
+    height: 1px;
+    background-color: var(--color-border);
+  }
+
+  .command-item {
+    position: relative;
+    display: flex;
+    cursor: default;
+    user-select: none;
+    align-items: center;
+    gap: var(--space-gap-control);
+    border-radius: var(--radius-inset);
+    padding-inline: 0.5rem;
+    padding-block: 0.375rem;
+    font-size: var(--font-size-sm);
+    outline: none;
+  }
+
+  .command-item[data-disabled="true"] {
+    pointer-events: none;
+    opacity: var(--opacity-disabled);
+  }
+
+  .command-item[data-selected="true"],
+  .command-item[aria-selected="true"] {
+    background-color: var(--color-accent);
+    color: var(--color-accent-fg);
+  }
+
+  .command-item:active {
+    background-color: var(--color-press);
+    color: var(--color-press-fg);
+  }
+
+  .command-item svg {
+    pointer-events: none;
+    width: var(--size-icon);
+    height: var(--size-icon);
+    flex-shrink: 0;
+  }
+
+  .command-shortcut {
+    margin-left: auto;
+    font-size: var(--font-size-xs);
+    letter-spacing: 0.1em;
+    color: var(--color-muted-fg);
+  }
+
+  /* Popover + cmdk: align insets with ungrouped Select list (see .select-item). */
+  .popover-content--command .command-input-row {
+    padding-inline: var(--space-menu-item-x);
+  }
+
+  .popover-content--command .command-group {
+    padding: 0;
+  }
+
+  .popover-content--command .command [cmdk-group],
+  .popover-content--command .command .cmdk-group {
+    padding-inline: 0;
+    padding-block: 0;
+  }
+}

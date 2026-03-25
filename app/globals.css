@@ -2,73 +2,62 @@
 @import "./tokens.css";
 @import "./styles/reset.css";
 @import "./styles/base.css";
-@import "./styles/components/accordion.css";
-@import "./styles/components/alert-dialog.css";
-@import "./styles/components/alert.css";
-@import "./styles/components/aspect-ratio.css";
-@import "./styles/components/avatar.css";
-@import "./styles/components/badge.css";
-@import "./styles/components/breadcrumb.css";
-@import "./styles/components/button-group.css";
-@import "./styles/components/button.css";
-@import "./styles/components/calendar.css";
-@import "./styles/components/card.css";
-@import "./styles/components/carousel.css";
-@import "./styles/components/chart.css";
-@import "./styles/components/checkbox.css";
-@import "./styles/components/collapsible.css";
-@import "./styles/components/command.css";
-@import "./styles/components/data-table.css";
-@import "./styles/components/dialog.css";
-@import "./styles/components/drawer.css";
-@import "./styles/components/dropdown-menu.css";
-@import "./styles/components/context-menu.css";
-@import "./styles/components/form.css";
-@import "./styles/components/gallery.css";
-@import "./styles/components/hover-card.css";
-@import "./styles/components/input-otp.css";
-@import "./styles/components/input.css";
-@import "./styles/components/label.css";
-@import "./styles/components/menubar.css";
-@import "./styles/components/navigation-menu.css";
-@import "./styles/components/pagination.css";
-@import "./styles/components/popover.css";
-@import "./styles/components/progress.css";
-@import "./styles/components/radio-group.css";
-@import "./styles/components/resizable.css";
-@import "./styles/components/scroll-area.css";
-@import "./styles/components/select.css";
-@import "./styles/components/separator.css";
-@import "./styles/components/sheet.css";
-@import "./styles/components/sidebar.css";
-@import "./styles/components/skeleton.css";
-@import "./styles/components/slider.css";
-@import "./styles/components/spinner.css";
-@import "./styles/components/sonner.css";
-@import "./styles/components/switch.css";
-@import "./styles/components/table.css";
-@import "./styles/components/tabs.css";
-@import "./styles/components/textarea.css";
-@import "./styles/components/toggle-group.css";
-@import "./styles/components/toggle.css";
-@import "./styles/components/tooltip.css";
+@import "./styles/components/accordion/accordion.css";
+@import "./styles/components/alert-dialog/alert-dialog.css";
+@import "./styles/components/alert/alert.css";
+@import "./styles/components/aspect-ratio/aspect-ratio.css";
+@import "./styles/components/avatar/avatar.css";
+@import "./styles/components/badge/badge.css";
+@import "./styles/components/breadcrumb/breadcrumb.css";
+@import "./styles/components/button-group/button-group.css";
+@import "./styles/components/button/button.css";
+@import "./styles/components/calendar/calendar.css";
+@import "./styles/components/card/card.css";
+@import "./styles/components/carousel/carousel.css";
+@import "./styles/components/chart/chart.css";
+@import "./styles/components/checkbox/checkbox.css";
+@import "./styles/components/collapsible/collapsible.css";
+@import "./styles/components/command/command.css";
+@import "./styles/components/data-table/data-table.css";
+@import "./styles/components/dialog/dialog.css";
+@import "./styles/components/drawer/drawer.css";
+@import "./styles/components/dropdown-menu/dropdown-menu.css";
+@import "./styles/components/context-menu/context-menu.css";
+@import "./styles/components/form/form.css";
+@import "./styles/components/gallery/gallery.css";
+@import "./styles/components/hover-card/hover-card.css";
+@import "./styles/components/input-otp/input-otp.css";
+@import "./styles/components/input/input.css";
+@import "./styles/components/label/label.css";
+@import "./styles/components/menubar/menubar.css";
+@import "./styles/components/navigation-menu/navigation-menu.css";
+@import "./styles/components/pagination/pagination.css";
+@import "./styles/components/popover/popover.css";
+@import "./styles/components/progress/progress.css";
+@import "./styles/components/radio-group/radio-group.css";
+@import "./styles/components/resizable/resizable.css";
+@import "./styles/components/scroll-area/scroll-area.css";
+@import "./styles/components/select/select.css";
+@import "./styles/components/separator/separator.css";
+@import "./styles/components/sheet/sheet.css";
+@import "./styles/components/sidebar/sidebar.css";
+@import "./styles/components/skeleton/skeleton.css";
+@import "./styles/components/slider/slider.css";
+@import "./styles/components/spinner/spinner.css";
+@import "./styles/components/sonner/sonner.css";
+@import "./styles/components/switch/switch.css";
+@import "./styles/components/table/table.css";
+@import "./styles/components/tabs/tabs.css";
+@import "./styles/components/textarea/textarea.css";
+@import "./styles/components/toggle-group/toggle-group.css";
+@import "./styles/components/toggle/toggle.css";
+@import "./styles/components/tooltip/tooltip.css";
 
 /* ==========================================================================
    APP SHELL (globals.css)
    Figma-aligned variables live in tokens.css. Below: derived CSS variables,
    keyframes, third-party overrides, and small utilities.
    ========================================================================== */
-
-/* Composite transitions from motion tokens — convenient for component CSS, not
-   exported as separate Figma variables. Depends on tokens.css :root. */
-:root {
-  --transition-colors: color var(--duration-fast) var(--ease-standard),
-    background-color var(--duration-fast) var(--ease-standard),
-    border-color var(--duration-fast) var(--ease-standard),
-    box-shadow var(--duration-fast) var(--ease-standard),
-    opacity var(--duration-fast) var(--ease-standard);
-  --transition-all: all var(--duration-fast) var(--ease-standard);
-}
 
 /* --------------------------------------------------------------------------
    Keyframes
@@ -139,9 +128,9 @@
   /* Focus ring — pair with interactive component classes */
   .focus-ring:focus-visible {
     outline: none;
-    border-color: var(--ring);
-    box-shadow: 0 0 0 var(--focus-ring-width)
-      color-mix(in oklch, var(--ring) 50%, transparent);
+    border-color: var(--color-ring);
+    box-shadow: 0 0 0 var(--size-ring-width)
+      color-mix(in oklch, var(--color-ring) 50%, transparent);
   }
 
   /* Animation helpers */
@@ -184,7 +173,7 @@
     text-align: right;
   }
   .text-primary-foreground {
-    color: var(--primary-foreground);
+    color: var(--color-primary-fg);
   }
   .bg-transparent {
     background-color: transparent;

@@ -1,0 +1,30 @@
+@layer components {
+  /* Sonner reads --normal-*; bridge from component tokens */
+  .toaster.toaster {
+    --normal-bg: var(--sonner-bg);
+    --normal-border: var(--sonner-border);
+    --normal-text: var(--sonner-fg);
+  }
+
+  .toaster .toast {
+    background: var(--sonner-bg);
+    color: var(--sonner-fg);
+    border: 1px solid var(--sonner-border);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .toaster .toast .description,
+  .toaster [data-description] {
+    color: var(--sonner-muted-fg);
+  }
+
+  .toaster .toast [data-button] {
+    background: var(--sonner-primary-bg);
+    color: var(--sonner-primary-fg);
+  }
+
+  .toaster .toast [data-cancel] {
+    background: var(--sonner-muted-bg);
+    color: var(--sonner-muted-fg);
+  }
+}

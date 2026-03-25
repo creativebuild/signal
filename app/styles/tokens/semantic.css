@@ -1,0 +1,292 @@
+/* Global semantic tokens — reference primitives only; theme via .dark overrides here */
+:root {
+  /* Surfaces & text */
+  --color-bg: var(--primitive-white);
+  --color-fg: var(--primitive-neutral-950);
+  --color-card: var(--primitive-white);
+  --color-card-fg: var(--primitive-neutral-950);
+  --color-popover: var(--primitive-white);
+  --color-popover-fg: var(--primitive-neutral-950);
+
+  /* Brand & interactions */
+  --color-primary: var(--primitive-black);
+  --color-primary-fg: var(--primitive-neutral-50);
+  --color-secondary: var(--primitive-neutral-100);
+  --color-secondary-fg: var(--primitive-neutral-900);
+  --color-secondary-hover: var(--primitive-neutral-200);
+  --color-muted: var(--primitive-neutral-100);
+  --color-muted-fg: var(--primitive-neutral-500);
+  --color-accent: var(--primitive-neutral-100);
+  --color-accent-fg: var(--primitive-neutral-900);
+  --color-link: var(--primitive-blue-700);
+  --color-link-fg: var(--primitive-neutral-50);
+  --color-press: var(--primitive-blue-800);
+  --color-press-fg: var(--primitive-neutral-50);
+  --color-selection: var(--primitive-blue-800);
+  --color-selection-fg: var(--primitive-white);
+
+  /* State */
+  --color-destructive: var(--primitive-red-600);
+  --color-destructive-fg: var(--primitive-neutral-50);
+  --color-success: var(--primitive-green-600);
+  --color-success-fg: var(--primitive-neutral-50);
+  --color-warning: var(--primitive-amber-400);
+  --color-warning-fg: var(--primitive-amber-950);
+  --color-info: var(--primitive-sky-600);
+  --color-info-fg: var(--primitive-neutral-50);
+
+  --color-destructive-subtle: color-mix(in srgb, var(--color-destructive) 10%, var(--color-bg));
+  --color-destructive-subtle-hover: color-mix(in srgb, var(--color-destructive) 20%, var(--color-bg));
+  --color-success-subtle: color-mix(in srgb, var(--color-success) 10%, var(--color-bg));
+  --color-success-subtle-hover: color-mix(in srgb, var(--color-success) 20%, var(--color-bg));
+  --color-warning-subtle: color-mix(in srgb, var(--color-warning) 10%, var(--color-bg));
+  --color-warning-subtle-hover: color-mix(in srgb, var(--color-warning) 20%, var(--color-bg));
+  --color-info-subtle: color-mix(in srgb, var(--color-info) 10%, var(--color-bg));
+  --color-info-subtle-hover: color-mix(in srgb, var(--color-info) 20%, var(--color-bg));
+
+  /* Border & focus */
+  --color-border: var(--primitive-neutral-200);
+  --color-input-border: var(--primitive-neutral-200);
+  --color-ring: var(--primitive-blue-600);
+  --size-ring-width: 3px;
+  --size-ring-offset: 2px;
+
+  /* Form control fill (semantic so light/dark switch without component :root duplication) */
+  --color-input-surface: transparent;
+
+  /* Shared selection / grid highlights (table + data density) */
+  --color-grid-selection: var(--primitive-blue-600);
+  --color-surface-fixed-light: var(--primitive-white);
+  --font-size-data: 0.9375rem;
+
+  /* Data syntax */
+  --color-data-primary: var(--primitive-neutral-900);
+  --color-data-secondary: var(--primitive-neutral-600);
+  --color-data-currency: var(--primitive-yellow-600);
+  --color-data-entity: var(--primitive-blue-600);
+  --color-data-identifier: var(--primitive-cyan-600);
+  --color-data-category: var(--primitive-purple-600);
+  --color-data-datetime: var(--primitive-teal-600);
+  --color-data-status-positive: var(--primitive-green-600);
+  --color-data-status-negative: var(--primitive-red-600);
+  --color-data-status-warning: var(--primitive-amber-500);
+  --color-data-status-neutral: var(--primitive-neutral-500);
+  --color-data-value-positive: var(--primitive-green-600);
+  --color-data-value-negative: var(--primitive-red-600);
+  --color-data-value-neutral: var(--primitive-neutral-900);
+
+  /* Charts — indexed utilities, unchanged names */
+  --chart-1: var(--primitive-violet-600);
+  --chart-2: var(--primitive-sky-500);
+  --chart-3: var(--primitive-teal-700);
+  --chart-4: var(--primitive-pink-700);
+  --chart-5: var(--primitive-red-500);
+  --chart-6: var(--primitive-red-900);
+  --chart-7: var(--primitive-green-600);
+  --chart-8: var(--primitive-blue-800);
+  --chart-9: var(--primitive-pink-500);
+  --chart-10: var(--primitive-yellow-600);
+  --chart-11: var(--primitive-teal-500);
+  --chart-12: var(--primitive-cyan-900);
+  --chart-13: var(--primitive-orange-700);
+  --chart-14: var(--primitive-violet-400);
+
+  /* Primary alpha ramps */
+  --color-primary-alpha-5: color-mix(in oklch, var(--color-primary) 5%, transparent);
+  --color-primary-alpha-10: color-mix(in oklch, var(--color-primary) 10%, transparent);
+  --color-primary-alpha-20: color-mix(in oklch, var(--color-primary) 20%, transparent);
+  --color-primary-alpha-30: color-mix(in oklch, var(--color-primary) 30%, transparent);
+  --color-primary-alpha-40: color-mix(in oklch, var(--color-primary) 40%, transparent);
+  --color-primary-alpha-50: color-mix(in oklch, var(--color-primary) 50%, transparent);
+  --color-primary-alpha-60: color-mix(in oklch, var(--color-primary) 60%, transparent);
+  --color-primary-alpha-70: color-mix(in oklch, var(--color-primary) 70%, transparent);
+  --color-primary-alpha-80: color-mix(in oklch, var(--color-primary) 80%, transparent);
+  --color-primary-alpha-90: color-mix(in oklch, var(--color-primary) 90%, transparent);
+
+  /* Overlays — modal strength vs muted scrims */
+  --color-overlay-strong: color-mix(in oklch, var(--primitive-black) 50%, transparent);
+  --color-overlay-muted: color-mix(in oklch, var(--primitive-black) 10%, transparent);
+
+  /* Typography */
+  --font-family-sans:
+    "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+  --font-family-mono:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --font-sans: var(--font-family-sans);
+  --font-mono: var(--font-family-mono);
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.75;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Radius */
+  --radius-md: 0.1875rem;
+  --radius-sm: calc(var(--radius-md) - 2px);
+  --radius-lg: calc(var(--radius-md) + 3px);
+  --radius-xl: calc(var(--radius-md) + 6px);
+  --radius-full: 9999px;
+  --radius-container: var(--radius-lg);
+  --radius-control: var(--radius-md);
+  --radius-inset: var(--radius-sm);
+  --radius-pill: var(--radius-full);
+
+  /* Shadows */
+  --shadow-xs: 0 1px rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 2px 0 oklch(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px oklch(0 0 0 / 0.1), 0 2px 4px -2px oklch(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px oklch(0 0 0 / 0.1), 0 4px 6px -4px oklch(0 0 0 / 0.1);
+
+  /* Control sizes */
+  --size-control-sm: 1.5rem;
+  --size-control-md: 2rem;
+  --size-control-lg: 2.5rem;
+  --space-control-x-sm: 0.75rem;
+  --space-control-x-md: 1rem;
+  --space-control-x-lg: 1.5rem;
+  --space-gap-x-control: 0.5rem;
+  --space-gap-y-control: 0.5rem;
+  --space-gap-control: var(--space-gap-x-control);
+
+  /* Layout & spacing */
+  --space-card: 1.5rem;
+  --space-content: 1rem;
+  --space-menu: 0.25rem;
+  --space-menu-item-x: 0.5rem;
+  --space-menu-item-y: 0.5rem;
+  --size-badge: 1.25rem;
+  --space-badge-x: 0.75rem;
+  --size-icon: 1rem;
+  --opacity-disabled: 0.5;
+  --size-avatar-sm: 2rem;
+  --size-avatar-md: 2.5rem;
+  --size-avatar-lg: 3.5rem;
+  --layout-rail-width: 16rem;
+
+  /* Motion */
+  --duration-fast: 100ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+
+  --transition-colors: color var(--duration-fast) var(--ease-standard),
+    background-color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard),
+    box-shadow var(--duration-fast) var(--ease-standard),
+    opacity var(--duration-fast) var(--ease-standard);
+  --transition-all: all var(--duration-fast) var(--ease-standard);
+
+  /* Z-index */
+  --z-base: 0;
+  --z-raised: 10;
+  --z-dropdown: 1000;
+  --z-sticky: 1100;
+  --z-overlay: 1200;
+  --z-modal: 1300;
+  --z-toast: 1400;
+  --z-tooltip: 1500;
+
+  /* Layout widths */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1536px;
+}
+
+.dark {
+  --color-bg: var(--primitive-black);
+  --color-fg: var(--primitive-neutral-50);
+  --color-card: var(--primitive-neutral-950);
+  --color-card-fg: var(--primitive-neutral-50);
+  --color-popover: var(--primitive-neutral-800);
+  --color-popover-fg: var(--primitive-neutral-50);
+
+  --color-primary: var(--primitive-white);
+  --color-primary-fg: var(--primitive-neutral-900);
+  --color-secondary: var(--primitive-neutral-800);
+  --color-secondary-fg: var(--primitive-neutral-50);
+  --color-secondary-hover: var(--primitive-neutral-700);
+  --color-muted: var(--primitive-neutral-800);
+  --color-muted-fg: var(--primitive-neutral-400);
+  --color-accent: var(--primitive-neutral-700);
+  --color-accent-fg: var(--primitive-neutral-50);
+  --color-link: var(--primitive-blue-400);
+  --color-link-fg: var(--primitive-neutral-950);
+  --color-press: var(--primitive-blue-600);
+  --color-press-fg: var(--primitive-neutral-50);
+  --color-selection: var(--primitive-blue-600);
+  --color-selection-fg: var(--primitive-neutral-50);
+
+  --color-destructive: var(--primitive-red-400);
+  --color-destructive-fg: var(--primitive-neutral-50);
+  --color-success: var(--primitive-green-500);
+  --color-success-fg: var(--primitive-neutral-50);
+  --color-warning: var(--primitive-amber-500);
+  --color-warning-fg: var(--primitive-neutral-900);
+  --color-info: var(--primitive-sky-400);
+  --color-info-fg: var(--primitive-neutral-50);
+
+  --color-destructive-subtle: color-mix(in srgb, var(--color-destructive) 20%, var(--color-bg));
+  --color-destructive-subtle-hover: color-mix(in srgb, var(--color-destructive) 30%, var(--color-bg));
+  --color-success-subtle: color-mix(in srgb, var(--color-success) 20%, var(--color-bg));
+  --color-success-subtle-hover: color-mix(in srgb, var(--color-success) 30%, var(--color-bg));
+  --color-warning-subtle: color-mix(in srgb, var(--color-warning) 20%, var(--color-bg));
+  --color-warning-subtle-hover: color-mix(in srgb, var(--color-warning) 30%, var(--color-bg));
+  --color-info-subtle: color-mix(in srgb, var(--color-info) 20%, var(--color-bg));
+  --color-info-subtle-hover: color-mix(in srgb, var(--color-info) 30%, var(--color-bg));
+
+  --color-border: var(--primitive-neutral-800);
+  --color-input-border: var(--primitive-neutral-800);
+  --color-ring: var(--primitive-blue-600);
+
+  --color-input-surface: color-mix(in oklch, var(--color-input-border) 30%, transparent);
+
+  --color-grid-selection: var(--primitive-blue-500);
+
+  --color-data-primary: var(--primitive-neutral-50);
+  --color-data-secondary: var(--primitive-neutral-400);
+  --color-data-currency: var(--primitive-yellow-400);
+  --color-data-entity: var(--primitive-blue-400);
+  --color-data-identifier: var(--primitive-cyan-400);
+  --color-data-category: var(--primitive-purple-400);
+  --color-data-datetime: var(--primitive-teal-500);
+  --color-data-status-positive: var(--primitive-green-400);
+  --color-data-status-negative: var(--primitive-red-400);
+  --color-data-status-warning: var(--primitive-amber-400);
+  --color-data-status-neutral: var(--primitive-neutral-400);
+  --color-data-value-positive: var(--primitive-green-400);
+  --color-data-value-negative: var(--primitive-red-400);
+  --color-data-value-neutral: var(--primitive-neutral-50);
+
+  --chart-1: var(--primitive-violet-400);
+  --chart-2: var(--primitive-sky-400);
+  --chart-3: var(--primitive-teal-600);
+  --chart-4: var(--primitive-pink-400);
+  --chart-5: var(--primitive-red-400);
+  --chart-6: var(--primitive-red-100);
+  --chart-7: var(--primitive-green-400);
+  --chart-8: var(--primitive-blue-500);
+  --chart-9: var(--primitive-pink-600);
+  --chart-10: var(--primitive-yellow-500);
+  --chart-11: var(--primitive-teal-400);
+  --chart-12: var(--primitive-cyan-300);
+  --chart-13: var(--primitive-orange-600);
+  --chart-14: var(--primitive-violet-300);
+}

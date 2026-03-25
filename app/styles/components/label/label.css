@@ -1,0 +1,27 @@
+@layer components {
+  .label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-gap-control);
+    font-size: var(--font-size-sm);
+    line-height: 1;
+    font-weight: var(--font-weight-medium);
+    user-select: none;
+  }
+
+  .group[data-disabled="true"] .label {
+    pointer-events: none;
+    opacity: var(--opacity-disabled);
+  }
+
+  [data-slot="checkbox"]:disabled ~ .label,
+  [data-slot="switch"]:disabled ~ .label,
+  [data-slot="radio-group-item"]:disabled ~ .label {
+    cursor: not-allowed;
+    opacity: var(--opacity-disabled);
+  }
+
+  .label[data-error="true"] {
+    color: var(--color-destructive);
+  }
+}

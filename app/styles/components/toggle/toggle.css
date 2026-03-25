@@ -1,0 +1,89 @@
+@layer components {
+  .toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-gap-control);
+    border-radius: var(--radius-control);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    white-space: nowrap;
+    transition: var(--transition-colors);
+    outline: none;
+  }
+
+  .toggle:hover {
+    background-color: var(--color-muted);
+    color: var(--color-muted-fg);
+  }
+
+  .toggle:active {
+    background-color: var(--color-press);
+    color: var(--color-press-fg);
+  }
+
+  .toggle:focus-visible {
+    outline: none;
+    border-color: var(--color-ring);
+    box-shadow: 0 0 0 var(--size-ring-width) color-mix(in oklch, var(--color-ring) 50%, transparent);
+  }
+
+  .toggle:disabled {
+    pointer-events: none;
+    opacity: var(--opacity-disabled);
+  }
+
+  .toggle[aria-invalid="true"] {
+    border-color: var(--color-destructive);
+    box-shadow: 0 0 0 var(--size-ring-width) color-mix(in oklch, var(--color-destructive) 20%, transparent);
+  }
+
+  .toggle[aria-pressed="true"] {
+    background-color: var(--color-accent);
+    color: var(--color-accent-fg);
+  }
+
+  .toggle[aria-pressed="true"]:active {
+    background-color: var(--color-press);
+    color: var(--color-press-fg);
+  }
+
+  .toggle svg {
+    pointer-events: none;
+    flex-shrink: 0;
+    width: var(--size-icon);
+    height: var(--size-icon);
+  }
+
+  .toggle--default {
+    background-color: transparent;
+  }
+
+  .toggle--outline {
+    border: 1px solid var(--color-input-border);
+    background-color: transparent;
+    box-shadow: var(--shadow-xs);
+  }
+
+  .toggle--outline:hover {
+    background-color: var(--color-muted);
+  }
+
+  .toggle--sm {
+    height: var(--size-control-sm);
+    min-width: var(--size-control-sm);
+    padding-inline: var(--space-control-x-sm);
+  }
+
+  .toggle--default-size {
+    height: var(--size-control-md);
+    min-width: var(--size-control-md);
+    padding-inline: var(--space-control-x-md);
+  }
+
+  .toggle--lg {
+    height: var(--size-control-lg);
+    min-width: var(--size-control-lg);
+    padding-inline: var(--space-control-x-lg);
+  }
+}

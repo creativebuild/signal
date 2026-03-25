@@ -9,6 +9,22 @@ const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
 const TOKENS_CSS = path.join(ROOT, "app", "tokens.css");
+/** Parsed for :root / .dark — primitives + semantic only (no component token maps). */
+const TOKEN_SOURCE_FILES = [
+  path.join(ROOT, "app", "styles", "tokens", "primitives.css"),
+  path.join(ROOT, "app", "styles", "tokens", "semantic.css"),
+  /* Component maps so data-table / table sizing tokens resolve for export */
+  path.join(ROOT, "app", "styles", "components", "data-table", "data-table.tokens.css"),
+  path.join(ROOT, "app", "styles", "components", "table", "table.tokens.css"),
+  path.join(ROOT, "app", "styles", "components", "sidebar", "sidebar.tokens.css"),
+  path.join(ROOT, "app", "styles", "components", "dialog", "dialog.tokens.css"),
+  path.join(ROOT, "app", "styles", "components", "drawer", "drawer.tokens.css"),
+  path.join(ROOT, "app", "styles", "components", "alert-dialog", "alert-dialog.tokens.css"),
+  path.join(ROOT, "app", "styles", "components", "sheet", "sheet.tokens.css"),
+  path.join(ROOT, "app", "styles", "components", "slider", "slider.tokens.css"),
+  path.join(ROOT, "app", "styles", "components", "switch", "switch.tokens.css"),
+  path.join(ROOT, "app", "styles", "components", "input", "input.tokens.css"),
+];
 const TOKENS_DIR = path.join(ROOT, "tokens");
 const OUTPUT_LIGHT = path.join(TOKENS_DIR, "light.json");
 const OUTPUT_DARK = path.join(TOKENS_DIR, "dark.json");
@@ -157,19 +173,66 @@ function colorValueToHex(value, paletteHexByVar) {
 /** ------------------------------------------------------------------ */
 /** CSS block extraction */
 /** ------------------------------------------------------------------ */
-function extractBlock(css, startNeedle) {
-  const start = css.indexOf(startNeedle);
-  if (start === -1) return null;
-  const open = css.indexOf("{", start);
-  if (open === -1) return null;
-  let depth = 1;
-  let pos = open + 1;
-  while (pos < css.length && depth > 0) {
-    if (css[pos] === "{") depth++;
-    else if (css[pos] === "}") depth--;
-    pos++;
+function loadMergedTokensCss() {
+  const parts = [];
+  for (const f of TOKEN_SOURCE_FILES) {
+    if (!fs.existsSync(f)) {
+      throw new Error(`Missing token source: ${f}`);
+    }
+    parts.push(fs.readFileSync(f, "utf8"));
   }
-  return css.slice(open + 1, pos - 1);
+  return parts.join("\n\n");
+}
+
+/** Merge custom properties from every `:root { … }` block (primitives + semantic files). */
+function extractAllRootVars(css) {
+  const merged = {};
+  const needle = ":root";
+  let from = 0;
+  while (from < css.length) {
+    const start = css.indexOf(needle, from);
+    if (start === -1) break;
+    const brace = css.indexOf("{", start);
+    if (brace === -1 || brace > start + needle.length + 8) {
+      from = start + needle.length;
+      continue;
+    }
+    let depth = 1;
+    let pos = brace + 1;
+    while (pos < css.length && depth > 0) {
+      if (css[pos] === "{") depth++;
+      else if (css[pos] === "}") depth--;
+      pos++;
+    }
+    const block = css.slice(brace + 1, pos - 1);
+    Object.assign(merged, extractVars(block));
+    from = pos;
+  }
+  return merged;
+}
+
+/** Merge `.dark { … }` overrides from semantic + component token files. */
+function extractAllDarkVars(css) {
+  const merged = {};
+  const needle = ".dark";
+  let from = 0;
+  while (from < css.length) {
+    const start = css.indexOf(needle, from);
+    if (start === -1) break;
+    const brace = css.indexOf("{", start);
+    if (brace === -1) break;
+    let depth = 1;
+    let pos = brace + 1;
+    while (pos < css.length && depth > 0) {
+      if (css[pos] === "{") depth++;
+      else if (css[pos] === "}") depth--;
+      pos++;
+    }
+    const block = css.slice(brace + 1, pos - 1);
+    Object.assign(merged, extractVars(block));
+    from = pos;
+  }
+  return merged;
 }
 
 function extractVars(cssBlock) {
@@ -581,173 +644,163 @@ function palettePathToAlias(path) {
 /** Semantic CSS var → output path + type + scopes */
 /** ------------------------------------------------------------------ */
 const SEMANTIC_MAP = {
-  "--background": {
+  "--color-bg": {
     path: ["surface", "default"],
     type: "color",
     scopes: ["FRAME_FILL", "SHAPE_FILL"],
   },
-  "--card": {
+  "--color-card": {
     path: ["surface", "raised"],
     type: "color",
     scopes: ["FRAME_FILL", "SHAPE_FILL"],
   },
-  "--popover": {
+  "--color-popover": {
     path: ["surface", "overlay"],
     type: "color",
     scopes: ["FRAME_FILL", "SHAPE_FILL"],
   },
-  "--foreground": {
+  "--color-fg": {
     path: ["text", "primary"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--card-foreground": {
+  "--color-card-fg": {
     path: ["text", "on-raised"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--popover-foreground": {
+  "--color-popover-fg": {
     path: ["text", "on-overlay"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--muted": {
+  "--color-muted": {
     path: ["surface", "subtle"],
     type: "color",
     scopes: ["FRAME_FILL", "SHAPE_FILL"],
   },
-  "--muted-foreground": {
+  "--color-muted-fg": {
     path: ["text", "muted"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--accent": {
+  "--color-accent": {
     path: ["surface", "accent"],
     type: "color",
     scopes: ["FRAME_FILL", "SHAPE_FILL"],
   },
-  "--accent-foreground": {
+  "--color-accent-fg": {
     path: ["text", "on-accent"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--primary": {
+  "--color-primary": {
     path: ["brand", "primary"],
     type: "color",
     scopes: ["ALL_FILLS"],
   },
-  "--primary-foreground": {
+  "--color-primary-fg": {
     path: ["brand", "primary-fg"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--secondary": {
+  "--color-secondary": {
     path: ["brand", "secondary"],
     type: "color",
     scopes: ["ALL_FILLS"],
   },
-  "--secondary-foreground": {
+  "--color-secondary-fg": {
     path: ["brand", "secondary-fg"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--secondary-hover": {
+  "--color-secondary-hover": {
     path: ["brand", "secondary-hover"],
     type: "color",
     scopes: ["ALL_FILLS"],
   },
-  "--destructive": {
+  "--color-destructive": {
     path: ["state", "danger"],
     type: "color",
     scopes: ["ALL_FILLS"],
   },
-  "--destructive-foreground": {
+  "--color-destructive-fg": {
     path: ["state", "danger-fg"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--success": {
+  "--color-success": {
     path: ["state", "success"],
     type: "color",
     scopes: ["ALL_FILLS"],
   },
-  "--success-foreground": {
+  "--color-success-fg": {
     path: ["state", "success-fg"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--warning": {
+  "--color-warning": {
     path: ["state", "warning"],
     type: "color",
     scopes: ["ALL_FILLS"],
   },
-  "--warning-foreground": {
+  "--color-warning-fg": {
     path: ["state", "warning-fg"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--info": {
+  "--color-info": {
     path: ["state", "info"],
     type: "color",
     scopes: ["ALL_FILLS"],
   },
-  "--info-foreground": {
+  "--color-info-fg": {
     path: ["state", "info-fg"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--border": {
+  "--color-border": {
     path: ["border", "default"],
     type: "color",
     scopes: ["STROKE_COLOR"],
   },
-  "--input": {
+  "--color-input-border": {
     path: ["border", "input"],
     type: "color",
     scopes: ["STROKE_COLOR"],
   },
-  "--ring": {
+  "--color-ring": {
     path: ["border", "focus"],
     type: "color",
     scopes: ["STROKE_COLOR"],
   },
-  "--link": {
+  "--color-link": {
     path: ["text", "link"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--link-foreground": {
+  "--color-link-fg": {
     path: ["text", "link-fg"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--press": {
+  "--color-press": {
     path: ["state", "press"],
     type: "color",
     scopes: ["ALL_FILLS"],
   },
-  "--press-foreground": {
+  "--color-press-fg": {
     path: ["state", "press-fg"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--selection": {
+  "--color-selection": {
     path: ["state", "selection"],
     type: "color",
     scopes: ["ALL_FILLS"],
   },
-  "--selection-foreground": {
+  "--color-selection-fg": {
     path: ["state", "selection-fg"],
-    type: "color",
-    scopes: ["TEXT_FILL"],
-  },
-  "--sidebar": {
-    path: ["surface", "sidebar"],
-    type: "color",
-    scopes: ["FRAME_FILL", "SHAPE_FILL"],
-  },
-  "--sidebar-foreground": {
-    path: ["text", "on-sidebar"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
@@ -776,72 +829,72 @@ const SEMANTIC_MAP = {
     type: "color",
     scopes: ["ALL_FILLS"],
   },
-  "--data-primary": {
+  "--color-data-primary": {
     path: ["dataSyntax", "primary"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--data-secondary": {
+  "--color-data-secondary": {
     path: ["dataSyntax", "secondary"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--data-currency": {
+  "--color-data-currency": {
     path: ["dataSyntax", "currency"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--data-entity": {
+  "--color-data-entity": {
     path: ["dataSyntax", "entity"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--data-identifier": {
+  "--color-data-identifier": {
     path: ["dataSyntax", "identifier"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--data-category": {
+  "--color-data-category": {
     path: ["dataSyntax", "category"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--data-datetime": {
+  "--color-data-datetime": {
     path: ["dataSyntax", "datetime"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--data-status-positive": {
+  "--color-data-status-positive": {
     path: ["dataSyntax", "status", "positive"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--data-status-negative": {
+  "--color-data-status-negative": {
     path: ["dataSyntax", "status", "negative"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--data-status-warning": {
+  "--color-data-status-warning": {
     path: ["dataSyntax", "status", "warning"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--data-status-neutral": {
+  "--color-data-status-neutral": {
     path: ["dataSyntax", "status", "neutral"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--data-value-positive": {
+  "--color-data-value-positive": {
     path: ["dataSyntax", "value", "positive"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--data-value-negative": {
+  "--color-data-value-negative": {
     path: ["dataSyntax", "value", "negative"],
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--data-value-neutral": {
+  "--color-data-value-neutral": {
     path: ["dataSyntax", "value", "neutral"],
     type: "color",
     scopes: ["TEXT_FILL"],
@@ -871,107 +924,107 @@ const SEMANTIC_MAP = {
     type: "number",
     scopes: ["CORNER_RADIUS"],
   },
-  "--control-height-sm": {
+  "--size-control-sm": {
     path: ["sizing", "control-height-sm"],
     type: "number",
     scopes: ["WIDTH_HEIGHT"],
   },
-  "--control-height-md": {
+  "--size-control-md": {
     path: ["sizing", "control-height-md"],
     type: "number",
     scopes: ["WIDTH_HEIGHT"],
   },
-  "--control-height-lg": {
+  "--size-control-lg": {
     path: ["sizing", "control-height-lg"],
     type: "number",
     scopes: ["WIDTH_HEIGHT"],
   },
-  "--control-px-sm": {
+  "--space-control-x-sm": {
     path: ["sizing", "control-px-sm"],
     type: "number",
     scopes: ["GAP"],
   },
-  "--control-px-md": {
+  "--space-control-x-md": {
     path: ["sizing", "control-px-md"],
     type: "number",
     scopes: ["GAP"],
   },
-  "--control-px-lg": {
+  "--space-control-x-lg": {
     path: ["sizing", "control-px-lg"],
     type: "number",
     scopes: ["GAP"],
   },
-  "--control-gap-x": {
+  "--space-gap-x-control": {
     path: ["sizing", "control-gap-x"],
     type: "number",
     scopes: ["GAP"],
   },
-  "--control-gap-y": {
+  "--space-gap-y-control": {
     path: ["sizing", "control-gap-y"],
     type: "number",
     scopes: ["GAP"],
   },
-  "--card-padding": {
+  "--space-card": {
     path: ["sizing", "card-padding"],
     type: "number",
     scopes: ["GAP"],
   },
-  "--content-padding": {
+  "--space-content": {
     path: ["sizing", "content-padding"],
     type: "number",
     scopes: ["GAP"],
   },
-  "--menu-padding": {
+  "--space-menu": {
     path: ["sizing", "menu-padding"],
     type: "number",
     scopes: ["GAP"],
   },
-  "--menu-item-px": {
+  "--space-menu-item-x": {
     path: ["sizing", "menu-item-px"],
     type: "number",
     scopes: ["GAP"],
   },
-  "--menu-item-py": {
+  "--space-menu-item-y": {
     path: ["sizing", "menu-item-py"],
     type: "number",
     scopes: ["GAP"],
   },
-  "--icon-size": {
+  "--size-icon": {
     path: ["sizing", "icon-size"],
     type: "number",
     scopes: ["WIDTH_HEIGHT"],
   },
-  "--disabled-opacity": {
+  "--opacity-disabled": {
     path: ["sizing", "disabled-opacity"],
     type: "number",
     scopes: ["OPACITY"],
   },
-  "--badge-height": {
+  "--size-badge": {
     path: ["sizing", "badge-height"],
     type: "number",
     scopes: ["WIDTH_HEIGHT"],
   },
-  "--badge-px": {
+  "--space-badge-x": {
     path: ["sizing", "badge-px"],
     type: "number",
     scopes: ["GAP"],
   },
-  "--avatar-size-sm": {
+  "--size-avatar-sm": {
     path: ["sizing", "avatar-sm"],
     type: "number",
     scopes: ["WIDTH_HEIGHT"],
   },
-  "--avatar-size-md": {
+  "--size-avatar-md": {
     path: ["sizing", "avatar-md"],
     type: "number",
     scopes: ["WIDTH_HEIGHT"],
   },
-  "--avatar-size-lg": {
+  "--size-avatar-lg": {
     path: ["sizing", "avatar-lg"],
     type: "number",
     scopes: ["WIDTH_HEIGHT"],
   },
-  "--sidebar-width": {
+  "--layout-rail-width": {
     path: ["sizing", "sidebar-width"],
     type: "number",
     scopes: ["WIDTH_HEIGHT"],
@@ -1061,26 +1114,7 @@ const SEMANTIC_MAP = {
     type: "color",
     scopes: ["TEXT_FILL"],
   },
-  "--dialog-overlay-bg": {
-    path: ["overlays", "dialog"],
-    type: "color",
-    scopes: ["ALL_FILLS"],
-  },
-  "--drawer-overlay-bg": {
-    path: ["overlays", "drawer"],
-    type: "color",
-    scopes: ["ALL_FILLS"],
-  },
-  "--alert-dialog-overlay-bg": {
-    path: ["overlays", "alert-dialog"],
-    type: "color",
-    scopes: ["ALL_FILLS"],
-  },
-  "--sheet-overlay-bg": {
-    path: ["overlays", "sheet"],
-    type: "color",
-    scopes: ["ALL_FILLS"],
-  },
+  /* Overlays use color-mix(oklch) — not resolved by this exporter */
   "--slider-thumb-bg": {
     path: ["components", "slider", "thumb-bg"],
     type: "color",
@@ -1492,13 +1526,11 @@ function main() {
     process.exit(1);
   }
 
-  const tokensCss = fs.readFileSync(TOKENS_CSS, "utf8");
+  const tokensCss = loadMergedTokensCss();
 
   const themeVars = {};
-  const rootBlock = extractBlock(tokensCss, ":root {");
-  const darkBlock = extractBlock(tokensCss, ".dark");
-  const lightRoot = extractVars(rootBlock || "");
-  const darkRoot = extractVars(darkBlock || "");
+  const lightRoot = extractAllRootVars(tokensCss);
+  const darkRoot = extractAllDarkVars(tokensCss);
 
   const mergedLightCtx = { ...themeVars, ...lightRoot };
   const mergedDarkCtx = { ...themeVars, ...lightRoot, ...darkRoot };
@@ -1589,12 +1621,41 @@ function main() {
     }
   }
 
-  // Warn for :root vars not exported
+  // Warn for :root vars not exported (skip known primitives / motion / component-only)
+  function isKnownUnmappedToken(k) {
+    if (/^--primitive-/.test(k)) return true;
+    if (/^--chart-\d+$/.test(k)) return true;
+    if (/^--color-primary-alpha-/.test(k)) return true;
+    if (/^--shadow-/.test(k)) return true;
+    if (/^--font-/.test(k)) return true;
+    if (/^--leading-/.test(k)) return true;
+    if (/^--duration-/.test(k)) return true;
+    if (/^--ease-/.test(k)) return true;
+    if (/^--transition-/.test(k)) return true;
+    if (/^--z-/.test(k)) return true;
+    if (/^--container-/.test(k)) return true;
+    if (/^--color-overlay-/.test(k)) return true;
+    if (/^--size-ring-/.test(k)) return true;
+    if (k === "--color-input-surface") return true;
+    if (k === "--color-grid-selection") return true;
+    if (k === "--color-surface-fixed-light") return true;
+    if (k === "--font-size-data") return true;
+    if (/^--color-(?:destructive|success|warning|info)-subtle/.test(k)) return true;
+    if (k === "--space-gap-control") return true;
+    if (/^--(?:dialog|drawer)-overlay-bg$/.test(k)) return true;
+    if (k === "--alert-dialog-overlay-bg") return true;
+    if (k === "--sheet-overlay-bg") return true;
+    if (/^--switch-/.test(k)) return true;
+    if (/^--input-bg/.test(k)) return true;
+    if (k === "--sidebar-width") return true;
+    return false;
+  }
+
   for (const k of Object.keys(lightRoot)) {
-    if (k === "--control-gap") continue; // alias of control-gap-x, skip duplicate
+    if (isKnownUnmappedToken(k)) continue;
+    if (k === "--control-gap") continue;
     if (/^--primary-\d+$/i.test(k)) continue;
     if (/^--spacing-scale-\d+$/i.test(k)) continue;
-    /* Stepped radius (except md — also a semantic token) → primitive/radius/* only */
     if (/^--radius-(sm|lg|xl|full)$/i.test(k)) continue;
     if (!SEMANTIC_MAP[k]) {
       warnings.push(`No semantic mapping for ${k} (skipped)`);

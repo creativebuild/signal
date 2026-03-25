@@ -1,0 +1,8 @@
+:root {
+  --switch-track-unchecked: var(--color-input-border);
+  --switch-thumb-unchecked: var(--color-bg);
+}
+
+.dark {
+  --switch-thumb-unchecked: var(--color-fg);
+}

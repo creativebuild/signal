@@ -1,0 +1,53 @@
+@layer components {
+  .checkbox {
+    position: relative;
+    display: flex;
+    padding: 0;
+    width: var(--size-icon);
+    height: var(--size-icon);
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-inset);
+    border: 1px solid var(--color-input-border);
+    box-shadow: var(--shadow-xs);
+    transition: var(--transition-colors);
+    outline: none;
+  }
+
+  .checkbox::after {
+    content: "";
+    position: absolute;
+    inset-inline: -0.75rem;
+    inset-block: -0.5rem;
+  }
+
+  .checkbox:disabled {
+    cursor: not-allowed;
+    opacity: var(--opacity-disabled);
+  }
+
+  .checkbox[aria-invalid="true"] {
+    border-color: color-mix(in oklch, var(--color-destructive) 80%, transparent);
+    box-shadow: 0 0 0 var(--size-ring-width) color-mix(in oklch, var(--color-destructive) 30%, transparent);
+  }
+
+  .checkbox[aria-checked="true"],
+  .checkbox[aria-checked="mixed"] {
+    border-color: var(--color-selection);
+    background-color: var(--color-selection);
+    color: var(--color-selection-fg);
+  }
+
+  .checkbox-indicator {
+    display: grid;
+    place-content: center;
+    color: currentColor;
+    transition: none;
+  }
+
+  .checkbox-indicator > svg {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+}

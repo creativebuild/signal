@@ -1,0 +1,10 @@
+:root {
+  --input-bg: var(--color-input-surface);
+  --input-bg-hover: color-mix(in oklch, var(--color-accent) 40%, var(--color-bg));
+  --input-bg-focus: var(--input-bg);
+  --input-bg-disabled: color-mix(in oklch, var(--color-input-border) 50%, transparent);
+}
+
+.dark {
+  --input-bg-hover: color-mix(in oklch, var(--color-accent) 50%, var(--input-bg));
+}

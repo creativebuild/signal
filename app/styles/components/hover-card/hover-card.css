@@ -1,0 +1,22 @@
+@layer components {
+  .hover-card-positioner {
+    isolation: isolate;
+    z-index: var(--z-dropdown);
+  }
+
+  .hover-card-content {
+    z-index: var(--z-dropdown);
+    width: 16rem;
+    transform-origin: var(--transform-origin, center);
+    border-radius: var(--radius-container);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-popover);
+    padding: var(--space-content);
+    font-size: var(--font-size-sm);
+    color: var(--color-popover-fg);
+    box-shadow: var(--shadow-md);
+    outline: 1px solid color-mix(in oklch, var(--color-fg) 10%, transparent);
+    outline-offset: 0;
+    transition-duration: 100ms;
+  }
+}

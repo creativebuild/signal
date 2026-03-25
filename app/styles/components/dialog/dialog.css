@@ -1,0 +1,90 @@
+@layer components {
+  .dialog-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    background-color: var(--dialog-overlay-bg);
+  }
+
+  .dialog-content {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: var(--z-modal);
+    display: grid;
+    width: 100%;
+    max-width: calc(100% - 2rem);
+    transform: translate(-50%, -50%);
+    gap: 1rem;
+    border-radius: var(--radius-container);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-bg);
+    padding: var(--space-card);
+    box-shadow: var(--shadow-lg);
+    outline: none;
+  }
+
+  @media (min-width: 640px) {
+    .dialog-content {
+      max-width: 32rem;
+    }
+  }
+
+  .dialog-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  @media (min-width: 640px) {
+    .dialog-header {
+      text-align: left;
+    }
+  }
+
+  .dialog-footer {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .dialog-footer {
+      flex-direction: row;
+      justify-content: flex-end;
+    }
+  }
+
+  .dialog-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    line-height: 1;
+  }
+
+  .dialog-description {
+    font-size: var(--font-size-sm);
+    color: var(--color-muted-fg);
+  }
+
+  .dialog-description a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .dialog-description a:hover {
+    color: var(--color-fg);
+  }
+
+  .dialog-close-button {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    border-radius: var(--radius-inset);
+    opacity: 0.7;
+  }
+
+  .dialog-close-button:hover {
+    opacity: 1;
+  }
+}

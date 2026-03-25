@@ -1,0 +1,44 @@
+@layer components {
+  .popover-positioner {
+    isolation: isolate;
+    z-index: var(--z-dropdown);
+  }
+
+  .popover-content {
+    z-index: var(--z-dropdown);
+    display: flex;
+    width: 18rem;
+    transform-origin: var(--transform-origin, center);
+    flex-direction: column;
+    gap: 1rem;
+    border-radius: var(--radius-container);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-popover);
+    padding: var(--space-content);
+    color: var(--color-popover-fg);
+    box-shadow: var(--shadow-md);
+    outline: none;
+  }
+
+  /* Dense panels: match select popup shell (no extra chrome padding). */
+  .popover-content--flush,
+  .popover-content--command {
+    padding: 0;
+    gap: 0;
+  }
+
+  .popover-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: var(--font-size-sm);
+  }
+
+  .popover-title {
+    font-weight: var(--font-weight-medium);
+  }
+
+  .popover-description {
+    color: var(--color-muted-fg);
+  }
+}

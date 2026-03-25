@@ -1,0 +1,9 @@
+:root {
+  --sonner-bg: var(--color-bg);
+  --sonner-border: var(--color-border);
+  --sonner-fg: var(--color-fg);
+  --sonner-muted-fg: var(--color-muted-fg);
+  --sonner-primary-bg: var(--color-primary);
+  --sonner-primary-fg: var(--color-primary-fg);
+  --sonner-muted-bg: var(--color-muted);
+}

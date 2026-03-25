@@ -1,6 +1,6 @@
 # Signal — Token-driven Design System POC
 
-A Next.js 15 proof of concept: **shadcn-style components styled with native CSS** and **design tokens** aligned for Figma Variables. Semantic variables live in **`app/tokens.css`**. **`app/globals.css`** wires the cascade (imports, derived variables, keyframes, a few utilities) — it is not the token source of truth.
+A Next.js 15 proof of concept: **shadcn-style components styled with native CSS** and **design tokens** aligned for Figma Variables. Token **definitions** live under **`app/styles/tokens/`** and **`app/styles/components/<name>/*.tokens.css`**. **`app/tokens.css`** is a thin **barrel** that imports those layers. **`app/globals.css`** is the **app shell**: import order, keyframes, third-party tweaks, and small utilities — not the token source of truth.
 
 Run **`npm run tokens`** to export JSON for Figma (see [Figma export](#figma-export)).
 
@@ -26,129 +26,136 @@ Open [http://localhost:3000](http://localhost:3000) for the component gallery. U
 
 ---
 
-## Architecture: shadcn + design tokens + native CSS
+## Where do `globals.css` and `tokens.css` live — and why?
+
+| File | Location | Role |
+|------|----------|------|
+| **`app/globals.css`** | Next to **`app/layout.tsx`** | **Single stylesheet the layout imports** (`@/app/globals.css`). Defines cascade order: layers → tokens barrel → reset → base → every component stylesheet, then keyframes, Sonner tweaks, and `@layer utilities`. This matches the usual App Router pattern: one obvious global entry next to the root layout. |
+| **`app/tokens.css`** | Same **`app/`** folder | **Barrel only** — three `@import`s: `styles/tokens/primitives.css`, `semantic.css`, `component-tokens.css`. No variables declared here. Keeps one stable name to grep (“where are tokens loaded?”) while the real content lives under **`app/styles/`**. |
+
+**Why not move both files into `app/styles/` only?** You could. Import `@/app/styles/globals.css` from `layout.tsx` and it would work the same. This project **keeps barrels at `app/`** so “global CSS” and “token import root” sit beside `layout.tsx`; **all implementation** (primitives, semantics, component token maps, per-component CSS) stays under **`app/styles/`**.
+
+**Summary for new developers**
+
+1. **Edit theme values** in **`app/styles/tokens/primitives.css`** (raw palette) and **`app/styles/tokens/semantic.css`** (meaningful names, light `:root` + **`.dark`** overrides). Do not put component-specific names in semantic (e.g. no `--sidebar-bg` there — use component tokens).  
+2. **Component-only mappings** (semantic → `--dialog-overlay-bg`, `--data-table-*`, etc.) live in **`app/styles/components/<name>/<name>.tokens.css`**, aggregated by **`app/styles/tokens/component-tokens.css`**.  
+3. **Component appearance rules** live in **`app/styles/components/<name>/<name>.css`** — classes only; use **`var(--…)`** tokens (globals or component-prefixed), never raw hex from the palette in those files.  
+4. **`app/globals.css`** — do not add `:root` token definitions here; add keyframes, vendor overrides, and utilities only.
+
+---
+
+## Architecture: layers, naming, and CSS files
 
 ### Mental model
 
 | Piece | Responsibility |
-|--------|------------------|
-| **`app/tokens.css`** | **Figma-oriented theme tokens:** `:root` (light + shared structure), **`.dark`** (color overrides), **`--primitive-*` palette**, typography scale, motion **durations/eases**, radius, shadows, spacing, data-syntax colors, z-index, etc. No component rules. |
-| **`app/globals.css`** | **Application shell:** `@import` order (layers → tokens → reset → base → **per-component CSS**), **derived** `:root` values (e.g. `--transition-colors` built from duration/ease), **keyframes**, **Sonner** overrides (unlayered), **`@layer utilities`** (`.focus-ring`, `sr-only`, minimal text/align helpers). |
-| **`app/styles/layers.css`** | Declares `@layer` order: `reset, base, components, utilities`. |
+|--------|----------------|
+| **`app/styles/tokens/primitives.css`** | **Raw values only** — `--primitive-*` palette (OKLCH), black/white. No semantic meaning. |
+| **`app/styles/tokens/semantic.css`** | **Global semantic tokens** — prefixed names: `--color-*`, `--space-*`, `--size-*`, `--radius-*`, `--shadow-*`, `--duration-*`, `--z-*`, typography, containers, transitions. References **only** primitives (or other semantic tokens). **`.dark`** overrides colors (and related) so components inherit theme without duplicating component tokens. **`--chart-1` … `--chart-14`** stay as global chart indices (exception). |
+| **`app/styles/tokens/component-tokens.css`** | **`@import`s** every **`*.tokens.css`** under `components/<name>/`. |
+| **`app/tokens.css`** | Imports the three token layers above (barrel). |
+| **`app/globals.css`** | **Import order** + keyframes + unlayered hacks + **`@layer utilities`**. |
+| **`app/styles/layers.css`** | `@layer` order: `reset, base, components, utilities`. |
 | **`app/styles/reset.css`**, **`base.css`** | Global box model, typography defaults, `:focus-visible`. |
-| **`app/styles/components/*.css`** | **One file per UI area** (e.g. `button.css`, `input.css`). Rules target **semantic class names** (`.btn`, `.input`, `[data-slot="…"]`) that match what **`components/ui/*`** apply via `className={cn("…")}`. |
+| **`app/styles/components/<name>/<name>.tokens.css`** | Maps semantics → **`--<name>-*`** (no rules, no raw palette). Optional `.dark` only when unavoidable (e.g. switch thumb). |
+| **`app/styles/components/<name>/<name>.css`** | **`@layer components`** — class / `[data-slot]` rules using **`var(--token)`** (semantic or that component’s `--name-*` tokens). |
 
-shadcn components are **not** themed with Tailwind utility strings. They use **token-backed declarations**:
+### Token naming (quick reference)
+
+- **Global:** `--color-bg`, `--color-fg`, `--color-primary`, `--color-border`, `--font-size-sm`, `--size-control-md`, `--space-card`, `--radius-control`, …  
+- **Data syntax:** `--color-data-currency`, `--color-data-status-positive`, …  
+- **Primary tints:** `--color-primary-alpha-10`, …  
+- **Charts:** `--chart-1` … `--chart-14` (unchanged).  
+- **Component examples:** `--dialog-overlay-bg`, `--input-bg`, `--data-table-row-height-sm`, `--sidebar-width` (maps from `--layout-rail-width`).
+
+### Example
 
 ```css
-/* Example: app/styles/components/button.css */
+/* app/styles/components/button/button.css */
 .btn {
   border-radius: var(--radius-control);
   transition: var(--transition-colors);
+  background-color: var(--color-primary);
+  color: var(--color-primary-fg);
 }
 ```
-
-…and **TSX** attaches those classes:
 
 ```tsx
 <ButtonPrimitive className={cn("btn focus-ring", variantClass, className)} />
 ```
 
-**Dark mode:** `next-themes` adds `.dark` on `<html>`. Variables overridden in **`tokens.css`** under `.dark { … }` flow into every `var(--…)` usage automatically.
+**Dark mode:** `next-themes` sets `.dark` on `<html>`. Overrides in **`semantic.css`** under `.dark { … }` flow into all `var(--color-*)` uses; component token files usually need no dark duplicate.
 
 ### Import order (critical)
 
-`globals.css` must load **`tokens.css` before** component CSS so `var(--background)`, `var(--radius-control)`, etc. resolve. Order today:
+`globals.css` must load **`tokens.css` before** any component CSS so variables exist. Order:
 
 1. `layers.css`  
-2. `tokens.css`  
+2. **`tokens.css`** (primitives → semantic → component token maps)  
 3. `reset.css` → `base.css`  
-4. All `styles/components/*.css` (alphabetical is fine; keep list maintainable)  
-5. Unlayered blocks in `globals.css` (keyframes, Sonner, selected-row checkbox tweak)  
-6. `@layer utilities` (focus ring, animations, small helpers)
+4. **`styles/components/<name>/<name>.css`** for each UI area (list in `globals.css`)  
+5. Unlayered blocks in `globals.css` (keyframes, Sonner, table checkbox tweak)  
+6. `@layer utilities` (`.focus-ring`, `sr-only`, etc.)
 
-`app/layout.tsx` imports **`@/app/globals.css`** once; that pulls in the whole tree.
+`app/layout.tsx` imports **`@/app/globals.css`** once.
 
-### What belongs in `tokens.css` vs `globals.css`
+### What belongs where
 
-- **`tokens.css`:** Values you want **1:1 (or close) with Figma Variables** — colors, type scale, radii, shadows, spacing, motion **primitives** (`--duration-fast`, `--ease-standard`), focus **primitives** (`--focus-ring-width`, `--ring`), z-index scale, data-table dimensions, etc.  
-- **`globals.css`:** **CSS-only conveniences** that **compose** tokens — e.g. `--transition-colors`, keyframes, third-party widget fixes, `.focus-ring`.
+| In token CSS | In `globals.css` only |
+|--------------|------------------------|
+| Colors, type scale, radii, shadows, spacing, motion, z-index, data/chart tokens | Keyframes, third-party widget overrides, small utility classes |
+| `--transition-colors` / `--transition-all` (composed from duration + ease) live in **semantic.css** | Anything that is not a design token |
 
 ---
 
 ## Transferring this setup to another shadcn project
 
-Use this as a checklist when porting the pattern (not necessarily every file verbatim).
-
 ### 1. Dependencies
 
-- Keep **`clsx`** and a small **`cn()`** in `lib/utils.ts`.  
-- You do **not** need Tailwind for this approach. Remove Tailwind from PostCSS/build if you are fully native.  
-- Keep **`next-themes`** (or equivalent) if you want `.dark` class theming.
+- **`clsx`** + **`cn()`** in `lib/utils.ts`.  
+- **`next-themes`** with `attribute="class"` if you use `.dark`.
 
-### 2. Add the CSS skeleton
+### 2. CSS skeleton
 
-- Copy or recreate **`app/styles/layers.css`** with `@layer reset, base, components, utilities;`.  
-- Add **`reset.css`** and **`base.css`** (or merge into one file) and import them after tokens.  
-- Create **`app/tokens.css`**: start with `:root` semantic aliases (`--background`, `--foreground`, `--primary`, …), **`--primitive-*`**, then **`.dark`** with color overrides only where needed.
+- **`app/styles/layers.css`** — `@layer reset, base, components, utilities;`  
+- **`app/styles/tokens/primitives.css`**, **`semantic.css`**, **`component-tokens.css`**  
+- **`app/tokens.css`** — `@import` those three  
+- **`reset.css`** / **`base.css`**  
+- **`app/globals.css`** — import layers → tokens → reset → base → each **`components/<name>/<name>.css`**
 
-### 3. Create `app/globals.css`
+### 3. Wire the layout
 
-- `@import` **layers → tokens → reset → base**.  
-- Add `@import` for each **`app/styles/components/<name>.css`** you maintain.  
-- Append a **second `:root`** block only for **non-Figma** derived variables (e.g. transition shorthands).  
-- Add **keyframes** and any **unlayered** overrides (toast libraries, etc.).  
-- Add **`@layer utilities`** for `.focus-ring:focus-visible`, `sr-only`, and any tiny classes you need from TSX strings.
+- **`app/layout.tsx`** — `import "@/app/globals.css"` once.
 
-### 4. Wire the layout
+### 4. Per component
 
-- In **`app/layout.tsx`**, import **`./globals.css`** (or `@/app/globals.css`) **once**.  
-- Use **`ThemeProvider`** with `attribute="class"` so **`.dark`** matches **`tokens.css`**.
+- **`components/ui/*.tsx`** — semantic classes + `cn()`.  
+- **`app/styles/components/<name>/<name>.css`** — rules with `var(--…)`.  
+- Optional **`app/styles/components/<name>/<name>.tokens.css`** + register in **`component-tokens.css`**.
 
-### 5. Restyle each shadcn component
+### 5. Figma
 
-For each `components/ui/*.tsx`:
-
-1. Replace Tailwind class strings with **stable semantic classes** (`btn`, `btn--outline`, `dialog-content`, …).  
-2. Put the corresponding rules in **`app/styles/components/<component>.css`** inside `@layer components { … }`.  
-3. Use **`var(--token)`** for every visual that should theme (colors, radius, shadow, spacing).  
-4. Add **`focus-ring`** (or your utility) on focusable controls.  
-5. Prefer **`data-slot="…"`** selectors when the primitive supports them, for stable styling hooks.
-
-### 6. Figma parity (optional)
-
-- Copy **`scripts/export-tokens.js`** and **`export-tokens-figma.js`** and adapt parsing if your `tokens.css` structure differs.  
-- Run **`npm run tokens`** in CI or before handoff so **`tokens/*.json`** stay current.
-
-### 7. Verify
-
-- Toggle **light/dark** and confirm only **token-driven** values change (no hardcoded hex in components).  
-- Run **`npm run build`** — CSS must parse and all `var(--…)` references must exist on `:root` or `.dark`.
+- **`scripts/export-tokens-figma.js`** reads merged **`primitives.css`** + **`semantic.css`** (+ selected `*.tokens.css`). Run **`npm run tokens`**.
 
 ---
 
 ## Usage priority when styling
 
-1. **Semantic tokens** — `var(--background)`, `var(--primary)`, `var(--muted-foreground)`, …  
-2. **Domain extensions** — `var(--data-currency)`, chart colors, overlay scrims, …  
-3. **Structural tokens** — `var(--radius-control)`, `var(--card-padding)`, `var(--shadow-md)`, …  
-4. **One-offs** — Only when not worth tokenising.
+1. **Semantic tokens** — `var(--color-bg)`, `var(--color-primary)`, `var(--color-muted-fg)`, …  
+2. **Domain** — `var(--color-data-currency)`, `var(--chart-1)`, overlay tokens via component maps, …  
+3. **Structure** — `var(--radius-control)`, `var(--space-card)`, `var(--shadow-md)`, …  
+4. **One-offs** — only when not worth tokenising.
 
 ---
 
 ## Token reference (where to look)
 
-All sections are commented in **`app/tokens.css`**. In outline:
-
-- **Semantic colors** — Surfaces, brand, state, borders, data-syntax, charts, primary alpha scales, overlays.  
-- **Motion** — Durations and easing curves (used by `globals.css` shorthands and components).  
-- **Focus** — `--ring`, `--focus-ring-width`, `--focus-ring-offset`.  
-- **Typography** — Font stacks, scale, weights, leading.  
-- **Radius / shadows** — Stepped and semantic radius; shadow scale.  
-- **Spacing** — Control heights, padding, gaps, card/menu padding, avatar sizes.  
-- **Components / data table** — Sidebar, inputs, switches, table selection, dense grid typography and sizing.
-
-**dataSyntax** — Semantic text colors for tables and dense data (`--data-currency`, `--data-entity`, `--data-status-positive`, …).
+| File | Contents |
+|------|-----------|
+| **`app/styles/tokens/primitives.css`** | Full `--primitive-*` scale |
+| **`app/styles/tokens/semantic.css`** | `--color-*`, motion, radius, shadows, spacing, typography, **`.dark`** |
+| **`app/styles/tokens/component-tokens.css`** | Import list for `*.tokens.css` |
+| **`app/styles/components/*/*.tokens.css`** | Component-specific `--foo-*` aliases |
 
 ---
 
@@ -158,25 +165,14 @@ All sections are commented in **`app/tokens.css`**. In outline:
 npm run tokens
 ```
 
-This runs **two** exporters:
-
 | Output | Format | Use case |
 |--------|--------|----------|
-| **`tokens/variables-pro.json`** | Variables Pro (Light + Dark modes in one file) | [Variables Pro](https://variables.pro/) plugin → Import |
-| **`tokens/light.json`** & **`tokens/dark.json`** | DTCG-style trees **per mode** (primitives + semantic resolved for that mode) | Figma’s **native Variables** import (import each file into the matching mode / collection workflow) |
+| **`tokens/variables-pro.json`** | Variables Pro (Light + Dark) | [Variables Pro](https://variables.pro/) import |
+| **`tokens/light.json`** & **`tokens/dark.json`** | DTCG-style per mode | Figma native Variables |
 
-Optional scripts:
+Optional: `npm run tokens:variables-pro`, `npm run tokens:figma`.
 
-- `npm run tokens:variables-pro` — only `variables-pro.json`  
-- `npm run tokens:figma` — only `light.json` + `dark.json`
-
-**API (dev server):**
-
-- `GET /api/tokens` — download `variables-pro.json`  
-- `GET /api/tokens/figma` — `light.json` (default)  
-- `GET /api/tokens/figma?mode=dark` — `dark.json`  
-
-Generate files with `npm run tokens` before using these routes.
+**API:** `GET /api/tokens`, `GET /api/tokens/figma` (+ `?mode=dark`). Run `npm run tokens` before using.
 
 ---
 
@@ -186,11 +182,10 @@ Generate files with `npm run tokens` before using these routes.
 npx shadcn@latest add <component-name>
 ```
 
-If prompted to overwrite customised files, choose **no** for anything already wired to this CSS. For new components, merge manually:
-
-1. Add **TSX** under `components/ui/`.  
-2. Add **`app/styles/components/<name>.css`** and **`@import`** it from **`globals.css`**.  
-3. Use **`var(--…)`** from **`tokens.css`** for themed values.
+1. TSX under `components/ui/`.  
+2. **`app/styles/components/<name>/<name>.css`** (+ optional **`<name>.tokens.css`**).  
+3. **`@import`** the `.css` from **`globals.css`**.  
+4. If you add **`.tokens.css`**, **`@import`** it from **`component-tokens.css`**.
 
 ---
 
@@ -198,25 +193,35 @@ If prompted to overwrite customised files, choose **no** for anything already wi
 
 ```
 app/
-  tokens.css              # Design tokens: :root, .dark, primitives (Figma-aligned)
-  globals.css             # Imports, derived vars, keyframes, utilities
-  layout.tsx              # ThemeProvider, single globals.css import
+  layout.tsx              # import @/app/globals.css once
+  globals.css             # Cascade: layers → tokens → reset → base → components; keyframes; utilities
+  tokens.css              # Barrel: @import styles/tokens/*.css (primitives, semantic, component-tokens)
 
 app/styles/
-  layers.css              # @layer declaration
-  reset.css, base.css     # Global defaults
-  components/             # Per-component CSS (button, dialog, input, …)
+  layers.css
+  reset.css
+  base.css
+  tokens/
+    primitives.css
+    semantic.css
+    component-tokens.css    # @import ../components/*/*.tokens.css
+  components/
+    <name>/
+      <name>.tokens.css   # optional: semantic → --name-*
+      <name>.css          # @layer components { … }
 
-tokens/                   # Generated JSON (Figma)
-scripts/                  # export-tokens*.js
+tokens/                   # Generated JSON (npm run tokens)
+scripts/
+  export-tokens*.js
+  apply-token-renames.mjs # one-off / reference for bulk var() renames
 
 components/
-  gallery/                # Gallery sections
-  ui/                     # shadcn-compatible components
+  gallery/
+  ui/
 ```
 
 ---
 
 ## Component gallery
 
-The gallery lists components by category: Buttons, Typography, Form controls, Feedback, Data display, Navigation, Layout, Overlay, and Selection. **Data display** includes a Trading Blotter (TanStack Table) using **data-syntax** tokens on a dense financial grid.
+Categories: Buttons, Typography, Form controls, Feedback, Data display, Navigation, Layout, Overlay, Selection. **Data display** includes a Trading Blotter (TanStack Table) using **data-syntax** tokens on a dense grid.

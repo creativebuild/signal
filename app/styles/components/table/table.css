@@ -1,0 +1,114 @@
+@layer components {
+  .table-scroll-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: auto;
+  }
+
+  .table-root,
+  .data-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  .table-root {
+    width: 100%;
+    caption-side: bottom;
+    font-size: var(--font-size-sm);
+  }
+
+  .table-root.data-table {
+    font-size: var(--data-table-font-size);
+    font-weight: var(--data-table-font-weight);
+  }
+
+  .table-header-row tr {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .table-root.data-table thead tr {
+    border-bottom: none;
+  }
+
+  .table-body tr:last-child {
+    border-bottom: none;
+  }
+
+  .table-footer {
+    border-top: 1px solid var(--color-border);
+    background-color: color-mix(in oklch, var(--color-muted) 50%, transparent);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .table-footer tr:last-child {
+    border-bottom: none;
+  }
+
+  .table-row {
+    border-bottom: 1px solid var(--color-border);
+    transition: var(--transition-colors);
+  }
+
+  .table-row:hover {
+    background-color: color-mix(in oklch, var(--color-muted) 50%, transparent);
+  }
+
+  .table-row[data-state="selected"] {
+    background-color: var(--color-muted);
+  }
+
+  .table-head {
+    min-height: 2.5rem;
+    padding-inline: 0.5rem;
+    text-align: left;
+    vertical-align: middle;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-muted-fg);
+  }
+
+  .table-head:has([role="checkbox"]) {
+    padding-inline-end: 0;
+  }
+
+  /* Baseline nudge for text rows only — breaks vertical center in compact data tables */
+  .table-root:not(.data-table) .table-head [role="checkbox"] {
+    transform: translateY(2px);
+  }
+
+  .data-table-header .table-head,
+  tr.data-table-header-row .table-head {
+    color: var(--data-table-header-fg);
+  }
+
+  .table-cell {
+    padding: 0.5rem;
+    vertical-align: middle;
+  }
+
+  .table-cell:has([role="checkbox"]) {
+    padding-inline-end: 0;
+  }
+
+  .table-root:not(.data-table) .table-cell [role="checkbox"] {
+    transform: translateY(2px);
+  }
+
+  .table-caption {
+    margin-top: 1rem;
+    font-size: var(--font-size-sm);
+    color: var(--color-muted-fg);
+  }
+
+  /* Data table: token padding only (.table-cell loads later and would override with padding shorthand) */
+  td.table-cell.data-table-cell {
+    padding: 0;
+    padding-inline: var(--data-table-cell-px);
+    padding-block: var(--data-table-cell-py);
+  }
+
+  th.table-head.data-table-head-cell {
+    padding: 0;
+    padding-inline: var(--data-table-cell-px);
+    padding-block: var(--data-table-cell-py);
+  }
+}
